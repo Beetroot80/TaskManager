@@ -19,17 +19,14 @@ namespace ConsoleApp
         {
             TaskManagerContext context = new TaskManagerContext();
 
-            var personalInfo = new PersonalInfo()
+            var project = new Project()
             {
-                FirstName = "Eugene",
-                LastName = "Beetroot"
-            };
-            var user = new User()
-            {
-                PersonalInfoId = 0
+                Id = 0,
+                Description = "Desc",
+                Title = "Title"
             };
 
-            context.Users.Add(user);
+            context.Projects.Add(project);
             context.SaveChanges();
             Console.WriteLine("Done");
             Console.ReadLine();
