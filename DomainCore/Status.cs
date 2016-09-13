@@ -14,5 +14,10 @@ namespace DomainCore
         //Foreign keys
         //Navigation properties
         public ICollection<DomainTask> DomainTasks { get; set; }
+
+        public Status()
+        {
+            DomainTasks = new List<DomainTask>();
+        }
     }
 }

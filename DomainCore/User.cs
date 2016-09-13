@@ -18,5 +18,12 @@ namespace DomainCore
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Project> Projects { get; set; }
         public ICollection<DomainTask> DomainTasks { get; set; }
+
+        public User()
+        {
+            Comments = new List<Comment>();
+            Projects = new List<Project>();
+            DomainTasks = new List<DomainTask>();
+        }
     }
 }

@@ -8,8 +8,9 @@ namespace DomainEF
     public class TaskManagerContext : DbContext
     {
         public TaskManagerContext()
-            : base(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
+            : base("TaskManagerDB")
         {
+            Database.SetInitializer<TaskManagerContext>(new DropCreateDatabaseAlways<TaskManagerContext>());
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -22,7 +23,6 @@ namespace DomainEF
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Priority> Priorities { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
-
     }
 
 }

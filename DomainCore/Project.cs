@@ -15,5 +15,11 @@ namespace DomainCore
         //Navigation properties
         public ICollection<DomainTask> DomainTasks { get; set; }
         public ICollection<User> Users { get; set; }
+
+        public Project()
+        {
+            DomainTasks = new List<DomainTask>();
+            Users = new List<User>();
+        }
     }
 }
