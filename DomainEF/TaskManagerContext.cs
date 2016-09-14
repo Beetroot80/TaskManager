@@ -1,6 +1,4 @@
-using System;
 using System.Data.Entity;
-using System.Linq;
 using DomainCore;
 
 namespace DomainEF
@@ -10,7 +8,7 @@ namespace DomainEF
         public TaskManagerContext()
             : base("TaskManagerDB")
         {
-            Database.SetInitializer<TaskManagerContext>(new DropCreateDatabaseAlways<TaskManagerContext>());
+            Database.SetInitializer<TaskManagerContext>(new TaskManagerInitializer());
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -23,6 +21,7 @@ namespace DomainEF
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Priority> Priorities { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<DomainTask> Tasks { get; set; }
     }
 
 }

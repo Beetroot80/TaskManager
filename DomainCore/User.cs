@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DomainCore
 {
@@ -11,7 +7,7 @@ namespace DomainCore
         public int Id { get; set; }
 
         //Foreign keys
-        public int? PersonalInfoId { get; set; }
+        public int PersonalInfoId { get; set; }
 
         //Navigation properties
         public PersonalInfo PersonalInfo { get; set; }

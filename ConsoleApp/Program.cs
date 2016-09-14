@@ -17,17 +17,16 @@ namespace ConsoleApp
 
         static void TestConnactionAndCreationForDb()
         {
-            TaskManagerContext context = new TaskManagerContext();
-
             var project = new Project()
             {
-                Id = 0,
-                Description = "Desc",
-                Title = "Title"
+                Description = "Desc2",
+                Title = "Title2"
             };
-
-            context.Projects.Add(project);
-            context.SaveChanges();
+            using (TaskManagerContext context = new TaskManagerContext())
+            {
+                context.Projects.Add(project);
+                context.SaveChanges();
+            }
             Console.WriteLine("Done");
             Console.ReadLine();
         }
