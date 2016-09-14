@@ -13,6 +13,7 @@ namespace DomainEF
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasRequired(x => x.PersonalInfo).WithRequiredDependent(x => x.User);
+            modelBuilder.Entity<DomainTask>().HasRequired(x => x.CreatedBy);
         }
 
         public virtual DbSet<User> Users { get; set; }
