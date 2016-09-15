@@ -49,8 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DomainTaskRepository.cs" />
-    <Compile Include="Interfaces\IDomainTaskRepositorie.cs" />
+    <Compile Include="Common\IRepository.cs" />
+    <Compile Include="Common\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,14 +58,13 @@
       <Project>{a219e1f7-137e-49f4-8dc8-ab1b4720c8a9}</Project>
       <Name>DomainCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Repository\GenericRepository.csproj">
-      <Project>{a89c4aad-4a23-4289-b898-ee2f7d1086d7}</Project>
-      <Name>GenericRepository</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

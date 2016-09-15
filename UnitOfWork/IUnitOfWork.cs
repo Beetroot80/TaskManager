@@ -2,7 +2,7 @@
 
 namespace UnitOfWork
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         void SaveChanges();
     }

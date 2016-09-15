@@ -3,7 +3,7 @@ using System.Data.Entity;
 
 namespace UnitOfWork
 {
-    sealed class UnitOfWork : IUnitOfWork
+    public sealed class UnitOfWork : IUnitOfWork
     {
         private DbContext context;
 

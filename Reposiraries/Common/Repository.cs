@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace GenericRepository
+namespace Repositories.Common
 {
     //TODO: Right way to delete, update, insert... 
     public abstract class Repository<T> : IRepository<T> where T : class
