@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainCore", "DomainCore\Do
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainEF", "DomainEF\DomainEF.csproj", "{69962963-5971-4CC2-BE30-A897261119FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reposiraries", "Reposiraries\Reposiraries.csproj", "{03A8ECE8-5577-440A-ABED-3C5EB72352B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Reposiraries\Repositories.csproj", "{03A8ECE8-5577-440A-ABED-3C5EB72352B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{34072D02-8C86-4F1B-A243-A55350D598D2}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceEntities", "ServiceEntities\ServiceEntities.csproj", "{7C875FDC-0ECE-4530-9F1B-A2D19B28E72E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{DF816E04-796C-492F-BA97-71571197D300}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceMapper", "Mapper\ServiceMapper.csproj", "{4DC259A8-90B0-4F4B-9D91-08E58A1AB017}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{DF816E04-796C-492F-BA97-71571197D300}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF816E04-796C-492F-BA97-71571197D300}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF816E04-796C-492F-BA97-71571197D300}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC259A8-90B0-4F4B-9D91-08E58A1AB017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC259A8-90B0-4F4B-9D91-08E58A1AB017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC259A8-90B0-4F4B-9D91-08E58A1AB017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC259A8-90B0-4F4B-9D91-08E58A1AB017}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,5 +74,6 @@ Global
 		{F800261F-359E-4082-99FD-CCECFFB94E22} = {34072D02-8C86-4F1B-A243-A55350D598D2}
 		{7C875FDC-0ECE-4530-9F1B-A2D19B28E72E} = {3808B444-CAC8-4F58-BEE9-5A8076737648}
 		{DF816E04-796C-492F-BA97-71571197D300} = {3808B444-CAC8-4F58-BEE9-5A8076737648}
+		{4DC259A8-90B0-4F4B-9D91-08E58A1AB017} = {3808B444-CAC8-4F58-BEE9-5A8076737648}
 	EndGlobalSection
 EndGlobal

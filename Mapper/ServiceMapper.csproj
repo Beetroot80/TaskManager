@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF816E04-796C-492F-BA97-71571197D300}</ProjectGuid>
+    <ProjectGuid>{4DC259A8-90B0-4F4B-9D91-08E58A1AB017}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Services</RootNamespace>
-    <AssemblyName>Services</AssemblyName>
+    <RootNamespace>Mapper</RootNamespace>
+    <AssemblyName>Mapper</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,16 +34,7 @@
       <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,33 +44,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DomainCore\DomainCore.csproj">
       <Project>{a219e1f7-137e-49f4-8dc8-ab1b4720c8a9}</Project>
       <Name>DomainCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DomainEF\DomainEF.csproj">
-      <Project>{69962963-5971-4cc2-be30-a897261119fb}</Project>
-      <Name>DomainEF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Reposiraries\Repositories.csproj">
-      <Project>{03a8ece8-5577-440a-abed-3c5eb72352b3}</Project>
-      <Name>Repositories</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ServiceEntities\ServiceEntities.csproj">
       <Project>{7c875fdc-0ece-4530-9f1b-a2d19b28e72e}</Project>
       <Name>ServiceEntities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UnitOfWork\UnitOfWork.csproj">
-      <Project>{f800261f-359e-4082-99fd-ccecffb94e22}</Project>
-      <Name>UnitOfWork</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

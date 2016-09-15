@@ -68,6 +68,18 @@
       <Project>{69962963-5971-4cc2-be30-a897261119fb}</Project>
       <Name>DomainEF</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mapper\ServiceMapper.csproj">
+      <Project>{4dc259a8-90b0-4f4b-9d91-08e58a1ab017}</Project>
+      <Name>ServiceMapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceEntities\ServiceEntities.csproj">
+      <Project>{7c875fdc-0ece-4530-9f1b-a2d19b28e72e}</Project>
+      <Name>ServiceEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{df816e04-796c-492f-ba97-71571197d300}</Project>
+      <Name>Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
