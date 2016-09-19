@@ -15,13 +15,13 @@ namespace ServiceEntities
 
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Project> Projects { get; set; }
-        public ICollection<ServiceTask> DomainTasks { get; set; }
+        public ICollection<ServiceTask> ServiceTasks { get; set; }
 
         public User()
         {
             Comments = new List<Comment>();
             Projects = new List<Project>();
-            DomainTasks = new List<ServiceTask>();
+            ServiceTasks = new List<ServiceTask>();
         }
     }
 }

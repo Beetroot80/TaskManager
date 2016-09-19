@@ -12,7 +12,7 @@ namespace ConsoleApp
     {
         static void Main(string [] args)
         {
-            var mapper = new MapperConfig();
+            MapperConfig.ConfigureAutoMapper();
             TestConnactionAndCreationForDb();
             var list = TestTaskServiceGetAll();
             int i = 0;

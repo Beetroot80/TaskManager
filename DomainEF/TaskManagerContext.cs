@@ -25,7 +25,7 @@ namespace DomainEF
         {
             modelBuilder.Entity<User>().HasRequired(x => x.PersonalInfo).WithRequiredDependent(x => x.User);
             modelBuilder.Entity<User>().HasMany(x => x.DomainTasks).WithRequired(x => x.CreatedBy).WillCascadeOnDelete(false);
-            //modelBuilder.Entity<DomainTask>().HasRequired(x => x.CreatedBy);
+            modelBuilder.Entity<DomainTask>().Property(x => x.CreatedBy_Id).IsRequired();
         }
 
         public void SetModified(object entity)

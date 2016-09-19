@@ -29,7 +29,7 @@ namespace DomainEF
 
             //Personal info
             var pi0 = new PersonalInfo() { FirstName = "Eugene", LastName = "Beetroot", UserId = 1 };
-            var pi1 = new PersonalInfo() { FirstName = "Amely", LastName = "Strange", UserId = 2};
+            var pi1 = new PersonalInfo() { FirstName = "Amely", LastName = "Strange", UserId = 2 };
             context.Entry<PersonalInfo>(pi0).State = EntityState.Added;
             context.Entry<PersonalInfo>(pi1).State = EntityState.Added;
             context.SaveChanges();
@@ -54,10 +54,10 @@ namespace DomainEF
             context.SaveChanges();
 
             //Tasks
-            var t0 = new DomainTask() { Title = "Task1", Description = "First task", Status = s0, Priority = p0, Project = pr0, CreatedBy = u0 };
-            var t1 = new DomainTask() { Title = "Task2", Description = "Second task", Status = s0, Priority = p1, Project = pr0, CreatedBy = u0 };
-            var t2 = new DomainTask() { Title = "Task3", Description = "Third task", Status = s1, Priority = p1, Project = pr1, CreatedBy = u0 };
-            var t3 = new DomainTask() { Title = "Task4", Description = "Fourth tas", Status = s2, Priority = p2, Project = pr1, CreatedBy = u0 };
+            var t0 = new DomainTask() { Title = "Task1", Description = "First task", Status = s0, Priority = p0, Project = pr0, CreatedBy = u1, CreatedBy_Id = u1.Id };
+            var t1 = new DomainTask() { Title = "Task2", Description = "Second task", Status = s0, Priority = p1, Project = pr0, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t2 = new DomainTask() { Title = "Task3", Description = "Third task", Status = s1, Priority = p1, Project = pr1, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t3 = new DomainTask() { Title = "Task4", Description = "Fourth tas", Status = s2, Priority = p2, Project = pr1, CreatedBy = u0, CreatedBy_Id = u0.Id };
             context.Tasks.Add(t0);
             context.Tasks.Add(t1);
             context.Tasks.Add(t2);

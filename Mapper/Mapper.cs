@@ -12,7 +12,7 @@ namespace ServiceMapper
         [Obsolete]
         protected override void Configure()
         {
-            CreateMap<DomainCore.DomainTask, ServiceEntities.ServiceTask>().MaxDepth(1);
+            CreateMap<DomainCore.DomainTask, ServiceEntities.ServiceTask>().ForMember("CreatedBy", d => d.MapFrom(src => src.CreatedBy_Id)).MaxDepth(1);
         }
     }
     public class MapperConfig
