@@ -2,10 +2,11 @@ using System;
 using System.Data.Entity;
 using DomainCore;
 using DomainEF.Interfaces;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DomainEF
 {
-    public class TaskManagerContext : DbContext, ITaskManagerContext
+    public class TaskManagerContext : IdentityDbContext<ApplicationUser>, ITaskManagerContext
     {
         public TaskManagerContext()
             : base("TaskManagerDB")
@@ -17,6 +18,10 @@ namespace DomainEF
             modelBuilder.Entity<User>().HasRequired(x => x.PersonalInfo).WithRequiredDependent(x => x.User);
             modelBuilder.Entity<User>().HasMany(x => x.DomainTasks).WithRequired(x => x.CreatedBy).WillCascadeOnDelete(false);
             modelBuilder.Entity<DomainTask>().Property(x => x.CreatedBy_Id).IsRequired();
+
+            modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
         }
 
         public void SetModified(object entity)

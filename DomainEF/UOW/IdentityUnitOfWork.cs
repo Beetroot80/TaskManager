@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DomainEF.UOW
 {
-    public class IdentityUnitOfWork: IIdentityUnitOfWork
+    public class IdentityUnitOfWork : IIdentityUnitOfWork
     {
         private TaskManagerContext context; //TODO: can change to ITaskManagerContext or TaskManagerContext
         private ApplicationRoleManager roleManager;
@@ -31,7 +31,7 @@ namespace DomainEF.UOW
         {
             get
             {
-                throw new NotImplementedException();
+                return clientManager;
             }
         }
 
@@ -39,7 +39,7 @@ namespace DomainEF.UOW
         {
             get
             {
-                throw new NotImplementedException();
+                return context;
             }
         }
 
@@ -47,7 +47,7 @@ namespace DomainEF.UOW
         {
             get
             {
-                throw new NotImplementedException();
+                return roleManager;
             }
         }
 
@@ -55,18 +55,38 @@ namespace DomainEF.UOW
         {
             get
             {
-                throw new NotImplementedException();
+                return userManager;
             }
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
 
         public void SaveChanges()
         {
-            throw new NotImplementedException();
+            context.SaveChanges();
         }
+
+        #region IDisposable 
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    UserManager.Dispose();
+                    RoleManager.Dispose();
+                    Context.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
