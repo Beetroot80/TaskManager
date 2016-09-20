@@ -1,21 +1,12 @@
 using System;
 using System.Data.Entity;
 using DomainCore;
+using DomainEF.Interfaces;
 
 namespace DomainEF
 {
-    public interface ITaskManagerContext : IContext
-    {
-        DbSet<User> Users { get; set; }
-        DbSet<PersonalInfo> PersonalInfo { get; set; }
-        DbSet<Project> Projects { get; set; }
-        DbSet<Status> Status { get; set; }
-        DbSet<Priority> Priorities { get; set; }
-        DbSet<Comment> Comments { get; set; }
-        DbSet<DomainTask> Tasks { get; set; }
-    }
     public class TaskManagerContext : DbContext, ITaskManagerContext
-    { 
+    {
         public TaskManagerContext()
             : base("TaskManagerDB")
         {
@@ -38,6 +29,7 @@ namespace DomainEF
             Entry(entity).State = EntityState.Added;
         }
 
+        public virtual DbSet<ClientProfile> ClientProfiles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<PersonalInfo> PersonalInfo { get; set; }
         public virtual DbSet<Project> Projects { get; set; }

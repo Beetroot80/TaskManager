@@ -38,6 +38,14 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -51,24 +59,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ApplicationRole.cs" />
+    <Compile Include="Entities\ApplicationUser.cs" />
+    <Compile Include="Entities\ClientProfile.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\DomainTask.cs" />
+    <Compile Include="Entities\PersonalInfo.cs" />
+    <Compile Include="Entities\Priority.cs" />
+    <Compile Include="Entities\Project.cs" />
+    <Compile Include="Entities\Status.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Identity\ApplicationRoleManager.cs" />
+    <Compile Include="Identity\ApplicationUserManager.cs" />
+    <Compile Include="Interfaces\IClientManager.cs" />
     <Compile Include="Interfaces\IContext.cs" />
+    <Compile Include="Interfaces\IIdentityUnitOfWork.cs" />
+    <Compile Include="Interfaces\ITaskManagerContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EF\TaskManagerContext.cs" />
     <Compile Include="EF\TaskManagerInitializer.cs" />
-    <Compile Include="Repositories\Interfaces\IEntityRepository.cs" />
-    <Compile Include="Repositories\Interfaces\ITaskRepository.cs" />
+    <Compile Include="Interfaces\IEntityRepository.cs" />
+    <Compile Include="Interfaces\ITaskRepository.cs" />
+    <Compile Include="Repositories\ClientManager.cs" />
     <Compile Include="Repositories\TaskRepository.cs" />
-    <Compile Include="UOW\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="UOW\IdentityUnitOfWork.cs" />
     <Compile Include="UOW\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DomainCore\DomainCore.csproj">
-      <Project>{a219e1f7-137e-49f4-8dc8-ab1b4720c8a9}</Project>
-      <Name>DomainCore</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

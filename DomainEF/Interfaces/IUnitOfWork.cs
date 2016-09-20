@@ -1,5 +1,6 @@
 ﻿using System;
 using DomainEF;
+
 namespace UnitOfWork
 {
     public interface IUnitOfWork : IDisposable

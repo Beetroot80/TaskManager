@@ -60,10 +60,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DomainCore\DomainCore.csproj">
-      <Project>{a219e1f7-137e-49f4-8dc8-ab1b4720c8a9}</Project>
-      <Name>DomainCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DomainEF\DomainEF.csproj">
       <Project>{69962963-5971-4cc2-be30-a897261119fb}</Project>
       <Name>DomainEF</Name>

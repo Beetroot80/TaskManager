@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using DomainCore;
 using Repositories.Interfaces;
 using UnitOfWork;
-using DomainEF;
 using System.Data.Entity;
+using DomainEF.Interfaces;
 
 namespace Repositories
 {
@@ -66,9 +64,7 @@ namespace Repositories
             }
         }
 
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
+        #region IDisposable 
         public void Dispose()
         {
             context.Dispose();
