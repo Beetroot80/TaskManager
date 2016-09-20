@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapper\Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TaskService.cs" />
   </ItemGroup>
@@ -65,17 +66,9 @@
       <Project>{69962963-5971-4cc2-be30-a897261119fb}</Project>
       <Name>DomainEF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Reposiraries\Repositories.csproj">
-      <Project>{03a8ece8-5577-440a-abed-3c5eb72352b3}</Project>
-      <Name>Repositories</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ServiceEntities\ServiceEntities.csproj">
       <Project>{7c875fdc-0ece-4530-9f1b-a2d19b28e72e}</Project>
       <Name>ServiceEntities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UnitOfWork\UnitOfWork.csproj">
-      <Project>{f800261f-359e-4082-99fd-ccecffb94e22}</Project>
-      <Name>UnitOfWork</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
