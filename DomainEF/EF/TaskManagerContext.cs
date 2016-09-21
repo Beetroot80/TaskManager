@@ -16,7 +16,7 @@ namespace DomainEF
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasRequired(x => x.PersonalInfo).WithRequiredDependent(x => x.User);
-            modelBuilder.Entity<User>().HasMany(x => x.DomainTasks).WithRequired(x => x.CreatedBy).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ClientProfile>().HasMany(x => x.DomainTasks).WithRequired(x => x.CreatedBy).WillCascadeOnDelete(false);
             modelBuilder.Entity<DomainTask>().Property(x => x.CreatedBy_Id).IsRequired();
 
             modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
@@ -35,7 +35,7 @@ namespace DomainEF
         }
 
         public virtual DbSet<ClientProfile> ClientProfiles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        //public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<PersonalInfo> PersonalInfo { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Status> Status { get; set; }

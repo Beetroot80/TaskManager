@@ -28,27 +28,27 @@ namespace DomainEF
             context.SaveChanges();
 
             //Personal info
-            var pi0 = new PersonalInfo() { FirstName = "Eugene", LastName = "Beetroot", UserId = 1 };
-            var pi1 = new PersonalInfo() { FirstName = "Amely", LastName = "Strange", UserId = 2 };
-            context.Entry<PersonalInfo>(pi0).State = EntityState.Added;
-            context.Entry<PersonalInfo>(pi1).State = EntityState.Added;
-            context.SaveChanges();
+            //var pi0 = new PersonalInfo() { FirstName = "Eugene", LastName = "Beetroot", UserId = 1 };
+            //var pi1 = new PersonalInfo() { FirstName = "Amely", LastName = "Strange", UserId = 2 };
+            //context.Entry<PersonalInfo>(pi0).State = EntityState.Added;
+            //context.Entry<PersonalInfo>(pi1).State = EntityState.Added;
+            //context.SaveChanges();
 
             //Users
-            var u0 = new User() { PersonalInfo = pi0, PersonalInfoId = pi0.Id };
-            var u1 = new User() { PersonalInfo = pi1, PersonalInfoId = pi1.Id };
-            var userGroup0 = new List<User>();
-            var userGroup1 = new List<User>();
+            var u0 = new ClientProfile { Id = "1", Name = "Eugene" };
+            var u1 = new ClientProfile() { Id = "2", Name = "Ann" };
+            var userGroup0 = new List<ClientProfile>();
+            var userGroup1 = new List<ClientProfile>();
             userGroup0.Add(u0);
             userGroup0.Add(u1);
             userGroup1.Add(u0);
-            context.Users.AddRange(userGroup0);
-            context.Users.AddRange(userGroup1);
+            context.ClientProfiles.AddRange(userGroup0);
+            context.ClientProfiles.AddRange(userGroup1);
             context.SaveChanges();
 
             //Projects
-            var pr0 = new Project() { Title = "FirstProject", Description = "This project was created first", Users = userGroup0 };
-            var pr1 = new Project() { Title = "SecondProject", Description = "This project was creted second", Users = userGroup1 };
+            var pr0 = new Project() { Title = "FirstProject", Description = "This project was created first", ClientProfiles = userGroup0 };
+            var pr1 = new Project() { Title = "SecondProject", Description = "This project was creted second", ClientProfiles = userGroup1 };
             context.Projects.Add(pr0);
             context.Projects.Add(pr1);
             context.SaveChanges();
@@ -65,12 +65,12 @@ namespace DomainEF
             context.SaveChanges();
 
             //Comments
-            var c0 = new Comment() { Text = "My first comment", DomainTask = t0, User = u0 };
-            var c1 = new Comment() { Text = "Hello world", DomainTask = t1, User = u0 };
+            var c0 = new Comment() { Text = "My first comment", DomainTask = t0, ClientProfile = u0 };
+            var c1 = new Comment() { Text = "Hello world", DomainTask = t1, ClientProfile = u0 };
             context.Comments.Add(c0);
             context.Comments.Add(c1);
-            context.Entry<User>(u0).State = EntityState.Modified;
-            context.Entry<User>(u1).State = EntityState.Modified;
+            context.Entry<ClientProfile>(u0).State = EntityState.Modified;
+            context.Entry<ClientProfile>(u1).State = EntityState.Modified;
             context.Entry<DomainTask>(t0).State = EntityState.Modified;
             context.Entry<DomainTask>(t1).State = EntityState.Modified;
             context.SaveChanges();
