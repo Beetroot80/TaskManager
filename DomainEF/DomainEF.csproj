@@ -64,7 +64,6 @@
     <Compile Include="Entities\ClientProfile.cs" />
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\DomainTask.cs" />
-    <Compile Include="Entities\PersonalInfo.cs" />
     <Compile Include="Entities\Priority.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Status.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="Interfaces\IEntityRepository.cs" />
     <Compile Include="Interfaces\ITaskRepository.cs" />
     <Compile Include="Repositories\ClientManager.cs" />
+    <Compile Include="Repositories\ClientProfileRepository.cs" />
     <Compile Include="Repositories\TaskRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="UOW\IdentityUnitOfWork.cs" />

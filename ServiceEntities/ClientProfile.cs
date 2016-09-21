@@ -8,10 +8,15 @@ namespace ServiceEntities
 {
     public class ClientProfile
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public List<string> PhoneNumber { get; set; }
+        public string Position { get; set; }
+        public byte[] Photo { get; set; }
+        public DateTime? BirthDate { get; set; }
 
-        //Foreign keys
-        public int PersonalInfoId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Project> Projects { get; set; }
