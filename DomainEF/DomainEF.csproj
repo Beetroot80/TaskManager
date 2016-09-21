@@ -68,7 +68,6 @@
     <Compile Include="Entities\Priority.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Status.cs" />
-    <Compile Include="Entities\User.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />

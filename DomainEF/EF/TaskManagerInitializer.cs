@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using DomainCore;
+using Microsoft.AspNet.Identity;
+using DomainEF.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DomainEF
 {
-    class TaskManagerInitializer : DropCreateDatabaseAlways<TaskManagerContext>
+    class TaskManagerInitializer : DropCreateDatabaseIfModelChanges<TaskManagerContext>
     {
         protected override void Seed(TaskManagerContext context)
         {
@@ -27,24 +30,22 @@ namespace DomainEF
             context.Priorities.Add(p2);
             context.SaveChanges();
 
-            //Personal info
-            //var pi0 = new PersonalInfo() { FirstName = "Eugene", LastName = "Beetroot", UserId = 1 };
-            //var pi1 = new PersonalInfo() { FirstName = "Amely", LastName = "Strange", UserId = 2 };
-            //context.Entry<PersonalInfo>(pi0).State = EntityState.Added;
-            //context.Entry<PersonalInfo>(pi1).State = EntityState.Added;
-            //context.SaveChanges();
-
             //Users
-            var u0 = new ClientProfile { Id = "1", Name = "Eugene" };
-            var u1 = new ClientProfile() { Id = "2", Name = "Ann" };
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var RoleManager = new RoleManager<ApplicationRole>(new RoleStore<ApplicationRole>(context));
+            RoleManager.Create(new ApplicationRole { Name ="admin"});
+            UserManager.Create(new ApplicationUser { UserName = "eugene", Email = "Eugene@gmail.com", ClientProfile = new ClientProfile { Name = "Eugene"} }, "Eugene1!");
+            UserManager.Create(new ApplicationUser { UserName = "Kate", Email = "Kate@gmail.com", ClientProfile = new ClientProfile { Name = "Kate" } }, "Kate11!");
+            var appUser1 = UserManager.Find("eugene", "Eugene1!");
+            var u0 = appUser1.ClientProfile;
+            var appUser2 = UserManager.Find("Kate", "Kate11!");
+            var u1 = appUser2.ClientProfile;
             var userGroup0 = new List<ClientProfile>();
             var userGroup1 = new List<ClientProfile>();
             userGroup0.Add(u0);
             userGroup0.Add(u1);
             userGroup1.Add(u0);
-            context.ClientProfiles.AddRange(userGroup0);
-            context.ClientProfiles.AddRange(userGroup1);
-            context.SaveChanges();
+            
 
             //Projects
             var pr0 = new Project() { Title = "FirstProject", Description = "This project was created first", ClientProfiles = userGroup0 };

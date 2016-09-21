@@ -35,7 +35,6 @@ namespace DomainEF
         }
 
         public virtual DbSet<ClientProfile> ClientProfiles { get; set; }
-        //public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<PersonalInfo> PersonalInfo { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Status> Status { get; set; }

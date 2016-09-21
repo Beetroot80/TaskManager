@@ -13,12 +13,12 @@ namespace ServiceEntities
         public string Description { get; set; }
 
         public ICollection<ServiceTask> Tasks { get; set; }
-        public ICollection<User> Users { get; set; }
+        public ICollection<ClientProfile> Users { get; set; }
 
         public Project()
         {
             Tasks = new List<ServiceTask>();
-            Users = new List<User>();
+            Users = new List<ClientProfile>();
         }
     }
 }

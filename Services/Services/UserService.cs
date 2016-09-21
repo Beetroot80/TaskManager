@@ -42,7 +42,7 @@ namespace Services.Services
                 user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
                 Uow.UserManager.Create(user, userDto.Password);
                 Uow.UserManager.AddToRole(user.Id, userDto.Role);
-                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Name = userDto.Name };
+                DomainCore.ClientProfile clientProfile = new DomainCore.ClientProfile { Id = user.Id, Name = userDto.Name };
                 Uow.ClientManager.Create(clientProfile);
                 Uow.SaveChanges();
                 return new OperationDetails(true, "Registraition is successful", "");
