@@ -14,6 +14,8 @@ using ServiceEntities;
 using Services.Helpers;
 using Services.Interfaces;
 using UnitOfWork;
+using appUser = DomainCore.ApplicationUser;
+using appRole = DomainCore.ApplicationRole;
 
 namespace Services.Services
 {
@@ -28,7 +30,7 @@ namespace Services.Services
         public ClaimsIdentity Authenticate(UserDTO userDto)
         {
             ClaimsIdentity claims = null;
-            ApplicationUser user = Uow.UserManager.Find(userDto.Email, userDto.Password);
+            appUser user = Uow.UserManager.Find(userDto.Email, userDto.Password);
             if (user != null)
                 claims = Uow.UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
             return claims;
@@ -36,10 +38,10 @@ namespace Services.Services
 
         public OperationDetails Create(UserDTO userDto)
         {
-            ApplicationUser user = Uow.UserManager.FindByEmail(userDto.Email);
+            appUser user = Uow.UserManager.FindByEmail(userDto.Email);
             if (user == null)
             {
-                user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
+                user = new appUser { Email = userDto.Email, UserName = userDto.Email };
                 Uow.UserManager.Create(user, userDto.Password);
                 Uow.UserManager.AddToRole(user.Id, userDto.Role);
                 DomainCore.ClientProfile clientProfile = new DomainCore.ClientProfile { Id = user.Id, Name = userDto.Name };
@@ -65,7 +67,7 @@ namespace Services.Services
                 var role = Uow.RoleManager.FindByName(roleName);
                 if (role == null)
                 {
-                    role = new ApplicationRole { Name = roleName };
+                    role = new appRole { Name = roleName };
                     Uow.RoleManager.Create(role);
                 }
             }

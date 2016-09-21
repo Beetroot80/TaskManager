@@ -20,7 +20,7 @@ namespace Services
                 using (var repo = new TaskRepository(uow))
                 {
                     List<ServiceTask> serviseTasks = new List<ServiceTask>();
-                    var tasks = repo.AllIncluding(x => x.ClientProfile);
+                    var tasks = repo.AllIncluding(x => x.Client);
                     foreach(var i in tasks)
                     {
                         serviseTasks.Add(Mapper.Map<ServiceTask>(i));

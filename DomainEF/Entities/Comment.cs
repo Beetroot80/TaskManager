@@ -7,10 +7,10 @@
 
         //Foreign keys
         public int DomainTaskId { get; set; }
-        public string ClientProfileId { get; set; }
+        public string ClientId { get; set; }
 
         //Navigation properties
         public DomainTask DomainTask { get; set; }
-        public ClientProfile ClientProfile { get; set; }
+        public ApplicationUser Client { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace DomainEF
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ClientProfile>().HasMany(x => x.DomainTasks).WithRequired(x => x.CreatedBy).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ApplicationUser>().HasMany(x => x.DomainTasks).WithRequired(x => x.CreatedBy).WillCascadeOnDelete(false);
             modelBuilder.Entity<DomainTask>().Property(x => x.CreatedBy_Id).IsRequired();
 
             modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);

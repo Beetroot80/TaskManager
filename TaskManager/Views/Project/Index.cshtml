@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TaskManager.Models.ProjectModel>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tasks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Clients)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            @foreach (var tasks in item.Tasks)
+                {
+                <td>
+                    <p>@Html.DisplayFor(modelItem => tasks.Title)</p>
+                    <p>@Html.DisplayFor(modelItem => tasks.Description)</p>
+                </td>
+            }
+            @foreach (var client in item.Clients)
+                {
+                <td>
+                    <p>@Html.DisplayFor(modelItem => client.ClientProfile.Name)</p>
+                </td>
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

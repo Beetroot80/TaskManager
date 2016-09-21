@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DomainEF
 {
-    class TaskManagerInitializer : DropCreateDatabaseIfModelChanges<TaskManagerContext>
+    class TaskManagerInitializer : DropCreateDatabaseAlways<TaskManagerContext>
     {
         protected override void Seed(TaskManagerContext context)
         {
@@ -36,20 +36,18 @@ namespace DomainEF
             RoleManager.Create(new ApplicationRole { Name ="admin"});
             UserManager.Create(new ApplicationUser { UserName = "eugene", Email = "Eugene@gmail.com", ClientProfile = new ClientProfile { Name = "Eugene"} }, "Eugene1!");
             UserManager.Create(new ApplicationUser { UserName = "Kate", Email = "Kate@gmail.com", ClientProfile = new ClientProfile { Name = "Kate" } }, "Kate11!");
-            var appUser1 = UserManager.Find("eugene", "Eugene1!");
-            var u0 = appUser1.ClientProfile;
-            var appUser2 = UserManager.Find("Kate", "Kate11!");
-            var u1 = appUser2.ClientProfile;
-            var userGroup0 = new List<ClientProfile>();
-            var userGroup1 = new List<ClientProfile>();
+            var u0 = UserManager.Find("eugene", "Eugene1!");
+            var u1 = UserManager.Find("Kate", "Kate11!");
+            var userGroup0 = new List<ApplicationUser>();
+            var userGroup1 = new List<ApplicationUser>();
             userGroup0.Add(u0);
             userGroup0.Add(u1);
             userGroup1.Add(u0);
             
 
             //Projects
-            var pr0 = new Project() { Title = "FirstProject", Description = "This project was created first", ClientProfiles = userGroup0 };
-            var pr1 = new Project() { Title = "SecondProject", Description = "This project was creted second", ClientProfiles = userGroup1 };
+            var pr0 = new Project() { Title = "FirstProject", Description = "This project was created first", Clients = userGroup0 };
+            var pr1 = new Project() { Title = "SecondProject", Description = "This project was creted second", Clients = userGroup1 };
             context.Projects.Add(pr0);
             context.Projects.Add(pr1);
             context.SaveChanges();
@@ -66,12 +64,12 @@ namespace DomainEF
             context.SaveChanges();
 
             //Comments
-            var c0 = new Comment() { Text = "My first comment", DomainTask = t0, ClientProfile = u0 };
-            var c1 = new Comment() { Text = "Hello world", DomainTask = t1, ClientProfile = u0 };
+            var c0 = new Comment() { Text = "My first comment", DomainTask = t0, Client= u0 };
+            var c1 = new Comment() { Text = "Hello world", DomainTask = t1, Client = u0 };
             context.Comments.Add(c0);
             context.Comments.Add(c1);
-            context.Entry<ClientProfile>(u0).State = EntityState.Modified;
-            context.Entry<ClientProfile>(u1).State = EntityState.Modified;
+            context.Entry<ApplicationUser>(u0).State = EntityState.Modified;
+            context.Entry<ApplicationUser>(u1).State = EntityState.Modified;
             context.Entry<DomainTask>(t0).State = EntityState.Modified;
             context.Entry<DomainTask>(t1).State = EntityState.Modified;
             context.SaveChanges();

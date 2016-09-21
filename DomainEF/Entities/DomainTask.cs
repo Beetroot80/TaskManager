@@ -17,7 +17,7 @@ namespace DomainCore
         public int ProjectId { get; set; }
         public int? StatusId { get; set; }
         public int? PriorityId { get; set; }
-        [ForeignKey("ClientProfile")]
+        [ForeignKey("Client")]
         public string AssignedTo { get; set; }
         [ForeignKey("CreatedBy")]
         public string CreatedBy_Id { get; set; }
@@ -26,8 +26,8 @@ namespace DomainCore
         public Project Project { get; set; }
         public Status Status { get; set; }
         public Priority Priority { get; set; }
-        public ClientProfile ClientProfile { get; set; }
-        public ClientProfile CreatedBy { get; set; }
+        public ApplicationUser Client { get; set; }
+        public ApplicationUser CreatedBy { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
 

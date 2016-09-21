@@ -16,8 +16,8 @@ namespace ServiceEntities
         public DateTime DeadLine { get; set; }
 
         public int ProjectId { get; set; }
-        public int CreatedBy { get; set; }
-        public int? AssignedTo { get; set; }
+        public string CreatedBy { get; set; }
+        public string AssignedTo { get; set; }
         public int? StatusId { get; set; }
         public int? PriorityId { get; set; }
 

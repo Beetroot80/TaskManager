@@ -26,19 +26,19 @@ namespace Repositories
             return null;
         }
 
-        public IQueryable<DomainTask> All()
+        public IEnumerable<DomainTask> All()
         {
             return context.Tasks;
         }
 
-        public IQueryable<DomainTask> AllIncluding(params Expression<Func<DomainTask, object>> [] includeProperties)
+        public IEnumerable<DomainTask> AllIncluding(params Expression<Func<DomainTask, object>> [] includeProperties)
         {
             IQueryable<DomainTask> query = context.Tasks;
             foreach(var i in includeProperties)
             {
                 query = query.Include(i);
             }
-            return query;
+            return query.ToList();
         }
 
         public void Delete(int id)

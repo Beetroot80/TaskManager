@@ -1,17 +1,16 @@
-﻿using DomainCore;
-using Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
+using DomainCore;
+using Repositories.Interfaces;
 using DomainEF.Interfaces;
 using UnitOfWork;
+using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace DomainEF.Repositories
 {
-    public class ClientProfileRepository : IEntityRepository<ClientProfile>
+    public class ClientProfileRepository : IClientProfileRepository
     {
         private readonly ITaskManagerContext context;
 
@@ -20,63 +19,49 @@ namespace DomainEF.Repositories
             this.context = uow.Context as ITaskManagerContext;
         }
 
-        public IQueryable<ClientProfile> All()
+        public IEnumerable<ClientProfile> All()
         {
             return context.ClientProfiles.AsQueryable();
         }
 
-        public IQueryable<ClientProfile> AllIncluding(params Expression<Func<ClientProfile, object>>[] includeProperties)
+        public IEnumerable<ClientProfile> AllIncluding(params Expression<Func<ClientProfile, object>>[] includeProperties)
         {
-            throw new NotImplementedException();
+            IQueryable<ClientProfile> query = context.ClientProfiles;
+            foreach (var i in includeProperties)
+            {
+                query = query.Include(i);
+            }
+            return query.ToList();
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var clientProfile = context.ClientProfiles.Find(id);
+            context.ClientProfiles.Remove(clientProfile);
         }
 
         public ClientProfile Find(int id)
         {
-            throw new NotImplementedException();
+            return context.ClientProfiles.Find(id);
         }
 
         public void InsertOrUpdate(ClientProfile entity)
         {
-            throw new NotImplementedException();
-        }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
+            if (entity.Id == default(string)) //New
             {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
-                disposedValue = true;
+                context.SetAdded(entity);
+            }
+            else //Excisting
+            {
+                context.SetModified(entity);
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~ClientProfileRepository() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
+        #region IDisposable Support
 
-        // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
+            context.Dispose();
         }
         #endregion
     }

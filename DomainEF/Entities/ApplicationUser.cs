@@ -10,5 +10,16 @@ namespace DomainCore
     public class ApplicationUser : IdentityUser
     {
         public virtual ClientProfile ClientProfile { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Project> Projects { get; set; }
+        public ICollection<DomainTask> DomainTasks { get; set; }
+
+        public ApplicationUser()
+        {
+            Comments = new List<Comment>();
+            Projects = new List<Project>();
+            DomainTasks = new List<DomainTask>();
+        }
     }
 }

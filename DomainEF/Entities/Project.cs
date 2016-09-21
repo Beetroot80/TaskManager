@@ -9,13 +9,13 @@ namespace DomainCore
         public string Description { get; set; }
 
         //Navigation properties
-        public ICollection<DomainTask> DomainTasks { get; set; }
-        public ICollection<ClientProfile> ClientProfiles { get; set; }
+        public ICollection<DomainTask> Tasks { get; set; }
+        public ICollection<ApplicationUser> Clients { get; set; }
 
         public Project()
         {
-            DomainTasks = new List<DomainTask>();
-            ClientProfiles = new List<ClientProfile>();
+            Tasks = new List<DomainTask>();
+            Clients= new List<ApplicationUser>();
         }
     }
 }

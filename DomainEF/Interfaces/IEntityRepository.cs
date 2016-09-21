@@ -9,8 +9,8 @@ namespace Repositories.Interfaces
 {
     public interface IEntityRepository<T> : IDisposable
     {
-        IQueryable<T> All();
-        IQueryable<T> AllIncluding(params Expression<Func<T, object>> [] includeProperties);
+        IEnumerable<T> All();
+        IEnumerable<T> AllIncluding(params Expression<Func<T, object>> [] includeProperties);
         T Find(int id);
         void InsertOrUpdate(T entity);
         void Delete(int id);
