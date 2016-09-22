@@ -17,6 +17,7 @@ using UnitOfWork;
 using appUser = DomainCore.ApplicationUser;
 using appRole = DomainCore.ApplicationRole;
 using AutoMapper;
+using DomainEF.Repositories;
 
 namespace Services.Services
 {
@@ -75,7 +76,7 @@ namespace Services.Services
             Create(adminDto);
         }
 
-        public IEnumerable<ServiceEntities.ApplicationUser> GetUsers()
+        public IEnumerable<ServiceEntities.ApplicationUser> GetUsers() //TODO: delete
         {
             var domainUsers = Uow.UserManager.Users.ToList();
             List<ServiceEntities.ApplicationUser> users = new List<ServiceEntities.ApplicationUser>();
@@ -84,6 +85,14 @@ namespace Services.Services
                 users.Add(Mapper.Map<ServiceEntities.ApplicationUser>(user));
             }
             return users;
+        }
+
+        public ServiceEntities.ApplicationUser GetUserById(string id)
+        {
+            using (var repo = new ApplicationUserRepository(Uow))
+            {
+               return Mapper.Map<ServiceEntities.ApplicationUser>(repo.GetById(id));
+            }
         }
     }
 }

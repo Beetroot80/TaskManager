@@ -85,6 +85,7 @@
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\TaskRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UOW\IdentityUnitOfWork.cs" />
     <Compile Include="UOW\UnitOfWork.cs" />
   </ItemGroup>

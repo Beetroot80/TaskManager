@@ -15,5 +15,6 @@ namespace Services.Interfaces
         ClaimsIdentity Authenticate(UserDTO userDto);
         void SetInitialDate(UserDTO adminDto, List<string> roles);
         IEnumerable<ApplicationUser> GetUsers();
+        ApplicationUser GetUserById(string id);
     }
 }

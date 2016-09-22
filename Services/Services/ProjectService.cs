@@ -66,11 +66,6 @@ namespace Services.Services
             }
             List<Project> projects = new List<Project>();
 
-            //var serviceCreator = new ServiceCreator();
-            //var userService = serviceCreator.CreateUserService("TaskManagerDB");
-
-            //IEnumerable<ApplicationUser> users = userService.GetUsers();
-
             foreach (var entity in dProjects)
             {
                 projects.Add(Mapper.Map<Project>(entity));
