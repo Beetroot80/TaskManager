@@ -6,10 +6,19 @@
 
 @section Menu
 {
-    <div class="col-sm-3 col-md-2 sidebar" id="menu">
+    <div class="sidebar text-center" id="menu">
         <ul class="nav nav-pills nav-stacked">
             <li class="active">
                 @Ajax.ActionLink("Add user", "AddUser", "Account", new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "results",
+               LoadingElementId = "loading"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("Users", "Users", "Account", new AjaxOptions
            {
                HttpMethod = "Get",
                InsertionMode = InsertionMode.Replace,
@@ -17,16 +26,20 @@
            })
             </li>
             <li>
-                @Html.ActionLink("Edit user", "UserList", "Account", "")
-            </li>
-            <li>
-                @Html.ActionLink("Project list", "Index", "Project", "")
+                @Ajax.ActionLink("Projects", "Index", "Project", new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "results"
+           })
             </li>
         </ul>
     </div>
 }
+
 <div id="results">
-    <p>In a body</p>
+</div>
+<div class="container" id="loading">
 </div>
 
 

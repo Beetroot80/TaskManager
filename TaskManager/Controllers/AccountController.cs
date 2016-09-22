@@ -108,6 +108,32 @@ namespace TaskManager.Controllers
             return PartialView();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddUser(AddUserModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                UserDTO user = new UserDTO
+                {
+                    Email = model.Email,
+                    Password = model.Password,
+                    UserName = model.Email,
+                    Name = model.Name,
+                    Role = model.Role,
+                    PhoneNumber = model.PhoneNumber,
+                    Surname = model.Surname
+                };
+                OperationDetails opDetails = UserService.Create(user);
+                if (opDetails.Succedeed)
+                    return View("Index", "Home");
+                else
+                    ModelState.AddModelError(opDetails.Property, opDetails.Message);
+            }
+
+            return View("AuthorizedAsAdmin", "Home", model);
+        }
+
         private void SetInitialData()
         {
             UserService.SetInitialDate(new UserDTO

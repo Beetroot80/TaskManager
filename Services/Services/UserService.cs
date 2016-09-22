@@ -46,7 +46,14 @@ namespace Services.Services
                 user = new appUser { Email = userDto.Email, UserName = userDto.Email };
                 Uow.UserManager.Create(user, userDto.Password);
                 Uow.UserManager.AddToRole(user.Id, userDto.Role);
-                DomainCore.ClientProfile clientProfile = new DomainCore.ClientProfile { Id = user.Id, Name = userDto.Name };
+                DomainCore.ClientProfile clientProfile = new DomainCore.ClientProfile
+                {
+                    Id = user.Id,
+                    Name = userDto.Name,
+                    BirthDate = userDto.BirthDate,
+                    PhoneNumber = userDto.PhoneNumber,
+                    Surname = userDto.Surname
+                };
                 Uow.ClientManager.Create(clientProfile);
                 Uow.SaveChanges();
                 return new OperationDetails(true, "Registration is successful", "");
@@ -80,7 +87,7 @@ namespace Services.Services
         {
             var domainUsers = Uow.UserManager.Users.ToList();
             List<ServiceEntities.ApplicationUser> users = new List<ServiceEntities.ApplicationUser>();
-            foreach(var user in domainUsers)
+            foreach (var user in domainUsers)
             {
                 users.Add(Mapper.Map<ServiceEntities.ApplicationUser>(user));
             }
@@ -91,7 +98,7 @@ namespace Services.Services
         {
             using (var repo = new ApplicationUserRepository(Uow))
             {
-               return Mapper.Map<ServiceEntities.ApplicationUser>(repo.GetById(id));
+                return Mapper.Map<ServiceEntities.ApplicationUser>(repo.GetById(id));
             }
         }
     }

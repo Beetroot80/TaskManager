@@ -24,7 +24,7 @@ namespace TaskManager.Controllers
             {
                 projectModels.Add(Mapper.Map<ProjectModel>(project));
             }
-            return View(projectModels.AsEnumerable());
+            return PartialView(projectModels.AsEnumerable());
         }
     }
 }

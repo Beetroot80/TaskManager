@@ -36,3 +36,17 @@ textarea {
 .row {
     padding-top: 20px;
 }
+
+div #menu {
+    position: fixed;
+}
+div #results{
+    outline-offset: 0;
+}
+
+.gly-spin {
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
