@@ -11,6 +11,9 @@ namespace TaskManager.Models
         public string Email { get; set; }
         public string UserName { get; set; }
 
+        public string ClientProfileId { get; set; }
+        public ClientProfileModel ClientProfile { get; set; }
+
         public ICollection<CommentModel> Comments { get; set; }
         public ICollection<ProjectModel> Projects { get; set; }
         public ICollection<TaskModel> Tasks { get; set; }

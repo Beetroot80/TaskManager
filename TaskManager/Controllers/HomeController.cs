@@ -8,6 +8,7 @@ namespace TaskManager.Controllers
 {
     public class HomeController : Controller
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
@@ -25,6 +26,23 @@ namespace TaskManager.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AuthorizedAsAdmin()
+        {
+            throw new NotImplementedException();
+        }
+        [Authorize(Roles = "Manager")]
+        public ActionResult AuthorizedAuthorizedAsManager()
+        {
+            throw new NotImplementedException();
+        }
+        [Authorize(Roles = "Manager")]
+        public ActionResult AuthorizedAuthorizedAsUser()
+        {
+            throw new NotImplementedException();
+
         }
     }
 }

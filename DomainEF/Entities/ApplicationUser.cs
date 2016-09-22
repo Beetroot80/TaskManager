@@ -9,6 +9,7 @@ namespace DomainCore
 {
     public class ApplicationUser : IdentityUser
     {
+        public string ClientProfileId { get; set; }
         public virtual ClientProfile ClientProfile { get; set; }
 
         public ICollection<Comment> Comments { get; set; }

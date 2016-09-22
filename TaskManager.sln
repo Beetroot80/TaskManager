@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{AFF8884E-B049-4374-B04F-212459B00596}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainEF", "DomainEF\DomainEF.csproj", "{69962963-5971-4CC2-BE30-A897261119FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{34072D02-8C86-4F1B-A243-A55350D598D2}"
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AFF8884E-B049-4374-B04F-212459B00596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFF8884E-B049-4374-B04F-212459B00596}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AFF8884E-B049-4374-B04F-212459B00596}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFF8884E-B049-4374-B04F-212459B00596}.Release|Any CPU.Build.0 = Release|Any CPU
 		{69962963-5971-4CC2-BE30-A897261119FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{69962963-5971-4CC2-BE30-A897261119FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69962963-5971-4CC2-BE30-A897261119FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
