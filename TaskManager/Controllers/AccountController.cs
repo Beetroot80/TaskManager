@@ -66,7 +66,8 @@ namespace TaskManager.Controllers
             return View();
         }
 
-        public ActionResult Logout()
+        [HttpPost]
+        public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
@@ -108,7 +109,7 @@ namespace TaskManager.Controllers
                 Email = "admin@gmail.com",
                 UserName = "admin@gmail.com",
                 Password = "Admin1!",
-                Name = "Admn",
+                Name = "Admin",
                 Role = "admin",
             }, new List<string> { "user", "admin" });
         }

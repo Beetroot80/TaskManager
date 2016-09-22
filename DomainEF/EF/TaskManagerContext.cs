@@ -17,6 +17,8 @@ namespace DomainEF
         {
             modelBuilder.Entity<ApplicationUser>().HasMany(x => x.DomainTasks).WithRequired(x => x.CreatedBy).WillCascadeOnDelete(false);
             modelBuilder.Entity<DomainTask>().Property(x => x.CreatedBy_Id).IsRequired();
+            modelBuilder.Entity<Project>().HasMany(x => x.Clients);
+            modelBuilder.Entity<ApplicationUser>().HasMany(x => x.DomainTasks);
 
             modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);

@@ -16,6 +16,7 @@ using Services.Interfaces;
 using UnitOfWork;
 using appUser = DomainCore.ApplicationUser;
 using appRole = DomainCore.ApplicationRole;
+using AutoMapper;
 
 namespace Services.Services
 {
@@ -47,7 +48,7 @@ namespace Services.Services
                 DomainCore.ClientProfile clientProfile = new DomainCore.ClientProfile { Id = user.Id, Name = userDto.Name };
                 Uow.ClientManager.Create(clientProfile);
                 Uow.SaveChanges();
-                return new OperationDetails(true, "Registraition is successful", "");
+                return new OperationDetails(true, "Registration is successful", "");
             }
             else
             {
@@ -72,6 +73,17 @@ namespace Services.Services
                 }
             }
             Create(adminDto);
+        }
+
+        public IEnumerable<ServiceEntities.ApplicationUser> GetUsers()
+        {
+            var domainUsers = Uow.UserManager.Users.ToList();
+            List<ServiceEntities.ApplicationUser> users = new List<ServiceEntities.ApplicationUser>();
+            foreach(var user in domainUsers)
+            {
+                users.Add(Mapper.Map<ServiceEntities.ApplicationUser>(user));
+            }
+            return users;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace TaskManager
         protected override void Configure()
         {
             CreateMap<ServiceEntities.Project, ProjectModel>();
+            CreateMap<ServiceEntities.ApplicationUser, ApplicationUserModel>();
         }
     }
     public static class MVCMapperConfig

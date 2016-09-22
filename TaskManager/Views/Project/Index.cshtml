@@ -34,19 +34,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            @foreach (var tasks in item.Tasks)
+            <td>
+                @foreach (var tasks in item.Tasks)
                 {
-                <td>
                     <p>@Html.DisplayFor(modelItem => tasks.Title)</p>
                     <p>@Html.DisplayFor(modelItem => tasks.Description)</p>
-                </td>
-            }
-            @foreach (var client in item.Clients)
+
+                }
+            </td>
+            <td>
+                @foreach (var client in item.Clients)
                 {
-                <td>
-                    <p>@Html.DisplayFor(modelItem => client.ClientProfile.Name)</p>
-                </td>
-            }
+
+                    <p>@Html.DisplayFor(modelItem => client.UserName)</p>
+
+                }
+            </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |

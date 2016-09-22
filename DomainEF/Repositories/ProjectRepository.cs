@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using DomainCore;
 using DomainEF.Interfaces;
 using UnitOfWork;
+using DomainEF.UOW;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DomainEF.Repositories
 {
@@ -20,6 +22,10 @@ namespace DomainEF.Repositories
             this.context = uow.Context as ITaskManagerContext;
         }
 
+        public IEnumerable<Project> GetAllProjectsWithfullInfo()
+        {
+            return context.Projects.Include(x => x.Tasks).Include(x => x.Clients).ToList();
+        }
         public IEnumerable<Project> GetAllWithTasks()
         {
             return context.Projects.Include("Tasks").ToList();

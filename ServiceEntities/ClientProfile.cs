@@ -16,17 +16,6 @@ namespace ServiceEntities
         public byte[] Photo { get; set; }
         public DateTime? BirthDate { get; set; }
 
-        public virtual ApplicationUser ApplicationUser { get; set; }
-
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Project> Projects { get; set; }
-        public ICollection<ServiceTask> ServiceTasks { get; set; }
-
-        public ClientProfile()
-        {
-            Comments = new List<Comment>();
-            Projects = new List<Project>();
-            ServiceTasks = new List<ServiceTask>();
-        }
+        //public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

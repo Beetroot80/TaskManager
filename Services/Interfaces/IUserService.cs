@@ -14,5 +14,6 @@ namespace Services.Interfaces
         OperationDetails Create(UserDTO userDto);
         ClaimsIdentity Authenticate(UserDTO userDto);
         void SetInitialDate(UserDTO adminDto, List<string> roles);
+        IEnumerable<ApplicationUser> GetUsers();
     }
 }

@@ -17,7 +17,7 @@ namespace TaskManager.Controllers
         public ActionResult Index()
         {
             ProjectService pService = new ProjectService();
-            IEnumerable<Project> projects = pService.GetAllProjectsWithTasks();
+            IEnumerable<Project> projects = pService.GetFullTasks();
             List<ProjectModel> projectModels = new List<ProjectModel>();
 
             foreach (var project in projects)
