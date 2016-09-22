@@ -11,6 +11,8 @@ namespace TaskManager.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
+            if (User.IsInRole("Administrator"))
+                return View("AuthorizedAsAdmin");
             return View();
         }
 
@@ -31,7 +33,7 @@ namespace TaskManager.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AuthorizedAsAdmin()
         {
-            throw new NotImplementedException();
+            return View();
         }
         [Authorize(Roles = "Manager")]
         public ActionResult AuthorizedAuthorizedAsManager()

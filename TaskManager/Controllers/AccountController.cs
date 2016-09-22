@@ -60,12 +60,9 @@ namespace TaskManager.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    if (User.IsInRole("Administrator"))
-                        return RedirectToAction("AuthorizedAsAdmin", "Home");
                     return RedirectToAction("Index", "Home");
                 }
             }
-
             return View();
         }
 
@@ -103,6 +100,12 @@ namespace TaskManager.Controllers
                     ModelState.AddModelError(opDetails.Property, opDetails.Message);
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult AddUser()
+        {
+            return PartialView();
         }
 
         private void SetInitialData()

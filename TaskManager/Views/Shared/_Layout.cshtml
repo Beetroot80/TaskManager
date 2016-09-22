@@ -25,7 +25,14 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div class="row">
+            <div id="menu">
+                @RenderSection("Menu", false)
+            </div>
+            <div id="body">
+                @RenderBody()
+            </div>
+        </div>
         <hr />
         <footer class="navbar-fixed-bottom text-center">
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
