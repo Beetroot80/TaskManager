@@ -30,20 +30,24 @@ namespace DomainEF
             context.Priorities.Add(p2);
             context.SaveChanges();
 
+            //Roles
+            var RoleManager = new RoleManager<ApplicationRole>(new RoleStore<ApplicationRole>(context));
+            RoleManager.Create(new ApplicationRole { Name = "Administrator" });
+
             //Users
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            var RoleManager = new RoleManager<ApplicationRole>(new RoleStore<ApplicationRole>(context));
-            RoleManager.Create(new ApplicationRole { Name ="admin"});
-            UserManager.Create(new ApplicationUser { UserName = "eugene", Email = "Eugene@gmail.com", ClientProfile = new ClientProfile { Name = "Eugene"} }, "Eugene1!");
-            UserManager.Create(new ApplicationUser { UserName = "Kate", Email = "Kate@gmail.com", ClientProfile = new ClientProfile { Name = "Kate" } }, "Kate11!");
-            var u0 = UserManager.Find("eugene", "Eugene1!");
-            var u1 = UserManager.Find("Kate", "Kate11!");
+            UserManager.Create(new ApplicationUser { UserName = "Eugene@gmail.com", Email = "Eugene@gmail.com", ClientProfile = new ClientProfile { Name = "Eugene" } }, "Eugene1!");
+            UserManager.Create(new ApplicationUser { UserName = "Kate@gmail.com", Email = "Kate@gmail.com", ClientProfile = new ClientProfile { Name = "Kate" } }, "Kate11!");
+            var u0 = UserManager.Find("Eugene@gmail.com", "Eugene1!");
+            var u1 = UserManager.Find("Kate@gmail.com", "Kate11!");
+            UserManager.AddToRole(u0.Id, "Administrator");
+            UserManager.AddToRole(u1.Id, "Administrator");
             var userGroup0 = new List<ApplicationUser>();
             var userGroup1 = new List<ApplicationUser>();
             userGroup0.Add(u0);
             userGroup0.Add(u1);
             userGroup1.Add(u0);
-            
+
 
             //Projects
             var pr0 = new Project() { Title = "FirstProject", Description = "This project was created first", Clients = userGroup0 };
@@ -64,7 +68,7 @@ namespace DomainEF
             context.SaveChanges();
 
             //Comments
-            var c0 = new Comment() { Text = "My first comment", DomainTask = t0, Client= u0 };
+            var c0 = new Comment() { Text = "My first comment", DomainTask = t0, Client = u0 };
             var c1 = new Comment() { Text = "Hello world", DomainTask = t1, Client = u0 };
             context.Comments.Add(c0);
             context.Comments.Add(c1);

@@ -38,7 +38,7 @@ namespace TaskManager.Controllers
         {
             throw new NotImplementedException();
         }
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "User")]
         public ActionResult AuthorizedAuthorizedAsUser()
         {
             throw new NotImplementedException();

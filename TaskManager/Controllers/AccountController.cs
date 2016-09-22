@@ -60,6 +60,8 @@ namespace TaskManager.Controllers
                     {
                         IsPersistent = true
                     }, claim);
+                    if (User.IsInRole("Administrator"))
+                        return RedirectToAction("AuthorizedAsAdmin", "Home");
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -111,7 +113,7 @@ namespace TaskManager.Controllers
                 UserName = "admin@gmail.com",
                 Password = "Admin1!",
                 Name = "Admin",
-                Role = "admin",
+                Role = "Administrator",
             }, new List<string> { "user", "admin" });
         }
     }

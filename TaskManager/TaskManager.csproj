@@ -231,6 +231,7 @@
     <Content Include="Views\Account\SuccessRegister.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Home\AuthorizedAsAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
