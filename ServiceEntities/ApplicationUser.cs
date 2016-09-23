@@ -14,12 +14,11 @@ namespace ServiceEntities
         public string UserName { get; set; }
 
         public string ClientProfileId { get; set; }
+        public ClientProfile ClientProfile { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Project> Projects { get; set; }
         public ICollection<ServiceTask> Tasks { get; set; }
-
-        public ClientProfile ClientProfile { get; set; }
 
         public ApplicationUser()
         {

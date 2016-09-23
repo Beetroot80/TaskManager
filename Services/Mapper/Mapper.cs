@@ -16,7 +16,9 @@ namespace ServiceMapper
                 .ForMember("CreatedBy", d => d.MapFrom(src => src.CreatedBy_Id))
                 .MaxDepth(1);
             CreateMap<DomainCore.ClientProfile, ServiceEntities.ClientProfile>();
-            CreateMap<DomainCore.ApplicationUser, ServiceEntities.ApplicationUser>().MaxDepth(1);
+            CreateMap<DomainCore.ApplicationUser, ServiceEntities.ApplicationUser>()
+                .ForMember("ClientProfile", x=> x.MapFrom(y=> y.ClientProfile))
+                .MaxDepth(1);
             CreateMap<DomainCore.ApplicationRole, ServiceEntities.ApplicationRole>();
             CreateMap<DomainCore.Comment, ServiceEntities.Comment>();
             CreateMap<DomainCore.Priority, ServiceEntities.Priority>();

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<TaskManager.Models.EditUserModel>
+
+<table class="table-responsive col-md-offset-3 col-md-7">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => user.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => user.Role)
+            </td>
+            <td>
+                @Html.ActionLink("UserEdit", "UserEdit", new { id = user.Id }) @*floating window here*@
+            </td>
+        </tr>
+    }
+</table>
+

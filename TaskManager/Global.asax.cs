@@ -30,6 +30,9 @@ namespace TaskManager
         {
             CreateMap<ServiceEntities.Project, ProjectModel>();
             CreateMap<ServiceEntities.ApplicationUser, ApplicationUserModel>();
+            CreateMap<ServiceEntities.ApplicationUser, EditUserModel>()
+                .ForMember("Name", x => x.MapFrom(y => y.ClientProfile.Name))
+                .ForMember("Surname", x => x.MapFrom(y => y.ClientProfile.Surname));
         }
     }
     public static class MVCMapperConfig

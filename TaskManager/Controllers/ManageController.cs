@@ -44,7 +44,7 @@ namespace TaskManager.Controllers
         {
             if(ModelState.IsValid)
             {
-                ClientProfile profile = new ClientProfile { Name = model.Name, BirthDate = model.BirthDate, Position = model.Position, Surname = model.Surname };
+                ClientProfile profile = new ClientProfile { Name = model.Name, BirthDate = model.BirthDate, Surname = model.Surname };
                 var user = User.Identity.Name;
                 //ApplicationUser user = UserService.GetUserById(model.)
             }

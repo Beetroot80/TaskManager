@@ -16,5 +16,6 @@ namespace Services.Interfaces
         void SetInitialDate(UserDTO adminDto, List<string> roles);
         IEnumerable<ApplicationUser> GetUsers();
         ApplicationUser GetUserById(string id);
+        IEnumerable<string> GetAllRoles();
     }
 }

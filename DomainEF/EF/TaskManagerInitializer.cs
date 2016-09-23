@@ -32,16 +32,33 @@ namespace DomainEF
 
             //Roles
             var RoleManager = new RoleManager<ApplicationRole>(new RoleStore<ApplicationRole>(context));
-            RoleManager.Create(new ApplicationRole { Name = "Administrator" });
+            var admin = new ApplicationRole { Name = "Administrator" };
+            var manager = new ApplicationRole { Name = "Manager" };
+            var user = new ApplicationRole { Name = "User" };
+            RoleManager.Create(admin);
+            RoleManager.Create(manager);
+            RoleManager.Create(user);
 
             //Users
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            UserManager.Create(new ApplicationUser { UserName = "Eugene@gmail.com", Email = "Eugene@gmail.com", ClientProfile = new ClientProfile { Name = "Eugene" } }, "Eugene1!");
-            UserManager.Create(new ApplicationUser { UserName = "Kate@gmail.com", Email = "Kate@gmail.com", ClientProfile = new ClientProfile { Name = "Kate" } }, "Kate11!");
+            UserManager.Create(new ApplicationUser
+            {
+                UserName = "Eugene@gmail.com",
+                Email = "Eugene@gmail.com",
+                ClientProfile = new ClientProfile { Name = "Eugene" }
+            }, "Eugene1!");
+
+            UserManager.Create(new ApplicationUser
+            {
+                UserName = "Kate@gmail.com",
+                Email = "Kate@gmail.com",
+                ClientProfile = new ClientProfile { Name = "Kate" }
+            }, "Kate11!");
+
             var u0 = UserManager.Find("Eugene@gmail.com", "Eugene1!");
             var u1 = UserManager.Find("Kate@gmail.com", "Kate11!");
-            UserManager.AddToRole(u0.Id, "Administrator");
-            UserManager.AddToRole(u1.Id, "Administrator");
+            UserManager.AddToRole(u0.Id, admin.Name);
+            UserManager.AddToRole(u1.Id, admin.Name);
             var userGroup0 = new List<ApplicationUser>();
             var userGroup1 = new List<ApplicationUser>();
             userGroup0.Add(u0);

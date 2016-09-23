@@ -27,6 +27,7 @@ namespace TaskManager.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<IUserService>();
             }
         }
+
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -102,17 +103,20 @@ namespace TaskManager.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Administrator, Manager")]
         [HttpGet]
         public ActionResult AddUser()
         {
+            ViewBag.Roles = UserService.GetAllRoles();
             return PartialView();
         }
 
+        [Authorize(Roles = "Administrator, Manager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddUser(AddUserModel model)
+        public ActionResult AddUser(AddUserModel model) //TODO: how return the same window or display partial window
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 UserDTO user = new UserDTO
                 {
@@ -134,7 +138,20 @@ namespace TaskManager.Controllers
             return View("AuthorizedAsAdmin", "Home", model);
         }
 
-        private void SetInitialData()
+        [Authorize(Roles = "Administrator")]
+        [HttpGet]
+        public ActionResult UsersList()
+        {
+            var users = UserService.GetUsers();
+            var userList = new List<EditUserModel>();
+            foreach(var user in users)
+            {
+                userList.Add(AutoMapper.Mapper.Map<EditUserModel>(user));
+            }
+            return View(userList);
+        }
+
+        private void SetInitialData() //TODO: remove
         {
             UserService.SetInitialDate(new UserDTO
             {
@@ -143,7 +160,7 @@ namespace TaskManager.Controllers
                 Password = "Admin1!",
                 Name = "Admin",
                 Role = "Administrator",
-            }, new List<string> { "user", "admin" });
+            }, new List<string> { "User", "Manager" });
         }
     }
 }

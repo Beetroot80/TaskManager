@@ -12,7 +12,6 @@ namespace ServiceEntities
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
-        public string Position { get; set; }
         public DateTime? BirthDate { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }

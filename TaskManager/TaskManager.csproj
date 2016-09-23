@@ -183,6 +183,7 @@
     <Compile Include="Models\ApplicationUserModel.cs" />
     <Compile Include="Models\ClientProfileModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\EditUserModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PriorityModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Home\AuthorizedAsAdmin.cshtml" />
     <Content Include="Views\Account\AddUser.cshtml" />
+    <Content Include="Views\Account\UsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

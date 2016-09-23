@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using DomainEF.Interfaces;
 using UnitOfWork;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity;
 
 namespace DomainEF.Repositories
 {
@@ -24,6 +25,18 @@ namespace DomainEF.Repositories
         {
             var identityContext = context as IdentityDbContext<ApplicationUser>;
             return identityContext.Users.Find(id);
+        }
+
+        public IEnumerable<string> GetAllRoles()
+        {
+            var identityContext = context as IdentityDbContext<ApplicationUser>;
+            return identityContext.Roles.Select(x => x.Name).Distinct().ToList();
+        }
+        public IEnumerable<ApplicationUser> GetAllUsersWithRolesAndProfiles()
+        {
+            var identityContext = context as IdentityDbContext<ApplicationUser>;
+            var users = identityContext.Users.Include(x => x.Roles).Include(x => x.ClientProfile).ToList();
+            return users;
         }
         public IEnumerable<ApplicationUser> All()
         {
@@ -42,7 +55,7 @@ namespace DomainEF.Repositories
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            context.Dispose();
         }
 
         public ApplicationUser Find(int id)

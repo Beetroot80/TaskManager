@@ -16,6 +16,8 @@ using Services.Interfaces;
 using UnitOfWork;
 using appUser = DomainCore.ApplicationUser;
 using appRole = DomainCore.ApplicationRole;
+using serviceUser = ServiceEntities.ApplicationUser;
+using serviceRole = ServiceEntities.ApplicationRole;
 using AutoMapper;
 using DomainEF.Repositories;
 
@@ -83,13 +85,17 @@ namespace Services.Services
             Create(adminDto);
         }
 
-        public IEnumerable<ServiceEntities.ApplicationUser> GetUsers() //TODO: delete
+        public IEnumerable<serviceUser> GetUsers() //TODO: delete
         {
-            var domainUsers = Uow.UserManager.Users.ToList();
-            List<ServiceEntities.ApplicationUser> users = new List<ServiceEntities.ApplicationUser>();
+            IEnumerable<appUser> domainUsers = new List<appUser>();
+            List<serviceUser> users = new List<serviceUser>();
+            var repo = new ApplicationUserRepository(Uow);
+            domainUsers = repo.GetAllUsersWithRolesAndProfiles();
+            repo.Dispose();
+
             foreach (var user in domainUsers)
             {
-                users.Add(Mapper.Map<ServiceEntities.ApplicationUser>(user));
+                users.Add(Mapper.Map<serviceUser>(user));
             }
             return users;
         }
@@ -98,7 +104,14 @@ namespace Services.Services
         {
             using (var repo = new ApplicationUserRepository(Uow))
             {
-                return Mapper.Map<ServiceEntities.ApplicationUser>(repo.GetById(id));
+                return Mapper.Map<serviceUser>(repo.GetById(id));
+            }
+        }
+        public IEnumerable<string> GetAllRoles()//TODO: should be in a repo?
+        {
+            using (var repo = new ApplicationUserRepository(Uow))
+            {
+                return repo.GetAllRoles();
             }
         }
     }
