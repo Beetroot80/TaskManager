@@ -28,11 +28,20 @@ namespace TaskManager
         [Obsolete]
         protected override void Configure()
         {
-            CreateMap<ServiceEntities.Project, ProjectModel>();
+            CreateMap<ServiceEntities.Project, ProjectModel>()
+                .ForMember(x => x.TaskCount, op => op.MapFrom(project => project.Tasks.Count))
+                .ForMember(x => x.ClientsCount, op => op.MapFrom(project => project.Clients.Count))
+                .MaxDepth(2);
             CreateMap<ServiceEntities.ApplicationUser, ApplicationUserModel>();
             CreateMap<ServiceEntities.ApplicationUser, EditUserModel>()
-                .ForMember("Name", x => x.MapFrom(y => y.ClientProfile.Name))
-                .ForMember("Surname", x => x.MapFrom(y => y.ClientProfile.Surname));
+                .ForMember(x => x.Name, op => op.MapFrom(user => user.ClientProfile.Name))
+                .ForMember(x => x.Surname, x => x.MapFrom(user => user.ClientProfile.Surname));
+            CreateMap<ServiceEntities.ServiceTask, ViewTasksModel>()
+                .ForMember(x => x.AssignedToEmail, op => op.MapFrom(user => user.Client.Email))
+                .ForMember(x => x.CreatedByEmail, op => op.MapFrom(user => user.CreatedBy.Email))
+                .ForMember(x => x.PriorityTitle, op => op.MapFrom(title => title.Priority.Title))
+                .ForMember(x => x.StatusTitle, op => op.MapFrom(status => status.Status.Title))
+                .MaxDepth(1);
         }
     }
     public static class MVCMapperConfig

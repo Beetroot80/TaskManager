@@ -17,6 +17,7 @@ namespace TaskManager.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         [Required]
-        public string Role { get; set; }
+        [Display(Name ="User role")]
+        public IEnumerable<string> UserRoles { get; set; }
     }
 }

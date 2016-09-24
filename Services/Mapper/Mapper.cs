@@ -13,17 +13,21 @@ namespace ServiceMapper
         protected override void Configure()
         {
             CreateMap<DomainCore.DomainTask, ServiceEntities.ServiceTask>()
-                .ForMember("CreatedBy", d => d.MapFrom(src => src.CreatedBy_Id))
+                .ForMember(x => x.CreatedById, op => op.MapFrom(task => task.CreatedBy_Id))
+                .ForMember(x=> x.AssignedToId, op => op.MapFrom(task => task.AssignedTo))
+                .ForMember( x=> x.Client, op => op.MapFrom(user => user.Client))
                 .MaxDepth(1);
-            CreateMap<DomainCore.ClientProfile, ServiceEntities.ClientProfile>();
+            CreateMap<DomainCore.ClientProfile, ServiceEntities.ClientProfile>()
+                .ForMember(x => x.ApplicationUser , op => op.MapFrom(profile => profile.ApplicationUser)).MaxDepth(1);
             CreateMap<DomainCore.ApplicationUser, ServiceEntities.ApplicationUser>()
-                .ForMember("ClientProfile", x=> x.MapFrom(y=> y.ClientProfile))
-                .MaxDepth(1);
+                .ForMember(x => x.ClientProfile, op => op.MapFrom(user => user.ClientProfile))
+                .ForMember(x => x.Tasks, op => op.MapFrom(user => user.DomainTasks)).MaxDepth(1);
             CreateMap<DomainCore.ApplicationRole, ServiceEntities.ApplicationRole>();
             CreateMap<DomainCore.Comment, ServiceEntities.Comment>();
             CreateMap<DomainCore.Priority, ServiceEntities.Priority>();
             CreateMap<DomainCore.Status, ServiceEntities.Status>();
-            CreateMap<DomainCore.Project, ServiceEntities.Project>().MaxDepth(1);
+            CreateMap<DomainCore.Project, ServiceEntities.Project>()
+                .MaxDepth(1);
         }
     }
 }

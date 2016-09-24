@@ -5,7 +5,7 @@ namespace UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        IContext Context { get; }
+        //IContext Context { get; }
         void SaveChanges();
     }
 }

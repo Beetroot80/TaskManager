@@ -7,16 +7,17 @@ using Repositories.Interfaces;
 using UnitOfWork;
 using System.Data.Entity;
 using DomainEF.Interfaces;
+using DomainEF;
 
 namespace Repositories
 {
     public class TaskRepository : ITaskRepository
     {
-        private readonly ITaskManagerContext context;
+        private readonly TaskManagerContext context;
 
         public TaskRepository(IUnitOfWork uow)
         {
-            this.context = uow.Context as ITaskManagerContext;
+            this.context = new TaskManagerContext();
         }
 
         public List<DomainTask> TasksViaPriority(string status)

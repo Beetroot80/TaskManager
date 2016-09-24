@@ -20,15 +20,27 @@ using serviceUser = ServiceEntities.ApplicationUser;
 using serviceRole = ServiceEntities.ApplicationRole;
 using AutoMapper;
 using DomainEF.Repositories;
+using DomainEF;
+using System.Data.Entity;
 
 namespace Services.Services
 {
     public class UserService : IUserService
     {
-        IIdentityUnitOfWork Uow { get; set; }
-        public UserService(IIdentityUnitOfWork uow)
+        //TODO: usings?
+        private UnitOfWork<TaskManagerContext> uow;
+        UnitOfWork<TaskManagerContext> Uow
         {
-            Uow = uow;
+            get
+            {
+                if (uow == null)
+                    uow = new UnitOfWork<TaskManagerContext>();
+                return uow;
+            }
+        }
+
+        public UserService(IIdentityUnitOfWork unitOfWork)
+        {
         }
 
         public ClaimsIdentity Authenticate(UserDTO userDto)
@@ -85,14 +97,27 @@ namespace Services.Services
             Create(adminDto);
         }
 
-        public IEnumerable<serviceUser> GetUsers() //TODO: delete
+        public IEnumerable<serviceUser> GetUsers()
         {
-            IEnumerable<appUser> domainUsers = new List<appUser>();
-            List<serviceUser> users = new List<serviceUser>();
-            var repo = new ApplicationUserRepository(Uow);
-            domainUsers = repo.GetAllUsersWithRolesAndProfiles();
-            repo.Dispose();
+            IEnumerable<appUser> domainUsers;
+            domainUsers = Uow.UserManager.Users
+                .Include(x => x.ClientProfile)
+                .Include(x => x.Roles).ToList();
 
+            foreach (var user in domainUsers) //TODO: refactor this
+            {
+                var roleIds = user.Roles.Select(x => x.RoleId);
+                var rolenames = new List<string>();
+                foreach (var id in roleIds)
+                {
+                    rolenames.Add(Uow.RoleManager.FindById(id).Name);
+                }
+                user.UserRoles = rolenames;
+
+            }
+
+
+            List<serviceUser> users = new List<serviceUser>();
             foreach (var user in domainUsers)
             {
                 users.Add(Mapper.Map<serviceUser>(user));
@@ -107,12 +132,13 @@ namespace Services.Services
                 return Mapper.Map<serviceUser>(repo.GetById(id));
             }
         }
+
         public IEnumerable<string> GetAllRoles()//TODO: should be in a repo?
         {
-            using (var repo = new ApplicationUserRepository(Uow))
-            {
-                return repo.GetAllRoles();
-            }
+            return Uow.RoleManager.Roles
+            .Select(x => x.Name)
+            .Distinct()
+            .ToList();
         }
     }
 }

@@ -12,11 +12,11 @@ namespace DomainEF.Repositories
 {
     public class ClientProfileRepository : IClientProfileRepository
     {
-        private readonly ITaskManagerContext context;
+        private readonly TaskManagerContext context;
 
         public ClientProfileRepository(IUnitOfWork uow)
         {
-            this.context = uow.Context as ITaskManagerContext;
+            this.context = new TaskManagerContext();
         }
 
         public IEnumerable<ClientProfile> All()

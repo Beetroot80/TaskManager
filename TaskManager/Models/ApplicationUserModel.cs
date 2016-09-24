@@ -16,13 +16,13 @@ namespace TaskManager.Models
 
         public ICollection<CommentModel> Comments { get; set; }
         public ICollection<ProjectModel> Projects { get; set; }
-        public ICollection<TaskModel> Tasks { get; set; }
+        public ICollection<ViewTasksModel> Tasks { get; set; }
 
         public ApplicationUserModel()
         {
             Comments = new List<CommentModel>();
             Projects = new List<ProjectModel>();
-            Tasks = new List<TaskModel>();
+            Tasks = new List<ViewTasksModel>();
         }
     }
 }

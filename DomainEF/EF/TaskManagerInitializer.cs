@@ -45,14 +45,14 @@ namespace DomainEF
             {
                 UserName = "Eugene@gmail.com",
                 Email = "Eugene@gmail.com",
-                ClientProfile = new ClientProfile { Name = "Eugene" }
+                ClientProfile = new ClientProfile { Name = "Eugene", Surname = "Beetroot" }
             }, "Eugene1!");
 
             UserManager.Create(new ApplicationUser
             {
                 UserName = "Kate@gmail.com",
                 Email = "Kate@gmail.com",
-                ClientProfile = new ClientProfile { Name = "Kate" }
+                ClientProfile = new ClientProfile { Name = "Kate", Surname = "Windstorm" }
             }, "Kate11!");
 
             var u0 = UserManager.Find("Eugene@gmail.com", "Eugene1!");

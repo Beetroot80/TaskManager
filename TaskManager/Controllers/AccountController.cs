@@ -148,7 +148,9 @@ namespace TaskManager.Controllers
             {
                 userList.Add(AutoMapper.Mapper.Map<EditUserModel>(user));
             }
-            return View(userList);
+
+            ViewBag.Roles = UserService.GetAllRoles();
+            return PartialView(userList);
         }
 
         private void SetInitialData() //TODO: remove

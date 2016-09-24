@@ -189,7 +189,7 @@
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\StatusModel.cs" />
-    <Compile Include="Models\TaskModel.cs" />
+    <Compile Include="Models\ViewTasksModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +239,8 @@
     <Content Include="Views\Home\AuthorizedAsAdmin.cshtml" />
     <Content Include="Views\Account\AddUser.cshtml" />
     <Content Include="Views\Account\UsersList.cshtml" />
+    <Content Include="Views\Project\Projects.cshtml" />
+    <Content Include="Views\Project\ViewTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

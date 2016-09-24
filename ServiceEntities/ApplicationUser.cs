@@ -13,6 +13,8 @@ namespace ServiceEntities
         public string Email { get; set; }
         public string UserName { get; set; }
 
+        public IEnumerable<string> UserRoles { get; set; }
+
         public string ClientProfileId { get; set; }
         public ClientProfile ClientProfile { get; set; }
 

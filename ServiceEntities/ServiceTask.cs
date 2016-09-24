@@ -16,13 +16,18 @@ namespace ServiceEntities
         public DateTime DeadLine { get; set; }
 
         public int ProjectId { get; set; }
-        public string CreatedBy { get; set; }
-        public string AssignedTo { get; set; }
+        public string CreatedById { get; set; }
+        public string AssignedToId { get; set; }
         public int? StatusId { get; set; }
         public int? PriorityId { get; set; }
 
 
         public ICollection<Comment> Comments { get; set; }
+        public Project Project { get; set; }
+        public Status Status { get; set; }
+        public Priority Priority { get; set; }
+        public ApplicationUser Client { get; set; }
+        public ApplicationUser CreatedBy { get; set; }
 
         public ServiceTask()
         {

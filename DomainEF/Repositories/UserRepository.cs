@@ -19,7 +19,7 @@ namespace DomainEF.Repositories
 
         public ApplicationUserRepository(IUnitOfWork uow)
         {
-            this.context = uow.Context as ITaskManagerContext;
+            this.context = new TaskManagerContext();
         }
         public ApplicationUser GetById(string id)
         {

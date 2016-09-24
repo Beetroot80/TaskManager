@@ -26,10 +26,10 @@
     </div>
     <div class="container body-content">
         <div class="row">
-            <div id="menu" class="col-md-2">
+            <div id="menu" class="col-md-2 navbar-inverse navbar-fixed-left stretch-height">
                 @RenderSection("Menu", false)
             </div>
-            <div id="body">
+            <div id="body" class="col-md-offset-2 stretch-height">
                 @RenderBody()
             </div>
         </div>

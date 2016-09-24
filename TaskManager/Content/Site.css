@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #f2f2f2;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -29,24 +30,47 @@ textarea {
     margin-left: -20px;
 }
 
+.pre-scrollable {
+    height:100%;
+}
 .nav {
-    padding-left : 0px;
+    padding-left: 0px;
 }
 
-.row {
-    padding-top: 20px;
+.stretch-height{
+    height: 100%;
+}
+#menu {
+    padding-top: 5px;
+    left: 0;
+}
+.navbar-fixed-left {
+  position: fixed;
+  border-radius: 0;
 }
 
-div #menu {
-    position: fixed;
+#body{
+    padding-top: 10px;
 }
-div #results{
+
+
+div #results {
     outline-offset: 0;
 }
 
+#project-icons {
+    padding-top: 0px;
+
+}
+
 .gly-spin {
-  -webkit-animation: spin 2s infinite linear;
-  -moz-animation: spin 2s infinite linear;
-  -o-animation: spin 2s infinite linear;
-  animation: spin 2s infinite linear;
+    -webkit-animation: spin 2s infinite linear;
+    -moz-animation: spin 2s infinite linear;
+    -o-animation: spin 2s infinite linear;
+    animation: spin 2s infinite linear;
+}
+
+.list {
+    list-style: none;
+    text-align: center;
 }

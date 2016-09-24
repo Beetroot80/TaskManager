@@ -15,11 +15,11 @@ namespace DomainEF.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
-        private readonly ITaskManagerContext context;
+        private readonly TaskManagerContext context;
 
         public ProjectRepository(IUnitOfWork uow)
         {
-            this.context = uow.Context as ITaskManagerContext;
+            this.context =new TaskManagerContext();
         }
 
         public IEnumerable<Project> GetAllProjectsWithfullInfo()

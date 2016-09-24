@@ -14,16 +14,7 @@ namespace TaskManager.Models
         public string Title { get; set; }
         [MaxLength(255)]
         public string Description { get; set; }
-
-        public ICollection<ServiceTask> Tasks { get; set; }
-        public ICollection<ApplicationUser> Clients { get; set; }
-
-
-        public ProjectModel()
-        {
-            Tasks = new List<ServiceTask>();
-            Clients = new List<ApplicationUser>();
-
-        }
+        public int? ClientsCount { get; set; }
+        public int? TaskCount { get; set; }
     }
 }

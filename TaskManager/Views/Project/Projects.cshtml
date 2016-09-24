@@ -1,0 +1,38 @@
+﻿@model IEnumerable<TaskManager.Models.ProjectModel>
+
+<div class="col-md-3 stretch-height">
+    <ul class="list list-group">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="container">
+                    <div class="row top">
+                        <div class="col-md-10">
+                            @Ajax.ActionLink(@item.Title, "ViewTask", "Project", new { projectId = item.Id }, new AjaxOptions
+                       {
+                           HttpMethod = "Post",
+                           InsertionMode = InsertionMode.Replace,
+                           UpdateTargetId = "tasks"
+                       }, new { @class = "btn btn-default" })
+                            <p>@item.Description</p>
+                        </div>
+                        <div class="col-md-2" id="project-icons">
+                            <div>
+                                <span class="glyphicon glyphicon-user">@item.ClientsCount</span>
+                            </div>
+                            <div>
+                                <span class="glyphicon glyphicon-tasks">@item.TaskCount</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<div class="container">
+    <div class="row col-md-offset-3 stretch-height">
+        <div id="tasks">
+        </div>
+    </div>
+</div>
