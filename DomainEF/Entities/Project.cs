@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DomainCore
 {
@@ -7,6 +8,10 @@ namespace DomainCore
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+
+        [ForeignKey("CreatedBy")]
+        public string CreatedById { get; set; }
+        public ApplicationUser CreatedBy { get; set; }
 
         //Navigation properties
         public ICollection<DomainTask> Tasks { get; set; }

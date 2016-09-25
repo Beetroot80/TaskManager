@@ -33,14 +33,14 @@ namespace Services
             return serviseTasks;
         }
 
-        public IEnumerable<ServiceTask> GetSignedTasks(int projectId)
+        public IEnumerable<ServiceTask> GetSignedTasks(int projectId) //TODO: optimization!!!
         {
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
             IEnumerable<DomainTask> domainTasks;
             using (uow = new UnitOfWork<TaskManagerContext>())
             {
                 domainTasks = uow.DomainTaskRepo
-                    .AllIncluding(null, null, signed => signed.Client, created => created.CreatedBy, status => status.Status, priority => priority.Priority)
+                    .AllIncluding(null, null, signed => signed.Client, created => created.CreatedBy, status => status.Status, priority => priority.Priority, z => z.Project, m => m.CreatedBy)
                     .Where(x => x.ProjectId == projectId).ToList();
                 foreach (var item in domainTasks)
                 {

@@ -88,5 +88,13 @@ namespace Services.Services
             }
             return projects;
         }
+
+        public void Addproject(Project project)
+        {
+            using (uow = new UnitOfWork<TaskManagerContext>())
+            {
+                uow.ProjectRepo.Insert(Mapper.Map<DomainCore.Project>(project));
+            }
+        }
     }
 }

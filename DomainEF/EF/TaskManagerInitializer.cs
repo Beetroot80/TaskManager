@@ -67,8 +67,8 @@ namespace DomainEF
 
 
             //Projects
-            var pr0 = new Project() { Title = "FirstProject", Description = "This project was created first", Clients = userGroup0 };
-            var pr1 = new Project() { Title = "SecondProject", Description = "This project was creted second", Clients = userGroup1 };
+            var pr0 = new Project() { Title = "FirstProject", Description = "This project was created first", Clients = userGroup0, CreatedBy = u0 };
+            var pr1 = new Project() { Title = "SecondProject", Description = "This project was created second", Clients = userGroup1, CreatedBy = u0 };
             context.Projects.Add(pr0);
             context.Projects.Add(pr1);
             context.SaveChanges();
@@ -77,7 +77,7 @@ namespace DomainEF
             var t0 = new DomainTask() { Title = "Task1", Description = "First task", Status = s0, Priority = p0, Project = pr0, CreatedBy = u1, CreatedBy_Id = u1.Id };
             var t1 = new DomainTask() { Title = "Task2", Description = "Second task", Status = s0, Priority = p1, Project = pr0, CreatedBy = u0, CreatedBy_Id = u0.Id };
             var t2 = new DomainTask() { Title = "Task3", Description = "Third task", Status = s1, Priority = p1, Project = pr1, CreatedBy = u0, CreatedBy_Id = u0.Id };
-            var t3 = new DomainTask() { Title = "Task4", Description = "Fourth tas", Status = s2, Priority = p2, Project = pr1, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t3 = new DomainTask() { Title = "Task4", Description = "Fourth task", Status = s2, Priority = p2, Project = pr1, CreatedBy = u0, CreatedBy_Id = u0.Id };
             context.Tasks.Add(t0);
             context.Tasks.Add(t1);
             context.Tasks.Add(t2);

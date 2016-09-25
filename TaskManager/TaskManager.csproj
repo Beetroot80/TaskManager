@@ -189,6 +189,7 @@
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\StatusModel.cs" />
+    <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\ViewTasksModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -241,6 +242,7 @@
     <Content Include="Views\Account\UsersList.cshtml" />
     <Content Include="Views\Project\Projects.cshtml" />
     <Content Include="Views\Project\ViewTask.cshtml" />
+    <Content Include="Views\Project\AddProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

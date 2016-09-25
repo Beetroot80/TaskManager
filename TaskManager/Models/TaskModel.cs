@@ -7,15 +7,12 @@ using System.Web.Mvc;
 
 namespace TaskManager.Models
 {
-    public class ViewTasksModel
+    public class TaskModel
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public byte? Percentage { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? CreationDate { get; set; }
         [DataType(DataType.Date)]
         public DateTime? DeadLine { get; set; }
 
@@ -35,5 +32,6 @@ namespace TaskManager.Models
         public string AssignedToEmail { get; set; }
         public string CreatedByEmail { get; set; }
         public string ProjectTitle { get; set; }
+        public CommentModel Comments { get; set; }
     }
 }

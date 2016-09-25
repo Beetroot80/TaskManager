@@ -18,6 +18,14 @@
                        UpdateTargetId = "results"
                    })
                     </li>
+                    <li class="active">
+                        @Ajax.ActionLink("Add project", "AddProject", "project", new AjaxOptions
+                   {
+                       HttpMethod = "Get",
+                       InsertionMode = InsertionMode.Replace,
+                       UpdateTargetId = "results"
+                   })
+                    </li>
                     <li>
                         @Ajax.ActionLink("Users", "UsersList", "Account", new AjaxOptions
                    {

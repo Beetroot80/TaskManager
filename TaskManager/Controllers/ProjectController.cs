@@ -54,7 +54,31 @@ namespace TaskManager.Controllers
             {
                 taskModels.Add(Mapper.Map<ViewTasksModel>(task));
             }
+            ViewBag.CreatedByEmail = tasks.Select(x => x.Project.CreatedBy.Email).First(); //TODO: get projectby id;
+            ViewBag.ProjectTitle = taskModels.Select(x => x.ProjectTitle).First();
             return PartialView(taskModels.AsEnumerable());
         }
+        [Authorize(Roles = "Administrator,Manager,User")]
+        [HttpPost]
+        public ActionResult TaskInfo(int taskId)
+        {
+            return PartialView();
+        }
+        [Authorize(Roles = "Administrator,Manager,User")]
+        [HttpGet]
+        public ActionResult AddProject()
+        {
+            return PartialView();
+        }
+
+        [Authorize(Roles = "Administrator,Manager,User")]
+        [HttpPost]
+        public ActionResult AddProject(ProjectModel model)
+        {
+            var projectService = new ProjectService();
+            projectService.Addproject(Mapper.Map<ServiceEntities.Project>(model));
+            return PartialView();
+        }
+
     }
 }

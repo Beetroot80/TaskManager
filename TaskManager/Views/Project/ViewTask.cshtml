@@ -1,81 +1,64 @@
 ﻿@model IEnumerable<TaskManager.Models.ViewTasksModel>
-@section Tasks
-{
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Percentage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeadLine)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StatusId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PriorityId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AssignedToId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedById)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Percentage)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeadLine)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StatusId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PriorityId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AssignedTo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedBy_Id)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
-        }
 
-    </table>
-}
+<div class="container">
+    <div class="row" id="task">
+        <div id="task-header" class="row">
+            <div id="created-by" class="col-md-3">
+                <h6 class="text-left">Created by:</h6>
+                <h6 class="text-left">@ViewBag.CreatedByEmail</h6>
+            </div>
+            <div id="project-name" class="col-md-4 text-center">
+                <h2>@ViewBag.ProjectTitle</h2>
+            </div>
+            <div class="col-md-4" id="search-bar">
+                <div class="input-group" id="task-search">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Search</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="task-body" class="row">
+                @foreach (var item in Model)
+            {
+                    <div class="row">
+                        <div id="task-title" class="col-md-3 text-center">
+                            <div>
+                                <h2>@item.Title</h2>
+                                @item.CreationDate
+                            </div>
+                        </div>
+                        <div id="task-descriptuion" class="col-md-offset-1 col-md-2">
+                            <text class="text-center">@item.Description</text>
+                        </div>
+                        <div id="task-info" class="col-md-offset-6 text-center">
+                            <ul class="list">
+                                <li id="task-signed-to">
+                                    <h6>Signed to: @item.AssignedToEmail</h6>
+                                </li>
+                                <li id="task-status">
+                                    <h6>Status: @item.StatusTitle</h6>
+                                </li>
+                                <li id="task-priority">
+                                    <h6>Priority: @item.PriorityTitle</h6>
+                                </li>
+                                <li id="task-deadline">
+                                    <h6>Deadline: @item.DeadLine</h6>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div id="task-footer" class="navbar-fixed-bottom">
+
+        </div>
+    </div>
+</div>
+
