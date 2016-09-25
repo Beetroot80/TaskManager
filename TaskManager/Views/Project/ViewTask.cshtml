@@ -28,7 +28,7 @@
                     <div class="row">
                         <div id="task-title" class="col-md-3 text-center">
                             <div>
-                                <h2>@item.Title</h2>
+                                <h2>@Html.ActionLink(@item.Title, "ReadTask", "Project", "", new { @class = "openDialog", data_dialog_id = "taskDialog", data_dialog_title = "Task" })</h2>
                                 @item.CreationDate
 
                             </div>
@@ -62,4 +62,5 @@
         </div>
     </div>
 </div>
-
+<script>
+</script>

@@ -57,7 +57,8 @@ namespace DomainEF.Repositories
 
         public void Insert(TEntity entity)
         {
-            dbSet.Add(entity);
+            dbSet.Attach(entity);
+            context.Entry(entity).State = EntityState.Added;
         }
 
         public void Update(TEntity entity)

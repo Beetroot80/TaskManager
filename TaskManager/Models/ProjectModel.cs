@@ -10,6 +10,7 @@ namespace TaskManager.Models
 {
     public class ProjectModel
     {
+        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }

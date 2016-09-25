@@ -28,6 +28,8 @@ namespace ServiceMapper
             CreateMap<DomainCore.Status, ServiceEntities.Status>();
             CreateMap<DomainCore.Project, ServiceEntities.Project>()
                 .MaxDepth(1);
+            CreateMap<ServiceEntities.Project, DomainCore.Project>()
+                .ForMember(x => x.Id, op => op.Ignore());
         }
     }
 }

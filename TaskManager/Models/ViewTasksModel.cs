@@ -35,5 +35,8 @@ namespace TaskManager.Models
         public string AssignedToEmail { get; set; }
         public string CreatedByEmail { get; set; }
         public string ProjectTitle { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public List<CommentModel> Comments { get; set; }
     }
 }

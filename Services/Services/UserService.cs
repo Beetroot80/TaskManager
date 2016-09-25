@@ -127,10 +127,7 @@ namespace Services.Services
 
         public ServiceEntities.ApplicationUser GetUserById(string id)
         {
-            using (var repo = new ApplicationUserRepository(Uow))
-            {
-                return Mapper.Map<serviceUser>(repo.GetById(id));
-            }
+            return Mapper.Map<serviceUser>(Uow.UserManager.FindById(id));
         }
 
         public IEnumerable<string> GetAllRoles()//TODO: should be in a repo?

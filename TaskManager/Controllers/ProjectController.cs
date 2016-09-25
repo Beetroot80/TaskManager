@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using AutoMapper;
 using ServiceEntities;
 using ServiceMapper;
@@ -31,10 +32,10 @@ namespace TaskManager.Controllers
 
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpGet]
-        public ActionResult Projects() //TODO: display only my projects
+        public ActionResult Projects()
         {
             var projectService = new ProjectService();
-            var projects = projectService.GetAllProjectsWithCounts();
+            var projects = projectService.GetAllProjectsWithCounts(User.Identity.GetUserId());
             List<ProjectModel> projectModels = new List<ProjectModel>();
             foreach(var project in projects)
             {
@@ -54,8 +55,8 @@ namespace TaskManager.Controllers
             {
                 taskModels.Add(Mapper.Map<ViewTasksModel>(task));
             }
-            ViewBag.CreatedByEmail = tasks.Select(x => x.Project.CreatedBy.Email).First(); //TODO: get projectby id;
-            ViewBag.ProjectTitle = taskModels.Select(x => x.ProjectTitle).First();
+            ViewBag.CreatedByEmail = tasks.Select(x => x.Project.CreatedBy.Email).FirstOrDefault(); //TODO: get projectby id;
+            ViewBag.ProjectTitle = taskModels.Select(x => x.ProjectTitle).FirstOrDefault();
             return PartialView(taskModels.AsEnumerable());
         }
         [Authorize(Roles = "Administrator,Manager,User")]
@@ -75,10 +76,17 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult AddProject(ProjectModel model)
         {
+            model.CreatedById = HttpContext.User.Identity.GetUserId();
             var projectService = new ProjectService();
             projectService.Addproject(Mapper.Map<ServiceEntities.Project>(model));
-            return PartialView();
+            return View("Index", "Home");
         }
 
+        [Authorize(Roles = "Administrator,Manager,User")]
+        [HttpGet]
+        public ActionResult ReadTask(ViewTasksModel model) //TODO: raname to viewtask!
+        {
+            return PartialView(model);
+        }
     }
 }

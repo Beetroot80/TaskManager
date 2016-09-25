@@ -33,12 +33,14 @@ namespace Services.Services
             return projects;
         }
 
-        public List<Project> GetAllProjectsWithCounts()
+        public List<Project> GetAllProjectsWithCounts(string userId)
         {
             IEnumerable<DomainCore.Project> dProjects = new List<DomainCore.Project>();
             using (uow = new UnitOfWork<TaskManagerContext>())
             { //TODO: dispose connection before foreach, notice - gonna be exception if uow is disposed before mapping
-                dProjects = uow.ProjectRepo.AllIncluding(null, null, x => x.Clients, y => y.Tasks).ToList();//TODO: have to take counts without Including
+                dProjects = uow.ProjectRepo.AllIncluding(null, null, x => x.Clients, y => y.Tasks)
+                    .Where(x => x.CreatedById == userId || x.Clients.Where(y => y.Id == userId).Any()).ToList();//TODO: have to take counts without Including
+                //TODO: recheck expression!
                 List<Project> projects = new List<Project>();
                 foreach (var entity in dProjects)
                 {
@@ -48,15 +50,12 @@ namespace Services.Services
             }
         }
 
-        public List<Project> GetAllProjectsWithTasks()
+        public List<Project> GetAllProjectsWithTasks(string userId)//TODO: meaningful names!
         {
             IEnumerable<DomainCore.Project> dProjects = new List<DomainCore.Project>();
             using (uow = new UnitOfWork<TaskManagerContext>())
             {
-                using (var repo = new ProjectRepository(uow))
-                {
-                    dProjects = uow.ProjectRepo.AllIncluding(includeProperties: x => x.Tasks).ToList();
-                }
+                    dProjects = uow.ProjectRepo.AllIncluding(includeProperties: x => x.Tasks).ToList(); 
             }
             List<Project> projects = new List<Project>();
             foreach (var entity in dProjects)
@@ -89,11 +88,13 @@ namespace Services.Services
             return projects;
         }
 
-        public void Addproject(Project project)
+        public void Addproject(Project project) //TODO: working if database excists and created by id excists
+            //TODO: add some succed or failed view!
         {
             using (uow = new UnitOfWork<TaskManagerContext>())
             {
                 uow.ProjectRepo.Insert(Mapper.Map<DomainCore.Project>(project));
+                uow.SaveChanges();
             }
         }
     }

@@ -1,0 +1,46 @@
+﻿@model TaskManager.Models.ViewTasksModel
+
+<div class="container">
+    <div class="row task-info">
+        <div id="comments">
+            <div>
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="comment-info">
+                        @comment.ClientEmail
+                    </div>
+                    <div class="comment-body">
+                        @comment.Text
+                    </div>
+                }
+            </div>
+            <div id="send-comment">
+                <textarea /> <div class="btn btn-default">Send</div>
+            </div>
+        </div>
+        <div id="task-body">
+            <div id="title">
+                @Model.Title
+            </div>
+            <div id="description">
+                @Model.Description
+            </div>
+            <div id="info">
+                <ul class="list">
+                    <li id="task-signed-to">
+                        <h6>Signed to: @Model.AssignedToEmail</h6>
+                    </li>
+                    <li id="task-status">
+                        <h6>Status: @Model.StatusTitle</h6>
+                    </li>
+                    <li id="task-priority">
+                        <h6>Priority: @Model.PriorityTitle</h6>
+                    </li>
+                    <li id="task-deadline">
+                        <h6>Deadline: @Model.DeadLine</h6>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

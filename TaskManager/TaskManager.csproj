@@ -243,6 +243,8 @@
     <Content Include="Views\Project\Projects.cshtml" />
     <Content Include="Views\Project\ViewTask.cshtml" />
     <Content Include="Views\Project\AddProject.cshtml" />
+    <Content Include="Views\Shared\LoadingView.cshtml" />
+    <Content Include="Views\Project\ReadTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

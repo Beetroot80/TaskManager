@@ -11,11 +11,11 @@ namespace DomainCore
 
         [ForeignKey("CreatedBy")]
         public string CreatedById { get; set; }
-        public ApplicationUser CreatedBy { get; set; }
 
         //Navigation properties
         public ICollection<DomainTask> Tasks { get; set; }
         public ICollection<ApplicationUser> Clients { get; set; }
+        public ApplicationUser CreatedBy { get; set; }
 
         public Project()
         {

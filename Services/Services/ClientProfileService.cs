@@ -19,16 +19,13 @@ namespace Services.Services
         {
             using (var uow = new UnitOfWork<TaskManagerContext>())
             {
-                using (var repo = new ClientProfileRepository(uow))
-                {
-                    var clients = repo.All();
+                    var clients = uow.UserManager.Users.Select(x => x.ClientProfile).ToList();
                     var serviceClients = new List<ClientProfile>();
                     foreach(var c in clients)
                     {
                         serviceClients.Add(Mapper.Map<ClientProfile>(c));
                     }
-                    return serviceClients;
-                }
+                    return serviceClients;                
             }
         }
     }
