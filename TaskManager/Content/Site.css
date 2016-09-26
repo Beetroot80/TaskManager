@@ -39,67 +39,143 @@ textarea {
     margin-left: 30%;
 }
 
-#login-form header {
-    background: #cfcbcb;
-    padding: 30px 20px;
-    color: #373f52;
-    font-size: 2em;
-    font-weight: 600;
-    border-radius: 2px 2px 0 0;
-}
-
-#login-form input {
-    display: block;
-    margin-left: 80px;
-    margin-top: 40px;
-    padding: 5px 20px;
-    font-size: 1.3em;
-    border-radius: 3px;
-    outline: none;
-    border: 1px solid #ccc;
-}
-
-#login-form .login {
-    margin-left: 20px;
-    font-size: 0.8em;
-    color: #777;
-}
-
-#login-form .btn {
-    position: relative;
-    outline-offset: 0;
-    margin-left: 80px;
-    margin-top: 40px;
-    margin-bottom: 30px;
-    width: 278px;
-    font-family: inherit;
-    color: #373f52;
-    background: white;
-    border: none;
-    font-family: inherit;
-    font-size: 1.6em;
-    font-weight: 400;
-    border-radius: 3px;
-    box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.4);
-    cursor: pointer;
-}
-
-    #login-form .btn:hover {
-        background: #cbf7bb;
+    #login-form header {
+        background: #cfcbcb;
+        padding: 30px 20px;
+        color: #373f52;
+        font-size: 2em;
+        font-weight: 600;
+        border-radius: 2px 2px 0 0;
     }
 
-#login-form .field-validation-error {
-    color: tomato;
-    position: absolute;
-    font-size: 1.3em;
-    width: 300px;
-    height: 20px;
-    margin-top: 10px;
-    margin-left: -60%;
-    margin-right: -30px;
-}
+    #login-form input {
+        display: block;
+        margin-left: 80px;
+        margin-top: 40px;
+        padding: 5px 20px;
+        font-size: 1.3em;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid #ccc;
+    }
+
+    #login-form .login {
+        margin-left: 20px;
+        font-size: 0.8em;
+        color: #777;
+    }
+
+    #login-form .btn {
+        position: relative;
+        outline-offset: 0;
+        margin-left: 80px;
+        margin-top: 40px;
+        margin-bottom: 30px;
+        width: 278px;
+        font-family: inherit;
+        color: #373f52;
+        background: white;
+        border: none;
+        font-family: inherit;
+        font-size: 1.6em;
+        font-weight: 400;
+        border-radius: 3px;
+        box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.4);
+        cursor: pointer;
+    }
+
+        #login-form .btn:hover {
+            background: #cbf7bb;
+        }
+
+    #login-form .field-validation-error {
+        color: tomato;
+        position: absolute;
+        font-size: 1.3em;
+        width: 300px;
+        height: 20px;
+        margin-top: 10px;
+        margin-left: -60%;
+        margin-right: -30px;
+    }
 
 /*Menu*/
+/*Menu toogle*/
+#wrapper {
+    padding-left: 0;
+    transition: all 0.5s ease;
+}
+
+    #wrapper.toggled {
+        padding-left: 250px;
+    }
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 150px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+/*Menu decoration*/
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .sidebar-nav li {
+        text-indent: 20px;
+        line-height: 40px;
+        text-align:left;
+    }
+
+        .sidebar-nav li a {
+            display: block;
+            text-decoration: none;
+            color: #999999;
+        }
+
+            .sidebar-nav li a:hover {
+                text-decoration: none;
+                color: tomato;
+            }
+            .sidebar-nav li a:active,
+            .sidebar-nav li a:focus {
+                color: tomato;
+            }
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+        #wrapper.toggled {
+            padding-left: 0;
+        }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+}
+/*Projects*/
 .stretch-height {
     height: 100%;
     min-height: 100%;

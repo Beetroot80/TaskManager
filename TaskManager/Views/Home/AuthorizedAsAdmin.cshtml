@@ -6,82 +6,49 @@
 
 @section Menu
 {
-    <div class="container" id="menu">
-        <div class="row">
-            <div class="text-center">
-                <ul class="nav nav-pills nav-stacked">
-                    <li class="active">
-                        @Ajax.ActionLink("Add user", "AddUser", "Account", new AjaxOptions
-                   {
-                       HttpMethod = "Get",
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "results",
-                       LoadingElementId = "loading"
-                   })
-                    </li>
-                    <li class="active">
-                        @Ajax.ActionLink("Add project", "AddProject", "project", new AjaxOptions
-                   {
-                       HttpMethod = "Get",
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "results",
-                       LoadingElementId = "loading"
-                   })
-                    </li>
-                    <li>
-                        @Ajax.ActionLink("Users", "UsersList", "Account", new AjaxOptions
-                   {
-                       HttpMethod = "Get",
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "results",
-                       LoadingElementId = "loading"
-                   })
-                    </li>
-                    <li>
-                        @Ajax.ActionLink("Projects", "Projects", "Project", new AjaxOptions
-                   {
-                       HttpMethod = "Get",
-                       InsertionMode = InsertionMode.Replace,
-                       UpdateTargetId = "results"
-                   })
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div id="wrapper">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li>
+                @Ajax.ActionLink("Add project", "AddProject", "project", new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "results",
+               LoadingElementId = "loading"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("Add user", "AddUser", "Account", new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "results",
+               LoadingElementId = "loading"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("Users", "UsersList", "Account", new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "results",
+               LoadingElementId = "loading"
+           })
+            </li>
+            <li>
+                @Ajax.ActionLink("Projects", "Projects", "Project", new AjaxOptions
+           {
+               HttpMethod = "Get",
+               InsertionMode = InsertionMode.Replace,
+               UpdateTargetId = "results"
+           })
+            </li>
+        </ul>
     </div>
-
-<div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-        <li class="sidebar-brand">
-            <a href="#">
-                Start Bootstrap
-            </a>
-        </li>
-        <li>
-            <a href="#">Dashboard</a>
-        </li>
-        <li>
-            <a href="#">Shortcuts</a>
-        </li>
-        <li>
-            <a href="#">Overview</a>
-        </li>
-        <li>
-            <a href="#">Events</a>
-        </li>
-        <li>
-            <a href="#">About</a>
-        </li>
-        <li>
-            <a href="#">Services</a>
-        </li>
-        <li>
-            <a href="#">Contact</a>
-        </li>
-    </ul>
 </div>
 }
-
+<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
 <div class="container stretch-height">
     <div class="row stretch-height">
         <div id="results" class="stretch-height">
@@ -89,6 +56,16 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    //$("#menu-toggle").click(function (e) {
+    //    e.preventDefault();
+    //    $("#wrapper").toggleClass("toggled");
+    //});
+    jQuery(".sidebar-nav li").click(function () {
+        jQuery('.sidebar-nav li.active').removeClass('active');
+        jQuery(this).addClass('active');
+    });
+</script>
 
 
 @Scripts.Render("~/bundles/bootstrap")
