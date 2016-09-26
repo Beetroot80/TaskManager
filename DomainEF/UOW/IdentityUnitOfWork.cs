@@ -19,7 +19,7 @@ namespace DomainEF.UOW
         private ApplicationUserManager userManager;
         private IClientManager clientManager;
 
-        public IdentityUnitOfWork(string connection)
+        public IdentityUnitOfWork()
         {
             context = new TaskManagerContext();
             userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));

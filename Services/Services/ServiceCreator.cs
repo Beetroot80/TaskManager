@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Services.Interfaces;
 using DomainEF.UOW;
+using DomainEF;
+using UnitOfWork;
 
 namespace Services.Services
 {
@@ -12,7 +14,7 @@ namespace Services.Services
     {
         public IUserService CreateUserService(string connection)
         {
-            return new UserService(new IdentityUnitOfWork(connection));
+            return new UserService(new IdentityUnitOfWork());
         }
     }
 }

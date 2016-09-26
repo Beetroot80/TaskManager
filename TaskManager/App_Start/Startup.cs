@@ -26,6 +26,7 @@ namespace TaskManager.App_Start
                 LoginPath = new PathString("/Account/Login"),
             });
         }
+
         private IUserService CreateUserService()
         {
             return serviceCreator.CreateUserService("TaskManagerDB");

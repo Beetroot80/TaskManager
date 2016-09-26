@@ -1,31 +1,40 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 0px;
-    background-color: #f2f2f2;
+    background-color: #ebe9e9;
 }
 
 html, body {
     height: 100%;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists
-   will truncate terms that are too long to fit in the left column
-*/
 .dl-horizontal dt {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.stretch-height {
+    height: 100%;
+    min-height: 100%;
+}
+
+.list {
+    list-style: none;
+    text-align: center;
+}
+
+.nav {
+    padding-left: 0px;
 }
 
 .nav-sidebar {
@@ -34,28 +43,10 @@ textarea {
     margin-left: -20px;
 }
 
-.pre-scrollable {
-    height: 100%;
-}
-#task-footer{
-    margin-top: -45px;
-    padding-top: 0px;
-    height: 40px;
-    margin-bottom: 0px;
-}
-
-.nav {
-    padding-left: 0px;
-}
-
-.modal-content {
-    width: 600px;
-    margin: 30px auto;
-}
-
-.stretch-height {
-    height: 100%;
-    min-height: 100%;
+.navbar-fixed-left {
+    position:absolute;
+    border-radius: 0;
+    z-index:1;
 }
 
 #menu {
@@ -63,15 +54,57 @@ textarea {
     left: 0;
 }
 
-.navbar-fixed-left {
-    position: fixed;
-    border-radius: 0;
+#task-footer {
+    margin-top: -45px;
+    padding-top: 0px;
+    height: 40px;
+    margin-bottom: 0px;
+}
+
+
+#nav-menu {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#project-btn {
+    padding-top: 8px;
+    height: 40px;
+    width: 150px;
+}
+
+#project-row {
+    margin-top: -3px;
+    margin-bottom: -55px;
+}
+
+.nav-pills > li > a {
+    border-radius: 0px;
+    margin-bottom: 5px;
+}
+
+.btn {
+    border-radius: 0px;
 }
 
 #projects {
     padding-top: 9px;
     bottom: 0px;
+    margin-left: -35px;
+    margin-left: -5px;
 }
+
+
+#task-body .row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+    #task-body .row:nth-child(even) {
+        background-color: #dfe3e6;
+    }
 
 #body {
     padding-top: 10px;
@@ -82,8 +115,9 @@ div, #results {
 }
 
 
-div, #tasks {
+div, #tasks .row {
     outline-offset: 0;
+    margin: 0;
 }
 
 h2 {
@@ -102,8 +136,13 @@ h2 {
     margin-top: 10px;
 }
 
+.row {
+    min-height: 100px;
+}
+
 #tak-body, .row {
-    height: 100px;
+    min-height: 100px;
+    height: auto;
 }
 
 #task-descriptuion {
@@ -113,21 +152,11 @@ h2 {
 
 #task-info {
     outline-offset: 0;
-    margin-top: -10px;
+    margin-top: -15px;
 }
 
 #project-icons {
     padding-top: 0px;
 }
 
-.gly-spin {
-    -webkit-animation: spin 2s infinite linear;
-    -moz-animation: spin 2s infinite linear;
-    -o-animation: spin 2s infinite linear;
-    animation: spin 2s infinite linear;
-}
 
-.list {
-    list-style: none;
-    text-align: center;
-}

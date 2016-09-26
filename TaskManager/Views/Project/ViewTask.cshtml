@@ -20,48 +20,47 @@
                 </div>
             </div>
         </div>
-            <div class="container">
-                    <div id="task-body" class="row">
-                        @foreach (var item in Model)
+        <div class="container" id="task-body">
+            <div class="row">
+                @foreach (var item in Model)
             {
-                            <div class="row">
-                                <div id="task-title" class="col-md-2 text-center">
-                                    <div>
-                                        <h2>@Html.ActionLink(@item.Title, "ReadTask", "Project", new { id = item.Id }, new { @class = "openDialog", data_dialog_id = "taskDialog", data_dialog_title = "Task" })</h2>
-                                        @item.CreationDate
-
-                                    </div>
-                                </div>
-                                <div id="task-descriptuion" class="col-md-offset-2 col-md-2">
-                                    <text class="text-center">@item.Description</text>
-                                </div>
-                                <div id="task-info" class="col-md-offset-6 text-center">
-                                    <ul class="list">
-                                        <li id="task-signed-to">
-                                            <h6>Signed to: @item.AssignedToEmail</h6>
-                                        </li>
-                                        <li id="task-status">
-                                            <h6>Status: @item.StatusTitle</h6>
-                                        </li>
-                                        <li id="task-priority">
-                                            <h6>Priority: @item.PriorityTitle</h6>
-                                        </li>
-                                        <li id="task-deadline">
-                                            <h6>Deadline: @item.DeadLine</h6>
-                                        </li>
-                                    </ul>
-                                </div>
+                    <div class="row">
+                        <div id="task-title" class="col-md-2 ">
+                            <div>
+                                <h2>@Html.ActionLink(@item.Title, "ReadTask", "Project", new { id = item.Id }, new { @class = "openDialog", data_dialog_id = "taskDialog", data_dialog_title = "Task" })</h2>
+                                @item.CreationDate
                             </div>
-                        }
+                        </div>
+                        <div id="task-descriptuion" class="col-md-offset-1 col-md-3">
+                            <p class="text-left">@item.Description</p>
+                        </div>
+                        <div id="task-info" class="col-md-offset-6 text-left">
+                            <ul class="list">
+                                <li id="task-signed-to">
+                                    <h6>Signed to: @item.AssignedToEmail</h6>
+                                </li>
+                                <li id="task-status">
+                                    <h6>Status: @item.StatusTitle</h6>
+                                </li>
+                                <li id="task-priority">
+                                    <h6>Priority: @item.PriorityTitle</h6>
+                                </li>
+                                <li id="task-deadline">
+                                    <h6>Deadline: @item.DeadLine</h6>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+                }
             </div>
+        </div>
 
         <div id="task-footer" class="row">
             <div class="" id="status-filter">
             </div>
             <div class="" id="priority-filter">
             </div>
-            <button type="button" class="btn btn-default col-md-offset-9 col-md-2 add-task" id="add-task" onclick="location.href='@Url.Action("AddTask", "Project")'" >Add task</button>
+            <button type="button" class="btn btn-default col-md-offset-9 col-md-2 add-task" id="add-task" onclick="location.href='@Url.Action("AddTask", "Project")'">Add task</button>
         </div>
     </div>
 </div>
@@ -72,14 +71,14 @@
 
 <script type="text/javascript">
 
-        $(function () {
-            $.ajaxSetup({ cache: false });
-            $(".add-task").click(function (e) {
-                e.preventDefault();
-                $.get(this.href, function (data) {
-                    $('#dialogContent').html(data);
-                    $('#modDialog').modal('show');
-                });
+    $(function () {
+        $.ajaxSetup({ cache: false });
+        $(".add-task").click(function (e) {
+            e.preventDefault();
+            $.get(this.href, function (data) {
+                $('#dialogContent').html(data);
+                $('#modDialog').modal('show');
             });
-        })
+        });
+    })
 </script>

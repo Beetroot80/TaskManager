@@ -6,15 +6,15 @@
         {
             <li>
                 <div class="container">
-                    <div class="row top">
+                    <div class="row top" id="project-row">
                         <div class="col-md-10">
                             @Ajax.ActionLink(@item.Title, "ViewTask", "Project", new { projectId = item.Id }, new AjaxOptions
                        {
                            HttpMethod = "Post",
                            InsertionMode = InsertionMode.Replace,
                            UpdateTargetId = "tasks"
-                       }, new { @class = "btn btn-default" })
-                            <p>@item.Description</p>
+                       }, new { @class = "btn btn-default", @id ="project-btn"})
+
                         </div>
                         <div class="col-md-2" id="project-icons">
                             <div>
