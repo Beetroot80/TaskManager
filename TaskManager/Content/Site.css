@@ -1,7 +1,9 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 0px;
-    background-color: #ebe9e9;
+    background-color: #d8dbe2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5em;
 }
 
 html, body {
@@ -23,6 +25,81 @@ textarea {
     max-width: 280px;
 }
 
+/*Login*/
+#login-form {
+    background: white;
+    width: 40%;
+    height: 400px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    font-family: lato;
+    position: relative;
+    color: #373f52;
+    border-radius: 2px;
+    margin-top: 20px;
+    margin-left: 30%;
+}
+
+#login-form header {
+    background: #cfcbcb;
+    padding: 30px 20px;
+    color: #373f52;
+    font-size: 2em;
+    font-weight: 600;
+    border-radius: 2px 2px 0 0;
+}
+
+#login-form input {
+    display: block;
+    margin-left: 80px;
+    margin-top: 40px;
+    padding: 5px 20px;
+    font-size: 1.3em;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid #ccc;
+}
+
+#login-form .login {
+    margin-left: 20px;
+    font-size: 0.8em;
+    color: #777;
+}
+
+#login-form .btn {
+    position: relative;
+    outline-offset: 0;
+    margin-left: 80px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    width: 278px;
+    font-family: inherit;
+    color: #373f52;
+    background: white;
+    border: none;
+    font-family: inherit;
+    font-size: 1.6em;
+    font-weight: 400;
+    border-radius: 3px;
+    box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.4);
+    cursor: pointer;
+}
+
+    #login-form .btn:hover {
+        background: #cbf7bb;
+    }
+
+#login-form .field-validation-error {
+    color: tomato;
+    position: absolute;
+    font-size: 1.3em;
+    width: 300px;
+    height: 20px;
+    margin-top: 10px;
+    margin-left: -60%;
+    margin-right: -30px;
+}
+
+/*Menu*/
 .stretch-height {
     height: 100%;
     min-height: 100%;
@@ -44,9 +121,9 @@ textarea {
 }
 
 .navbar-fixed-left {
-    position:absolute;
+    position: absolute;
     border-radius: 0;
-    z-index:1;
+    z-index: 1;
 }
 
 #menu {
@@ -136,14 +213,14 @@ h2 {
     margin-top: 10px;
 }
 
-.row {
+/*.row {
     min-height: 100px;
-}
+}*/
 
-#tak-body, .row {
+/*#tak-body, .row {
     min-height: 100px;
     height: auto;
-}
+}*/
 
 #task-descriptuion {
     outline-offset: 0;
@@ -158,5 +235,3 @@ h2 {
 #project-icons {
     padding-top: 0px;
 }
-
-
