@@ -84,9 +84,11 @@ namespace TaskManager.Controllers
 
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpGet]
-        public ActionResult ReadTask(ViewTasksModel model) //TODO: raname to viewtask!
+        public ActionResult ReadTask(int taskId) //TODO: raname to viewtask!
         {
-            return PartialView(model);
+            var taskServie = new TaskService();
+            var task = taskServie.GetTaskById(taskId);
+            return PartialView(task);
         }
     }
 }

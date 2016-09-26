@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<TaskManager.Models.ProjectModel>
 
-<div class="col-md-3 stretch-height" id="projects">
+<div class="col-md-3 stretch-height pre-scrollable" id="projects">
     <ul class="list list-group">
         @foreach (var item in Model)
         {
@@ -31,7 +31,7 @@
     </ul>
 </div>
 <div class="container">
-    <div class="row col-md-offset-3 stretch-height">
+    <div class="row col-md-offset-3">
         <div id="tasks">
         </div>
     </div>

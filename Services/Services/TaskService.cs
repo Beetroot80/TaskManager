@@ -49,6 +49,14 @@ namespace Services
             }
             return serviceTasks;
         }
-
+        public ServiceTask GetTaskById (int taskId)
+        {
+            using (uow = new UnitOfWork<TaskManagerContext>())
+            {
+                var domainTask = uow.DomainTaskRepo.AllIncluding(null, null, signed => signed.Client, created => created.CreatedBy, status => status.Status, priority => priority.Priority, z => z.Project, m => m.CreatedBy)
+                    .Where(x => x.Id == taskId).FirstOrDefault();
+                return Mapper.Map<ServiceTask>(domainTask);
+            }
+        }
     }
 }
