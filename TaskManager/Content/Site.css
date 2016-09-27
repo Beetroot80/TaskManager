@@ -34,7 +34,7 @@ textarea {
 }
 /*Layout navbar*/
 #layout-navbar {
-    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.9);
 }
 /*Login*/
 #login-form {
@@ -51,7 +51,7 @@ textarea {
 }
 
     #login-form header {
-        background: #000;
+        background: rgba(0, 0, 0, 0.9);
         padding: 30px 20px;
         color: white;
         font-size: 2em;
@@ -84,7 +84,7 @@ textarea {
         margin-bottom: 30px;
         width: 278px;
         font-family: inherit;
-        color: #000;
+        color: rgba(0, 0, 0, 0.9);
         background: white;
         border: none;
         font-family: inherit;
@@ -131,7 +131,7 @@ textarea {
     height: 100%;
     margin-left: -150px;
     overflow-y: auto;
-    background: #000;
+    background: rgba(0, 0, 0, 0.9);
     transition: all 0.5s ease;
 }
 
@@ -189,6 +189,7 @@ textarea {
 /*Menu arrow*/
 /*Results sub window*/
 #results-wrapper {
+    overflow-y: auto;
     margin-left: 3%;
     margin-top: 2%;
     margin-bottom: 2%;
@@ -213,7 +214,7 @@ textarea {
 }
 
     #add-project header {
-        background: #000;
+        background: rgba(0, 0, 0, 0.9);
         padding: 30px 20px;
         color: white;
         font-size: 2em;
@@ -251,7 +252,7 @@ textarea {
         outline-offset: 0;
         width: 100%;
         font-family: inherit;
-        color: #000;
+        color: rgba(0, 0, 0, 0.9);
         background: white;
         border: none;
         font-family: inherit;
@@ -267,7 +268,7 @@ textarea {
         }
 
     #add-project .field-validation-error {
-        display:inline-table;
+        display: inline-table;
         color: tomato;
         position: absolute;
         font-size: 0.9em;
@@ -292,7 +293,7 @@ textarea {
 }
 
     #add-user header {
-        background: #000;
+        background: rgba(0, 0, 0, 0.9);
         padding: 30px 20px;
         color: white;
         font-size: 1.6em;
@@ -301,7 +302,7 @@ textarea {
     }
 
 
-    #add-user .add-user input{
+    #add-user .add-user input {
         display: inline-block;
         margin-top: 2%;
         margin-bottom: 1%;
@@ -319,7 +320,8 @@ textarea {
         margin-top: 1%;
         text-align: left;
     }
-    #add-user .form-group select{
+
+    #add-user .form-group select {
         display: inline-block;
         height: 10%;
         width: 50%;
@@ -332,35 +334,105 @@ textarea {
         border: 1px solid #ccc;
     }
 
-     #add-user-btn{
-        position: relative;
+#add-user-btn {
+    position: relative;
+    font-family: inherit;
+    margin-left: 35%;
+    width: 50%;
+    color: rgba(0, 0, 0, 0.9);
+    background: white;
+    border: none;
+    font-family: inherit;
+    font-size: 1.1em;
+    font-weight: 400;
+    border-radius: 3px;
+    box-shadow: 0px 0px 30px rgba(51, 51, 51, 0.3);
+    cursor: pointer;
+}
+
+#add-user .btn:hover {
+    box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.2);
+}
+
+#add-user .field-validation-error {
+    color: tomato;
+    position: absolute;
+    font-size: 1.3em;
+    width: 5%;
+    height: 20px;
+    margin-top: 1%;
+    margin-left: 2%;
+}
+/*User list*/
+#user-table {
+    margin-left: 10%;
+    width: 80%;
+    border-radius: 3px;
+    border-collapse: collapse;
+    padding: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    animation: float 5s infinite;
+}
+
+    #user-table th {
+        color: #fafafa;
+        background: rgba(0, 0, 0, 0.85);
+        border-bottom: 2px solid #9ea7af;
         font-family: inherit;
-        margin-left: 35%;
-        width: 50%;
-        color: #000;
-        background: white;
-        border: none;
-        font-family: inherit;
-        font-size: 1.1em;
         font-weight: 400;
-        border-radius: 3px;
-        box-shadow: 0px 0px 30px rgba(51, 51, 51, 0.3);
-        cursor: pointer;
+        padding: 15px;
+        text-align: left;
     }
 
-        #add-user .btn:hover {
-            box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.2);
+        #user-table th:first-child {
+            border-top-left-radius: 3px;
         }
 
-    #add-user .field-validation-error {
-        color: tomato;
-        position: absolute;
-        font-size: 1.3em;
-        width: 5%;
-        height: 20px;
-        margin-top: 1%;
-        margin-left: 2%;
+        #user-table th:last-child {
+            border-top-right-radius: 3px;
+            border-right: none;
+        }
+
+    #user-table tr {
+        border: 1px solid #C1C3D1;
+        color: #666B85;
+        font-size: 16px;
+        font-weight: normal;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     }
+
+        #user-table tr:hover td {
+            background: #9092a4;
+            color: white;
+            border-top: 1px solid #22262e;
+            border-bottom: 1px solid #22262e;
+        }
+
+
+        #user-table tr:nth-child(odd) td {
+            background: #EBEBEB;
+        }
+
+        #user-table tr:nth-child(odd):hover td {
+            background: #9092a4;
+        }
+
+    #user-table td {
+        background: #FFFFFF;
+        padding: 10px;
+        text-align: left;
+        vertical-align: middle;
+        font-weight: 200;
+        font-size: 1.2em;
+        border-right: 1px solid #C1C3D1;
+    }
+    #user-table .btn{
+        display: block;
+    }
+    #user-table select{
+        border-radius: 3px;
+    }
+
 /*Projects*/
 
 .list {

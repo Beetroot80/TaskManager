@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<TaskManager.Models.EditUserModel>
 
-    <table class="table-responsive col-md-offset-3 col-md-7">
+<div> @* navigation, filtering *@
+
+</div>
+    <table id="user-table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -16,6 +19,9 @@
             </th>
             <th>
                 @Html.DisplayName("Set role")
+            </th>
+            <th>
+
             </th>
         </tr>
         @foreach (var user in Model)
