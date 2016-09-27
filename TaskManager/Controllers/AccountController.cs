@@ -107,7 +107,7 @@ namespace TaskManager.Controllers
         [HttpGet]
         public ActionResult AddUser()
         {
-            ViewBag.Roles = UserService.GetAllRoles();
+            TempData.Add("Roles", UserService.GetAllRoles());
             return PartialView();
         }
 
@@ -130,12 +130,12 @@ namespace TaskManager.Controllers
                 };
                 OperationDetails opDetails = UserService.Create(user);
                 if (opDetails.Succedeed)
-                    return View("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 else
                     ModelState.AddModelError(opDetails.Property, opDetails.Message);
             }
-
-            return View("AuthorizedAsAdmin", "Home", model);
+            TempData["Roles"] = UserService.GetAllRoles();
+            return View(model);
         }
 
         [Authorize(Roles = "Administrator")]

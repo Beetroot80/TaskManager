@@ -35,7 +35,8 @@ namespace TaskManager.Controllers
         public ActionResult Projects()
         {
             var projectService = new ProjectService();
-            var projects = projectService.GetAllProjectsWithCounts(User.Identity.GetUserId());
+            var userId = User.Identity.GetUserId();
+            var projects = projectService.GetAllProjectsWithCounts(userId);
             List<ProjectModel> projectModels = new List<ProjectModel>();
             foreach(var project in projects)
             {
@@ -74,12 +75,12 @@ namespace TaskManager.Controllers
 
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpPost]
-        public ActionResult AddProject(ProjectModel model)
+        public ActionResult AddProject(ProjectModel model) //TODO: added or not?
         {
             model.CreatedById = HttpContext.User.Identity.GetUserId();
             var projectService = new ProjectService();
             projectService.Addproject(Mapper.Map<ServiceEntities.Project>(model));
-            return View("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [Authorize(Roles = "Administrator,Manager,User")]

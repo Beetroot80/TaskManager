@@ -8,19 +8,19 @@ namespace TaskManager.Models
 {
     public class AddUserModel
     {
-        [Required]
+        [Required(ErrorMessage ="*")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "*")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required]
+        [Required(ErrorMessage = "*")]
         [DataType(DataType.Password)]
         [Compare("Password")]
         [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }
-        [Required]
+        [Required(ErrorMessage = "*")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "*")]
         public string Role { get; set; }
 
         public string Surname { get; set; }

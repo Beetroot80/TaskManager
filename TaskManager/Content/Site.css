@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 0px;
-    background-color: #d8dbe2;
+    background-color: #e1d5ca;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.5em;
 }
@@ -10,10 +10,18 @@ html, body {
     height: 100%;
 }
 
-.body-content {
+.container.body-content {
     padding-left: 0px;
     padding-right: 0px;
+    margin-left: 0px;
+    width: 100%;
+    height: 100%;
 }
+
+    .container.body-content.toggled {
+        margin-left: 0px;
+        width: 100%;
+    }
 
 .dl-horizontal dt {
     white-space: normal;
@@ -24,7 +32,10 @@ select,
 textarea {
     max-width: 280px;
 }
-
+/*Layout navbar*/
+#layout-navbar {
+    background-color: #000;
+}
 /*Login*/
 #login-form {
     background: white;
@@ -35,14 +46,14 @@ textarea {
     position: relative;
     color: #373f52;
     border-radius: 2px;
-    margin-top: 20px;
+    margin-top: 10%;
     margin-left: 30%;
 }
 
     #login-form header {
-        background: #cfcbcb;
+        background: #000;
         padding: 30px 20px;
-        color: #373f52;
+        color: white;
         font-size: 2em;
         font-weight: 600;
         border-radius: 2px 2px 0 0;
@@ -73,19 +84,19 @@ textarea {
         margin-bottom: 30px;
         width: 278px;
         font-family: inherit;
-        color: #373f52;
+        color: #000;
         background: white;
         border: none;
         font-family: inherit;
         font-size: 1.6em;
         font-weight: 400;
         border-radius: 3px;
-        box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.4);
+        box-shadow: 0px 0px 30px rgba(51, 51, 51, 0.3);
         cursor: pointer;
     }
 
         #login-form .btn:hover {
-            background: #cbf7bb;
+            box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.2);
         }
 
     #login-form .field-validation-error {
@@ -100,86 +111,257 @@ textarea {
     }
 
 /*Menu*/
-/*Menu toogle*/
+/*Menu toggle*/
 #wrapper {
     padding-left: 0;
     transition: all 0.5s ease;
+    outline-offset: 0px;
 }
 
     #wrapper.toggled {
-        padding-left: 250px;
+        padding-left: 150px;
+        width: 150px;
     }
 
 #sidebar-wrapper {
-    z-index: 1000;
+    z-index: 2;
     position: fixed;
-    left: 250px;
-    width: 150px;
+    left: 150px;
+    width: 0px;
     height: 100%;
-    margin-left: -250px;
+    margin-left: -150px;
     overflow-y: auto;
     background: #000;
     transition: all 0.5s ease;
 }
 
 #wrapper.toggled #sidebar-wrapper {
-    width: 250px;
+    width: 150px;
 }
 
 /*Menu decoration*/
 .sidebar-nav {
     position: absolute;
-    top: 0;
-    width: 250px;
+    top: 10px;
+    width: 150px;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
     .sidebar-nav li {
-        text-indent: 20px;
+        text-indent: 10px;
         line-height: 40px;
-        text-align:left;
+        text-align: start;
+        margin-bottom: 15px;
     }
+
+        .sidebar-nav li#brand {
+            line-height: 40px;
+            text-align: start;
+            margin: 0px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+            .sidebar-nav li#brand a {
+                color: white;
+            }
 
         .sidebar-nav li a {
             display: block;
             text-decoration: none;
             color: #999999;
+            font-size: 1.2em;
         }
 
             .sidebar-nav li a:hover {
                 text-decoration: none;
                 color: tomato;
             }
-            .sidebar-nav li a:active,
-            .sidebar-nav li a:focus {
+
+            .sidebar-nav li a:focus,
+            .sidebar-nav li a.selected {
                 color: tomato;
             }
 
-@media(min-width:768px) {
-    #wrapper {
-        padding-left: 250px;
+/*Menu arrow*/
+/*Results sub window*/
+#results-wrapper {
+    margin-left: 3%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    height: 820px;
+    width: 94%;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px rgba(51, 51, 51, 0.3);
+}
+
+/*Add project*/
+#add-project {
+    background: white;
+    width: 40%;
+    height: 400px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    font-family: lato;
+    position: relative;
+    color: #373f52;
+    border-radius: 2px;
+    margin-top: 10%;
+    margin-left: 25%;
+}
+
+    #add-project header {
+        background: #000;
+        padding: 30px 20px;
+        color: white;
+        font-size: 2em;
+        font-weight: 600;
+        border-radius: 2px 2px 0 0;
     }
 
-        #wrapper.toggled {
-            padding-left: 0;
+    #add-project input {
+        display: block;
+        margin-top: 10%;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid #ccc;
+    }
+
+    #add-project textarea {
+        resize: none;
+        margin-left: 0;
+        width: 100%;
+        margin-top: 5%;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid #ccc;
+    }
+
+    #add-project .add-project {
+        display: block;
+        margin-left: 20%;
+        width: 60%;
+        color: #777;
+    }
+
+    #add-project .btn {
+        position: relative;
+        outline-offset: 0;
+        width: 100%;
+        font-family: inherit;
+        color: #000;
+        background: white;
+        border: none;
+        font-family: inherit;
+        font-size: 1.5em;
+        font-weight: 400;
+        border-radius: 3px;
+        box-shadow: 0px 0px 30px rgba(51, 51, 51, 0.3);
+        cursor: pointer;
+    }
+
+        #add-project .btn:hover {
+            box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.2);
         }
 
-    #sidebar-wrapper {
-        width: 250px;
+    #add-project .field-validation-error {
+        display:inline-table;
+        color: tomato;
+        position: absolute;
+        font-size: 0.9em;
+        width: 100%;
+        height: 20px;
+        margin-left: -15%;
     }
 
-    #wrapper.toggled #sidebar-wrapper {
-        width: 0;
-    }
+/*Add user*/
 
+#add-user {
+    background: white;
+    width: 60%;
+    height: 600px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    font-family: lato;
+    position: relative;
+    color: #373f52;
+    border-radius: 2px;
+    margin-top: 10%;
+    margin-left: -5%;
 }
+
+    #add-user header {
+        background: #000;
+        padding: 30px 20px;
+        color: white;
+        font-size: 1.6em;
+        font-weight: 600;
+        border-radius: 2px 2px 0 0;
+    }
+
+
+    #add-user .add-user input{
+        display: inline-block;
+        margin-top: 2%;
+        margin-bottom: 1%;
+        width: 50%;
+        height: 10%;
+        border-radius: 3px;
+        outline: none;
+        border: 1px solid #ccc;
+    }
+
+    #add-user .form-group label {
+        display: inline-block;
+        width: 30%;
+        margin-left: 5%;
+        margin-top: 1%;
+        text-align: left;
+    }
+    #add-user .form-group select{
+        display: inline-block;
+        height: 10%;
+        width: 50%;
+        font-size: 1em;
+        font-style: inherit;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        box-shadow: none;
+        font-size: 1.1em;
+        border: 1px solid #ccc;
+    }
+
+     #add-user-btn{
+        position: relative;
+        font-family: inherit;
+        margin-left: 35%;
+        width: 50%;
+        color: #000;
+        background: white;
+        border: none;
+        font-family: inherit;
+        font-size: 1.1em;
+        font-weight: 400;
+        border-radius: 3px;
+        box-shadow: 0px 0px 30px rgba(51, 51, 51, 0.3);
+        cursor: pointer;
+    }
+
+        #add-user .btn:hover {
+            box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.2);
+        }
+
+    #add-user .field-validation-error {
+        color: tomato;
+        position: absolute;
+        font-size: 1.3em;
+        width: 5%;
+        height: 20px;
+        margin-top: 1%;
+        margin-left: 2%;
+    }
 /*Projects*/
-.stretch-height {
-    height: 100%;
-    min-height: 100%;
-}
 
 .list {
     list-style: none;
@@ -310,4 +492,27 @@ h2 {
 
 #project-icons {
     padding-top: 0px;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 150px;
+    }
+
+        #wrapper.toggled {
+            padding-left: 150px;
+        }
+
+    #sidebar-wrapper {
+        width: 150px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    .container.body-content {
+        margin-left: 150px;
+        width: calc(100% - 150px);
+    }
 }

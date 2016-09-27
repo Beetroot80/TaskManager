@@ -7,68 +7,66 @@
 @section Menu
 {
     <div id="wrapper">
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li>
-                @Ajax.ActionLink("Add project", "AddProject", "project", new AjaxOptions
-           {
-               HttpMethod = "Get",
-               InsertionMode = InsertionMode.Replace,
-               UpdateTargetId = "results",
-               LoadingElementId = "loading"
-           })
-            </li>
-            <li>
-                @Ajax.ActionLink("Add user", "AddUser", "Account", new AjaxOptions
-           {
-               HttpMethod = "Get",
-               InsertionMode = InsertionMode.Replace,
-               UpdateTargetId = "results",
-               LoadingElementId = "loading"
-           })
-            </li>
-            <li>
-                @Ajax.ActionLink("Users", "UsersList", "Account", new AjaxOptions
-           {
-               HttpMethod = "Get",
-               InsertionMode = InsertionMode.Replace,
-               UpdateTargetId = "results",
-               LoadingElementId = "loading"
-           })
-            </li>
-            <li>
-                @Ajax.ActionLink("Projects", "Projects", "Project", new AjaxOptions
-           {
-               HttpMethod = "Get",
-               InsertionMode = InsertionMode.Replace,
-               UpdateTargetId = "results"
-           })
-            </li>
-        </ul>
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li id="brand">
+                    @Html.ActionLink("Home", "Index", "Home", new { area = "" })
+                </li>
+                <li>
+                    @Html.ActionLink("Add project", "AddProject", "Project")
+                </li>
+                <li>
+                    @*@Ajax.ActionLink("Add user", "AddUser", "Account", new AjaxOptions
+               {
+                   HttpMethod = "Get",
+                   InsertionMode = InsertionMode.Replace,
+                   UpdateTargetId = "results",
+                   LoadingElementId = "loading"
+               })*@
+                    @Html.ActionLink("Add user", "AddUser", "Account")
+                </li>
+                <li>
+                    @Ajax.ActionLink("Users", "UsersList", "Account", new AjaxOptions
+               {
+                   HttpMethod = "Get",
+                   InsertionMode = InsertionMode.Replace,
+                   UpdateTargetId = "results",
+                   LoadingElementId = "loading"
+               })
+                </li>
+                <li>
+                    @Ajax.ActionLink("Projects", "Projects", "Project", new AjaxOptions
+               {
+                   HttpMethod = "Get",
+                   InsertionMode = InsertionMode.Replace,
+                   UpdateTargetId = "results"
+               })
+                </li>
+            </ul>
+        </div>
+        <div id="menu-toggle"><a href="#menu-toggle"></a></div>
     </div>
-</div>
 }
-<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-<div class="container stretch-height">
-    <div class="row stretch-height">
-        <div id="results" class="stretch-height">
+
+<div id="results-wrapper">
+    <div>
+        <div id="results">
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-    //$("#menu-toggle").click(function (e) {
-    //    e.preventDefault();
-    //    $("#wrapper").toggleClass("toggled");
-    //});
-    jQuery(".sidebar-nav li").click(function () {
-        jQuery('.sidebar-nav li.active').removeClass('active');
-        jQuery(this).addClass('active');
+    jQuery("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        jQuery("#wrapper").toggleClass("toggled");
+        jQuery(".body-content").toggleClass("toggled");
+    });
+
+    jQuery(".sidebar-nav li a").click(function () {
+        jQuery(".sidebar-nav li a.selected").removeClass("selected");
+        jQuery(this).addClass("selected")
     });
 </script>
 
-
-@Scripts.Render("~/bundles/bootstrap")
-@Scripts.Render("~/scripts/jquery-1.12.4.js")
-@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+@*@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")*@
 
