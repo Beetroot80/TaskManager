@@ -1,38 +1,53 @@
 ﻿@model IEnumerable<TaskManager.Models.ProjectModel>
 
-<div class="col-md-3 stretch-height pre-scrollable" id="projects">
-    <ul class="list list-group">
-        @foreach (var item in Model)
-        {
-            <li>
-                <div class="container">
-                    <div class="row top" id="project-row">
-                        <div class="col-md-10">
-                            @Ajax.ActionLink(@item.Title, "ViewTask", "Project", new { projectId = item.Id }, new AjaxOptions
+<div id="project-wrapper">
+    <aside id="project-area">
+        <div>
+            <div id="project-panel">
+                <div class="input-group" id="task-search">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default disabled" type="button">Search</button>
+                    </span>
+                </div>
+            </div>
+            <div id="project">
+                <ul id="project-list">
+                    @foreach (var item in Model)
+            {
+                        <li>
+                            <div class="task-title">
+                                @Ajax.ActionLink(@item.Title, "ViewTask", "Project", new { projectId = item.Id }, new AjaxOptions
                        {
                            HttpMethod = "Post",
                            InsertionMode = InsertionMode.Replace,
-                           UpdateTargetId = "tasks"
-                       }, new { @class = "btn btn-default", @id ="project-btn"})
-
-                        </div>
-                        <div class="col-md-2" id="project-icons">
-                            <div>
-                                <span class="glyphicon glyphicon-user">@item.ClientsCount</span>
+                           UpdateTargetId = "task-results"
+                       })
                             </div>
-                            <div>
-                                <span class="glyphicon glyphicon-tasks">@item.TaskCount</span>
+                            <div class="project-description">
+                                <textarea readonly>@item.Description</textarea>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        }
-    </ul>
-</div>
-<div class="container">
-    <div class="row col-md-offset-3">
-        <div id="tasks">
+                            <div class="project-icons">
+                                <span id="users" class="glyphicon glyphicon-user">@item.ClientsCount</span>
+                                <span id="tasks" class="glyphicon glyphicon-tasks">@item.TaskCount</span>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
-    </div>
+    </aside>
+
+    <aside id="task-area">
+        <span>PlaceHolderSpan</span>
+        <div id="task-results">
+        </div>
+    </aside>
 </div>
+
+<script type="text/javascript">
+    jQuery("#project-area .task-title a").click(function () {
+        jQuery("#project-area .task-title a.selected").removeClass("selected");
+        jQuery(this).addClass("selected")
+    });
+</script>

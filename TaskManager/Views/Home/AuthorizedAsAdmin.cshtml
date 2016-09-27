@@ -4,6 +4,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script type="text/javascript">
+    function setHeight()
+    {
+        var h = jQuery(".body-content").height();
+        h = h - (h * 0.1);
+        jQuery("#results-wrapper").height(h);
+    }
+    jQuery("document").ready(function () {
+        setHeight();
+    });
+    jQuery(window).resize(setHeight());
+</script>
+
 @section Menu
 {
     <div id="wrapper">
@@ -16,13 +29,6 @@
                     @Html.ActionLink("Add project", "AddProject", "Project")
                 </li>
                 <li>
-                    @*@Ajax.ActionLink("Add user", "AddUser", "Account", new AjaxOptions
-               {
-                   HttpMethod = "Get",
-                   InsertionMode = InsertionMode.Replace,
-                   UpdateTargetId = "results",
-                   LoadingElementId = "loading"
-               })*@
                     @Html.ActionLink("Add user", "AddUser", "Account")
                 </li>
                 <li>
@@ -67,6 +73,4 @@
         jQuery(this).addClass("selected")
     });
 </script>
-
-@*@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")*@
 

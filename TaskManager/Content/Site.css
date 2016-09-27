@@ -46,7 +46,7 @@ textarea {
     position: relative;
     color: #373f52;
     border-radius: 2px;
-    margin-top: 10%;
+    margin-top: 5%;
     margin-left: 30%;
 }
 
@@ -190,10 +190,9 @@ textarea {
 /*Results sub window*/
 #results-wrapper {
     overflow-y: auto;
-    margin-left: 3%;
+    margin-left: 5%;
     margin-top: 2%;
     margin-bottom: 2%;
-    height: 820px;
     width: 94%;
     background-color: #fff;
     box-shadow: 0px 0px 20px rgba(51, 51, 51, 0.3);
@@ -209,7 +208,7 @@ textarea {
     position: relative;
     color: #373f52;
     border-radius: 2px;
-    margin-top: 10%;
+    margin-top: 5%;
     margin-left: 25%;
 }
 
@@ -288,8 +287,9 @@ textarea {
     position: relative;
     color: #373f52;
     border-radius: 2px;
-    margin-top: 10%;
+    margin-top: 5%;
     margin-left: -5%;
+    margin-bottom: 5%;
 }
 
     #add-user header {
@@ -402,7 +402,7 @@ textarea {
     }
 
         #user-table tr:hover td {
-            background: #9092a4;
+            background: rgba(144, 146, 164, 0.3);
             color: white;
             border-top: 1px solid #22262e;
             border-bottom: 1px solid #22262e;
@@ -414,7 +414,7 @@ textarea {
         }
 
         #user-table tr:nth-child(odd):hover td {
-            background: #9092a4;
+            background: rgba(144, 146, 164, 0.3);
         }
 
     #user-table td {
@@ -426,15 +426,136 @@ textarea {
         font-size: 1.2em;
         border-right: 1px solid #C1C3D1;
     }
-    #user-table .btn{
+
+    #user-table .btn {
         display: block;
     }
-    #user-table select{
+
+    #user-table select {
         border-radius: 3px;
     }
 
 /*Projects*/
+#project-wrapper {
+    display: flex;
+}
 
+#project-area {
+    float: left;
+    display: inline-block;
+    left: 0;
+    height: 100%;
+    width: 30%;
+    margin-right: 30px;
+    border-collapse: collapse;
+    box-shadow: 1px -2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#project-panel div {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+
+#project-panel input {
+    border-radius: 0;
+    height: 50px;
+}
+
+#project-panel .btn {
+    border-radius: 0;
+    height: 50px;
+}
+
+#project-panel input:active,
+#project-panel input:focus {
+    outline: none;
+    border: 1px solid rgba(34, 38, 46, 0.6);
+}
+
+#project-area ul {
+    list-style: none;
+    left: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#project-area .task-title {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    border-bottom: 2px solid rgba(51, 51, 51, 0.3);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1.2em;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+    #project-area .task-title a {
+        text-decoration: none;
+        color: #666B85;
+    }
+
+#project-area .project-icons {
+    background: #FFFFFF;
+    border-bottom: 1px solid #C1C3D1;
+    border-left: 1px solid #C1C3D1;
+    border-right: 1px solid #C1C3D1;
+}
+
+#project-area .project-description {
+    font-family: inherit;
+    background: #FFFFFF;
+    border-top: 1px solid #C1C3D1;
+    border-left: 1px solid #C1C3D1;
+    border-right: 1px solid #C1C3D1;
+}
+
+#project-area li:nth-child(odd) .project-description,
+#project-area li:nth-child(odd) .project-icons {
+    background: #EBEBEB;
+}
+
+#users {
+    margin-left: 30%;
+    width: 20%;
+}
+
+#tasks {
+    margin-left: 10%;
+    width: 20%;
+}
+
+#project-area textarea {
+    background: inherit;
+    resize: none;
+    min-height: 100px;
+    max-height: 350px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-size: 1.1em;
+    box-sizing: border-box;
+    margin-left: 15%;
+    width: 70%;
+    border: none;
+}
+
+#project-area .task-title:hover {
+    background: rgba(144, 146, 164, 0.3);
+    border-top: 1px solid rgba(34, 38, 46, 0.3);
+    border-bottom: 1px solid rgba(34, 38, 46,0.3);
+}
+
+#project-area .task-title a:active,
+#project-area .task-title a.selected {
+    color: tomato;
+}
+
+/*Tasks*/
+#tasks-area {
+}
+/*Save changes popup*/
 .list {
     list-style: none;
     text-align: center;
