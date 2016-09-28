@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
-using DomainCore;
 using Microsoft.AspNet.Identity;
-using DomainEF.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
+
+using DomainEntities;
 
 namespace DomainEF
 {
-    class TaskManagerInitializer : DropCreateDatabaseIfModelChanges<TaskManagerContext>
+    class TaskManagerInitializer : CreateDatabaseIfNotExists<TaskManagerContext>
     {
         protected override void Seed(TaskManagerContext context)
         {

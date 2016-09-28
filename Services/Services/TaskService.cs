@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnitOfWork;
-using Repositories;
-using DomainEF;
-using ServiceEntities;
 using AutoMapper;
-using DomainCore;
-using System.Collections;
+
+using ServiceEntities;
+
+using DomainEntities;
+using DomainEF.UnitOfWork;
 
 namespace Services
 {
     public class TaskService
     {
-        private UnitOfWork<TaskManagerContext> uow;
+        private UnitOfWork uow;
 
         public IEnumerable<ServiceTask> GetAllTasks()
         {
             List<ServiceTask> serviseTasks;
             IEnumerable<DomainTask> tasks;
-            using (uow = new UnitOfWork<TaskManagerContext>())
+            using (uow = new UnitOfWork())
             {
                 serviseTasks = new List<ServiceTask>();
-                tasks = uow.DomainTaskRepo.AllIncluding(includeProperties: x => x.Client).ToList();
+                tasks = uow.DomainTaskRepo.GetAllIncluding(includeProperties: x => x.Client).ToList();
             }
             foreach (var i in tasks)
             {
@@ -37,10 +33,10 @@ namespace Services
         {
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
             IEnumerable<DomainTask> domainTasks;
-            using (uow = new UnitOfWork<TaskManagerContext>())
+            using (uow = new UnitOfWork())
             {
                 domainTasks = uow.DomainTaskRepo
-                    .AllIncluding(null, null, signed => signed.Client, created => created.CreatedBy, status => status.Status, priority => priority.Priority, z => z.Project, m => m.CreatedBy)
+                    .GetAllIncluding(null, null, signed => signed.Client, created => created.CreatedBy, status => status.Status, priority => priority.Priority, z => z.Project, m => m.CreatedBy)
                     .Where(x => x.ProjectId == projectId).ToList();
                 foreach (var item in domainTasks)
                 {
@@ -51,18 +47,18 @@ namespace Services
         }
         public ServiceTask GetTaskById(int taskId)
         {
-            using (uow = new UnitOfWork<TaskManagerContext>())
+            using (uow = new UnitOfWork())
             {
-                var domainTask = uow.DomainTaskRepo.AllIncluding(null, null, signed => signed.Client, created => created.CreatedBy, status => status.Status, priority => priority.Priority, z => z.Project, m => m.CreatedBy)
+                var domainTask = uow.DomainTaskRepo.GetAllIncluding(null, null, signed => signed.Client, created => created.CreatedBy, status => status.Status, priority => priority.Priority, z => z.Project, m => m.CreatedBy)
                     .Where(x => x.Id == taskId).FirstOrDefault();
                 return Mapper.Map<ServiceTask>(domainTask);
             }
         }
         public List<ServiceEntities.Comment> GetComments(int taskId)
         {
-            using (uow = new UnitOfWork<TaskManagerContext>())
+            using (uow = new UnitOfWork())
             {
-                var domainComments = uow.DomainTaskRepo.All().Where(x => x.Id == taskId).Select(x => x.Comments).FirstOrDefault();
+                var domainComments = uow.DomainTaskRepo.GetAll().Where(x => x.Id == taskId).Select(x => x.Comments).FirstOrDefault();
                 return Mapper.Map<List<ServiceEntities.Comment>>(domainComments);
             }
         }
@@ -72,7 +68,7 @@ namespace Services
             var statusId = model.StatusId;
             var priorityId = model.PriorityId;
             var projectId = model.ProjectId;
-            using (uow = new UnitOfWork<TaskManagerContext>())
+            using (uow = new UnitOfWork())
             {
                 uow.DomainTaskRepo.Insert(Mapper.Map<DomainTask>(model)); //Updet by id
                 if (statusId != null)

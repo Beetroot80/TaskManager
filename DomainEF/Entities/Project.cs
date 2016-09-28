@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DomainCore
+namespace DomainEntities
 {
     public class Project
     {
@@ -12,10 +12,9 @@ namespace DomainCore
         [ForeignKey("CreatedBy")]
         public string CreatedById { get; set; }
 
-        //Navigation properties
-        public ICollection<DomainTask> Tasks { get; set; }
-        public ICollection<ApplicationUser> Clients { get; set; }
-        public ApplicationUser CreatedBy { get; set; }
+        public virtual ICollection<DomainTask> Tasks { get; set; }
+        public virtual ICollection<ApplicationUser> Clients { get; set; }
+        public virtual ApplicationUser CreatedBy { get; set; }
 
         public Project()
         {

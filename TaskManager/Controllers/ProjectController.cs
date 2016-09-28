@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using AutoMapper;
 using ServiceEntities;
-using ServiceMapper;
 using Services.Services;
 using TaskManager.Models;
 using Services;

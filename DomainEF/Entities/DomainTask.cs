@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DomainCore
+namespace DomainEntities
 {
     public class DomainTask
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public byte? Percentage { get; set; }
         public DateTime? CreationDate { get; set; }
         public DateTime? DeadLine { get; set; }
 
-        //Foreign keys
         public int ProjectId { get; set; }
         public int? StatusId { get; set; }
         public int? PriorityId { get; set; }
@@ -22,12 +20,11 @@ namespace DomainCore
         [ForeignKey("CreatedBy")]
         public string CreatedBy_Id { get; set; }
 
-        //Navigation properties
-        public Project Project { get; set; }
-        public Status Status { get; set; }
-        public Priority Priority { get; set; }
-        public ApplicationUser Client { get; set; }
-        public ApplicationUser CreatedBy { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual Status Status { get; set; }
+        public virtual Priority Priority { get; set; }
+        public virtual ApplicationUser Client { get; set; } //Task asigned to client
+        public virtual ApplicationUser CreatedBy { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
 

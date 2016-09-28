@@ -1,36 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DomainEF.Interfaces;
-using DomainEF.UOW;
-using DomainEF.Repositories;
-using UnitOfWork;
-using DomainEF;
+﻿using System.Collections.Generic;
 using ServiceEntities;
 using AutoMapper;
-using ServiceMapper;
+
+using DomainEF.UnitOfWork;
 
 namespace Services.Services
 {
     public class InfoService
     {
-        private UnitOfWork<TaskManagerContext> uow;
+        private UnitOfWork uow;
 
         public List<Status> StatusList()
         {
-            using (uow = new UnitOfWork<TaskManagerContext>())
+            using (uow = new UnitOfWork())
             {
-                var domainStatus = uow.StatusRepo.All();
+                var domainStatus = uow.StatusRepo.GetAll();
                 return Mapper.Map<List<Status>>(domainStatus);
             }
         }
         public List<Priority> PriorityList()
         {
-            using (uow = new UnitOfWork<TaskManagerContext>())
+            using (uow = new UnitOfWork())
             {
-                var domainPriority = uow.PriorityRepo.All();
+                var domainPriority = uow.PriorityRepo.GetAll();
                 return Mapper.Map<List<Priority>>(domainPriority);
             }
         }

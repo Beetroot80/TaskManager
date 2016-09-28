@@ -1,29 +1,68 @@
-﻿using DomainEF.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Data.Entity;
+
+using DomainEF.Interfaces;
 
 namespace DomainEF.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         where TEntity : class
     {
-        internal TaskManagerContext context;
-        internal DbSet<TEntity> dbSet;
+        private TaskManagerContext context;
+        private DbSet<TEntity> dbSet;
 
-        public GenericRepository(TaskManagerContext context)
+        internal TaskManagerContext Context
         {
-            this.context = context;
-            this.dbSet = context.Set<TEntity>();
+            get
+            {
+                return context;
+            }
+        }
+        internal DbSet<TEntity> DbSet
+        {
+            get
+            {
+                return dbSet;
+            }
         }
 
-        public IQueryable<TEntity> All()
+        public GenericRepository(ITaskManagerContext context)
+        {
+            this.context = context as TaskManagerContext;
+            dbSet = this.Context.Set<TEntity>();
+        }
+
+        public IQueryable<TEntity> GetAll()
         {
             return dbSet.AsQueryable();
+        }
+
+        public IQueryable<TEntity> GetAllIncluding(Expression<Func<TEntity, bool>> filter = null,
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           params Expression<Func<TEntity, object>> [] includeProperties)
+        {
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).AsQueryable();
+            }
+            else
+            {
+                return query.AsQueryable();
+            }
+
         }
 
         public void Delete(int id)
@@ -39,6 +78,11 @@ namespace DomainEF.Repositories
                 dbSet.Attach(entityToDelete);
             }
             dbSet.Remove(entityToDelete);
+        }
+        public void Delete(string id)
+        {
+            TEntity entityToDelete = dbSet.Find(id);
+            Delete(entityToDelete);
         }
 
         public void Dispose()
@@ -66,33 +110,6 @@ namespace DomainEF.Repositories
             dbSet.Attach(entity);
             context.Entry(entity).State = EntityState.Modified;
         }
-
-        public IQueryable<TEntity> AllIncluding(Expression<Func<TEntity, bool>> filter = null,
-           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-           params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            IQueryable<TEntity> query = dbSet;
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-            foreach (var includeProperty in includeProperties)
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).AsQueryable();
-            }
-            else
-            {
-                return query.AsQueryable();
-            }
-
-        }
-
     }
 
 }

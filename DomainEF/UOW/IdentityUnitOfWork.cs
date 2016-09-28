@@ -1,30 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DomainCore;
+using Microsoft.AspNet.Identity.EntityFramework;
+
+using DomainEntities;
 using DomainEF.Identity;
 using DomainEF.Interfaces;
 using DomainEF.Repositories;
-using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace DomainEF.UOW
+namespace DomainEF.UnitOfWork
 {
     public class IdentityUnitOfWork : IIdentityUnitOfWork
     {
-        private TaskManagerContext context; //TODO: can change to ITaskManagerContext or TaskManagerContext
+        private TaskManagerContext context;
         private ApplicationRoleManager roleManager;
         private ApplicationUserManager userManager;
         private IClientManager clientManager;
 
         public IdentityUnitOfWork()
         {
-            context = new TaskManagerContext();
-            userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
-            roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(context));
-            clientManager = new ClientManager(context);
+            Context = new TaskManagerContext();
+            userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(Context));
+            roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(Context));
+            clientManager = new ClientManager(Context);
         }
 
         public IClientManager ClientManager
@@ -32,14 +28,6 @@ namespace DomainEF.UOW
             get
             {
                 return clientManager;
-            }
-        }
-
-        public IContext Context
-        {
-            get
-            {
-                return context;
             }
         }
 
@@ -59,10 +47,22 @@ namespace DomainEF.UOW
             }
         }
 
+        public TaskManagerContext Context
+        {
+            get
+            {
+                return context;
+            }
+
+            set
+            {
+                context = value;
+            }
+        }
 
         public void SaveChanges()
         {
-            context.SaveChanges();
+            Context.SaveChanges();
         }
 
         #region IDisposable 
@@ -86,6 +86,11 @@ namespace DomainEF.UOW
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public void SaveChanges(out bool? result)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

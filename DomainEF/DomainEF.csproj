@@ -70,9 +70,6 @@
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
-    <Compile Include="Interfaces\IClientProfileRepository.cs" />
-    <Compile Include="Interfaces\IContext.cs" />
-    <Compile Include="Interfaces\IEntityRepository.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IIdentityUnitOfWork.cs" />
     <Compile Include="Interfaces\ITaskManagerContext.cs" />

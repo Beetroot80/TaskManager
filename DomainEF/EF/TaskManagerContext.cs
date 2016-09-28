@@ -1,8 +1,9 @@
-using System;
 using System.Data.Entity;
-using DomainCore;
-using DomainEF.Interfaces;
 using Microsoft.AspNet.Identity.EntityFramework;
+
+using DomainEntities;
+using DomainEF.Interfaces;
+using System;
 
 namespace DomainEF
 {
@@ -11,7 +12,7 @@ namespace DomainEF
         public TaskManagerContext()
             : base("TaskManagerDB")
         {
-            Database.SetInitializer<TaskManagerContext>(new TaskManagerInitializer());
+            
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -21,20 +22,6 @@ namespace DomainEF
             modelBuilder.Entity<ApplicationUser>().HasMany(x => x.DomainTasks);
 
             base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
-            //modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
-            //modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
-        }
-
-        public void SetModified(object entity)
-        {
-            Entry(entity).State = EntityState.Modified;
-        }
-
-        public void SetAdded(object entity)
-        {
-            Entry(entity).State = EntityState.Added;
         }
 
         public virtual DbSet<ClientProfile> ClientProfiles { get; set; }

@@ -2,12 +2,8 @@
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using Microsoft.AspNet.Identity;
-using Services;
+
 using Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Services.Services;
 
 [assembly: OwinStartup(typeof(TaskManager.App_Start.Startup))]

@@ -1,11 +1,10 @@
 ﻿using System;
-using DomainEF;
 
-namespace UnitOfWork
+namespace DomainEF.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        //IContext Context { get; }
+        void SaveChanges(out bool? result);
         void SaveChanges();
     }
 }

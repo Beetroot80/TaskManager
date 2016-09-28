@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Services.Interfaces;
-using DomainEF.UOW;
-using DomainEF;
-using UnitOfWork;
+﻿using Services.Interfaces;
+
+using DomainEF.UnitOfWork;
 
 namespace Services.Services
 {

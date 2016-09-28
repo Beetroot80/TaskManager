@@ -1,40 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-
-using DomainCore;
-using DomainEF.Interfaces;
-using DomainEF.UOW;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using ServiceEntities;
+using AutoMapper;
+
 using Services.Helpers;
 using Services.Interfaces;
-using UnitOfWork;
-using appUser = DomainCore.ApplicationUser;
-using appRole = DomainCore.ApplicationRole;
-using serviceUser = ServiceEntities.ApplicationUser;
-using serviceRole = ServiceEntities.ApplicationRole;
-using AutoMapper;
-using DomainEF.Repositories;
-using DomainEF;
+
 using System.Data.Entity;
+using DomainEF.UnitOfWork;
+using DomainEF.Interfaces;
+
+using appUser = DomainEntities.ApplicationUser;
+using appRole = DomainEntities.ApplicationRole;
+using serviceUser = ServiceEntities.ApplicationUser;
+
 
 namespace Services.Services
 {
     public class UserService : IUserService
     {
         //TODO: usings?
-        private UnitOfWork<TaskManagerContext> uow;
-        UnitOfWork<TaskManagerContext> Uow
+        private UnitOfWork uow;
+        public UnitOfWork Uow
         {
             get
             {
                 if (uow == null)
-                    uow = new UnitOfWork<TaskManagerContext>();
+                    uow = new UnitOfWork();
                 return uow;
             }
         }
@@ -60,7 +54,7 @@ namespace Services.Services
                 user = new appUser { Email = userDto.Email, UserName = userDto.Email };
                 Uow.UserManager.Create(user, userDto.Password);
                 Uow.UserManager.AddToRole(user.Id, userDto.Role);
-                DomainCore.ClientProfile clientProfile = new DomainCore.ClientProfile
+                DomainEntities.ClientProfile clientProfile = new DomainEntities.ClientProfile
                 {
                     Id = user.Id,
                     Name = userDto.Name,

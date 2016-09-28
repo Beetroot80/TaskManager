@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace DomainCore
+namespace DomainEntities
 {
     public class ApplicationUser : IdentityUser
     {
         public string ClientProfileId { get; set; }
         public virtual ClientProfile ClientProfile { get; set; }
 
-        public IEnumerable<string> UserRoles { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Project> Projects { get; set; }
-        public ICollection<DomainTask> DomainTasks { get; set; }
+        public ICollection<string> UserRoles { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<DomainTask> DomainTasks { get; set; }
 
         public ApplicationUser()
         {

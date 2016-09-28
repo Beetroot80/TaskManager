@@ -1,15 +1,8 @@
 ﻿using ServiceEntities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnitOfWork;
-using Repositories;
-using DomainEF;
 using AutoMapper;
-using DomainEF.Repositories;
-
+using DomainEF.UnitOfWork;
 
 namespace Services.Services
 {
@@ -17,7 +10,7 @@ namespace Services.Services
     {
         public static List<ClientProfile> GetAllUsers()
         {
-            using (var uow = new UnitOfWork<TaskManagerContext>())
+            using (var uow = new UnitOfWork())
             {
                     var clients = uow.UserManager.Users.Select(x => x.ClientProfile).ToList();
                     var serviceClients = new List<ClientProfile>();

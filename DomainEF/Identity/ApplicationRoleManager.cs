@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DomainCore;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+
+using DomainEntities;
+
 
 namespace DomainEF.Identity
 {
     public class ApplicationRoleManager : RoleManager<ApplicationRole>
     {
-        public ApplicationRoleManager(/*IRoleStore<ApplicationRole, string> store*/RoleStore<ApplicationRole> store) 
-            : base(store) // TODO: check 
+        public ApplicationRoleManager(RoleStore<ApplicationRole> store) 
+            : base(store)
         {
         }
     }

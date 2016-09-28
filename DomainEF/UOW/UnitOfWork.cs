@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Data.Entity;
-using DomainEF;
-using DomainCore;
+using DomainEntities;
+using Microsoft.AspNet.Identity.EntityFramework;
+
 using DomainEF.Repositories;
 using DomainEF.Identity;
 using DomainEF.Interfaces;
-using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace UnitOfWork
+
+namespace DomainEF.UnitOfWork
 {
-    public sealed class UnitOfWork<TContext>: IUnitOfWork
-        where TContext : IContext, new() //TODO: Do I need this?
+    public sealed class UnitOfWork : IUnitOfWork
     {
         private TaskManagerContext context;
-
-        private GenericRepository<ApplicationUser> applicationUserRepo; //TODO: do i need these 2?
-        private GenericRepository<ApplicationRole> applicationRoleRepo;
-        private GenericRepository<ClientProfile> clientProfileRepo;
 
         private GenericRepository<Comment> commentRepo;
         private GenericRepository<DomainTask> domainTaskRepo;
@@ -28,11 +23,26 @@ namespace UnitOfWork
         private ApplicationUserManager userManager;
         private IClientManager clientManager;
 
+        public TaskManagerContext Context
+        {
+            get
+            {
+                if (context == null)
+                {
+                    context = new TaskManagerContext();
+                }
+                return context;
+            }
+        }
 
         public IClientManager ClientManager
         {
             get
             {
+                if (clientManager == null)
+                {
+                    clientManager = new ClientManager(context);
+                }
                 return clientManager;
             }
         }
@@ -41,6 +51,10 @@ namespace UnitOfWork
         {
             get
             {
+                if (roleManager == null)
+                {
+                    roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(context));
+                }
                 return roleManager;
             }
         }
@@ -49,6 +63,10 @@ namespace UnitOfWork
         {
             get
             {
+                if (userManager == null)
+                {
+                    userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+                }
                 return userManager;
             }
         }
@@ -69,7 +87,7 @@ namespace UnitOfWork
         {
             get
             {
-                if(projectRepo == null)
+                if (projectRepo == null)
                 {
                     projectRepo = new GenericRepository<Project>(context);
                 }
@@ -81,7 +99,7 @@ namespace UnitOfWork
         {
             get
             {
-                if(priorityRepo == null)
+                if (priorityRepo == null)
                 {
                     priorityRepo = new GenericRepository<Priority>(context);
                 }
@@ -93,7 +111,7 @@ namespace UnitOfWork
         {
             get
             {
-                if(domainTaskRepo == null)
+                if (domainTaskRepo == null)
                 {
                     domainTaskRepo = new GenericRepository<DomainTask>(context);
                 }
@@ -105,7 +123,7 @@ namespace UnitOfWork
         {
             get
             {
-                if(commentRepo == null)
+                if (commentRepo == null)
                 {
                     commentRepo = new GenericRepository<Comment>(context);
                 }
@@ -113,17 +131,24 @@ namespace UnitOfWork
             }
         }
 
-        public UnitOfWork() //Pass connection string? 
+        public UnitOfWork()
         {
             context = new TaskManagerContext();
-            userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
-            roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(context));
-            clientManager = new ClientManager(context);
+        }
+        public UnitOfWork(string connectionName) //TODO: implement
+        {
+            context = new TaskManagerContext();
         }
 
         public void SaveChanges()
         {
             context.SaveChanges();
+        }
+
+        private void SafeDispose<T>(T o) where T : IDisposable
+        {
+            if (o != null)
+                o.Dispose();
         }
 
         #region IDisposable
@@ -135,18 +160,36 @@ namespace UnitOfWork
             {
                 if (disposing)
                 {
-                    UserManager.Dispose();
-                    RoleManager.Dispose();
-                    context.Dispose();
-                    context = null;
+                    SafeDispose(userManager);
+                    SafeDispose(clientManager);
+                    SafeDispose(roleManager);
+                    SafeDispose(commentRepo);
+                    SafeDispose(domainTaskRepo);
+                    SafeDispose(priorityRepo);
+                    SafeDispose(projectRepo);
+                    SafeDispose(statusRepo);
+                    SafeDispose(context);
                 }
                 disposedValue = true;
             }
         }
+
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+        public void SaveChanges(out bool? result)
+        {
+            int saves = context.SaveChanges();
+            if (saves > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
         }
         #endregion
     }

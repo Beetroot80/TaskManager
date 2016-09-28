@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ServiceEntities
 {
@@ -20,7 +17,6 @@ namespace ServiceEntities
         public string AssignedToId { get; set; }
         public int? StatusId { get; set; }
         public int? PriorityId { get; set; }
-
 
         public ICollection<Comment> Comments { get; set; }
         public Project Project { get; set; }
