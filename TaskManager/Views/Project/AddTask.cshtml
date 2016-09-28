@@ -1,5 +1,6 @@
 ﻿@model TaskManager.Models.TaskModel
 
+@{ Layout = "~/Views/Shared/_Layout.cshtml";}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -35,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StatusTitle, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StatusTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("StatusList", new SelectList((ICollection<string>)TempData["StatusList"]), new { @class = "btn btn-default btn-block text-center" })
                 @Html.ValidationMessageFor(model => model.StatusTitle, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,8 +44,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PriorityTitle, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                @Html.DropDownList("PriorityList", new SelectList((ICollection<string>)TempData["PriorityList"]), new { @class = "btn btn-default btn-block text-center" })
                 @Html.EditorFor(model => model.PriorityTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PriorityTitle, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -57,18 +58,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CreatedByEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedByEmail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedByEmail, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.ProjectTitle, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                @Html.DropDownList("ProjectTitles", new SelectList((ICollection<string>)TempData["ProjectTitles"]), new { @class = "btn btn-default btn-block text-center" })
                 @Html.EditorFor(model => model.ProjectTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProjectTitle, "", new { @class = "text-danger" })
             </div>
         </div>
 

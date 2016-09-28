@@ -18,7 +18,7 @@
         </div>
 
         <div id="task-add">
-            <button class="btn btn-default disabled" type="button">Add</button>
+            @Html.ActionLink("New", "AddTask", "Project", "", new { @class = "btn btn-default" })
         </div>
     </div>
 
@@ -91,17 +91,17 @@
     $(function () {
         $.ajaxSetup({ cache: false });
         $(".comments").click(function (e) {
-            e.preventDefault();
+                    e.preventDefault();
             $.get(this.href, function (data) {
                 $('#dialogContent').html(data);
                 $('#modDialog').modal('show');
+                    });
+                });
             });
-        });
-    });
 </script>
 
 @*post form   <form action="/User/Show" method="post">
-    <input type="hidden" name="uid" value="1" />
-    <input type="hidden" name="uname" value="user1">
-    <input type="submit" value="+" />
-</form>*@
+        <input type="hidden" name="uid" value="1" />
+        <input type="hidden" name="uname" value="user1">
+        <input type="submit" value="+" />
+    </form>*@

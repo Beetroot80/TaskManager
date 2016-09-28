@@ -38,7 +38,7 @@ namespace TaskManager.Controllers
             var userId = User.Identity.GetUserId();
             var projects = projectService.GetAllProjectsWithCounts(userId);
             List<ProjectModel> projectModels = new List<ProjectModel>();
-            foreach(var project in projects)
+            foreach (var project in projects)
             {
                 projectModels.Add(Mapper.Map<ProjectModel>(project));
             }
@@ -52,7 +52,7 @@ namespace TaskManager.Controllers
             var taskService = new TaskService();
             var tasks = taskService.GetSignedTasks(projectId);
             List<ViewTasksModel> taskModels = new List<ViewTasksModel>();
-            foreach(var task in tasks)
+            foreach (var task in tasks)
             {
                 taskModels.Add(Mapper.Map<ViewTasksModel>(task));
             }
@@ -60,12 +60,12 @@ namespace TaskManager.Controllers
             ViewBag.ProjectTitle = taskModels.Select(x => x.ProjectTitle).FirstOrDefault();
             return PartialView(taskModels.AsEnumerable());
         }
-        [Authorize(Roles = "Administrator,Manager,User")]
-        [HttpPost]
-        public ActionResult TaskInfo(int taskId)
-        {
-            return PartialView();
-        }
+        //[Authorize(Roles = "Administrator,Manager,User")]
+        //[HttpPost]
+        ////public ActionResult TaskInfo(int taskId)
+        ////{
+        ////    return PartialView();
+        ////}
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpGet]
         public ActionResult AddProject()
@@ -98,10 +98,49 @@ namespace TaskManager.Controllers
 
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpGet]
-        public ActionResult AddTask()
+        public ActionResult AddTask(string projectTitle)
         {
+            TempData["ProjectTitles"] = projectTitle;
+            projectTitle = null;
+            var taskModel = new TaskModel();
+            if (projectTitle == null)
+            {
+                var projectService = new ProjectService();
+                var serviceProjects = projectService.GetUserProjects(User.Identity.GetUserId());
+                var projectTitles = new List<string>();
+                foreach(var item in serviceProjects)
+                {
+                    projectTitles.Add(item.Title);
+                }
+                TempData["ProjectTitles"] = projectTitles;
+            }
+            var infoService = new InfoService();
+            var statusList = infoService.PriorityList().Select(x => x.Title).ToList();
+            var priorityList = infoService.StatusList().Select(x => x.Title).ToList();
+
+            TempData["StatusList"] = statusList;
+            TempData["PriorityList"] = priorityList;
+
+            return PartialView(taskModel);
+        }
+
+        [Authorize(Roles = "Administrator,Manager,User")]
+        [HttpPost]
+        public ActionResult AddTask(TaskModel model)
+        {
+            var userId = User.Identity.GetUserId();
+            var serviceModel = new ServiceTask();
+            serviceModel = Mapper.Map<ServiceTask>(model);
+            serviceModel.CreatedById = userId;
+
+            string projectTitle = null;
+            if (projectTitle == null)
+            {
+
+            }
             return PartialView();
         }
+
 
     }
 }

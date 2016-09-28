@@ -49,7 +49,7 @@ namespace Services
             }
             return serviceTasks;
         }
-        public ServiceTask GetTaskById (int taskId)
+        public ServiceTask GetTaskById(int taskId)
         {
             using (uow = new UnitOfWork<TaskManagerContext>())
             {
@@ -64,6 +64,35 @@ namespace Services
             {
                 var domainComments = uow.DomainTaskRepo.All().Where(x => x.Id == taskId).Select(x => x.Comments).FirstOrDefault();
                 return Mapper.Map<List<ServiceEntities.Comment>>(domainComments);
+            }
+        }
+        public void AddTask(ServiceTask model)
+        {
+            var userId = model.CreatedById;
+            var statusId = model.StatusId;
+            var priorityId = model.PriorityId;
+            var projectId = model.ProjectId;
+            using (uow = new UnitOfWork<TaskManagerContext>())
+            {
+                uow.DomainTaskRepo.Insert(Mapper.Map<DomainTask>(model)); //Updet by id
+                if (statusId != null)
+                {
+                    var entity = uow.StatusRepo.Find((int)statusId);
+                    uow.StatusRepo.Update(entity);
+                }
+                if (priorityId != null)
+                {
+                    var entity = uow.PriorityRepo.Find((int)priorityId);
+                    uow.PriorityRepo.Update(entity);
+                }
+                if (priorityId != null)
+                {
+                    var entity = uow.ProjectRepo.Find((int)projectId);
+                    uow.ProjectRepo.Update(entity);
+                }
+                var user = uow.UserManager.Users.Where(x => x.Id == userId).FirstOrDefault();
+                uow.UserManager.UpdateAsync(user);
+                uow.SaveChanges();
             }
         }
     }

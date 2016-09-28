@@ -32,6 +32,9 @@
                     @Html.ActionLink("Add user", "AddUser", "Account")
                 </li>
                 <li>
+                    @Html.ActionLink("Add task", "AddTask", "Project")
+                </li>
+                <li>
                     @Ajax.ActionLink("Users", "UsersList", "Account", new AjaxOptions
                {
                    HttpMethod = "Get",

@@ -64,6 +64,20 @@ namespace Services.Services
             }
             return projects;
         }
+        public List<Project> GetUserProjects(string userId)
+        {
+            IEnumerable<DomainCore.Project> dProjects = new List<DomainCore.Project>();
+            using (uow = new UnitOfWork<TaskManagerContext>())
+            {
+                dProjects = uow.ProjectRepo.All().Where(x => x.CreatedById == userId).ToList();
+            }
+            List<Project> projects = new List<Project>();
+            foreach (var entity in dProjects)
+            {
+                projects.Add(Mapper.Map<Project>(entity));
+            }
+            return projects;
+        }
 
         public List<Project> GetFullTasks() //TODO: delete
         {
