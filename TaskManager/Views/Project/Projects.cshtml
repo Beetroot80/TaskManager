@@ -1,10 +1,23 @@
 ﻿@model IEnumerable<TaskManager.Models.ProjectModel>
+<script type="text/javascript">
+    function setMaxHeight()
+    {
+        var h = jQuery(".body-content").height();
+        h = h-(h*0.1);
+        jQuery("#project-area").height(h);
+        jQuery("#project-area").css("maxHeight", h);
+    }
+    jQuery("document").ready(function () {
+        setMaxHeight();
+    });
+    jQuery("Window").resize(setHeight());
+</script>
 
 <div id="project-wrapper">
     <aside id="project-area">
         <div>
             <div id="project-panel">
-                <div class="input-group" id="task-search">
+                <div class="input-group" id="project-search">
                     <input type="text" class="form-control" placeholder="Search for...">
                     <span class="input-group-btn">
                         <button class="btn btn-default disabled" type="button">Search</button>
@@ -38,11 +51,10 @@
         </div>
     </aside>
 
-    <aside id="task-area">
-        <span>PlaceHolderSpan</span>
+    <section id="task-area">
         <div id="task-results">
         </div>
-    </aside>
+    </section>
 </div>
 
 <script type="text/javascript">

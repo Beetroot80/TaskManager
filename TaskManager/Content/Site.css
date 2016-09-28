@@ -190,7 +190,7 @@ textarea {
 /*Results sub window*/
 #results-wrapper {
     overflow-y: auto;
-    margin-left: 5%;
+    margin-left: 3%;
     margin-top: 2%;
     margin-bottom: 2%;
     width: 94%;
@@ -403,7 +403,7 @@ textarea {
 
         #user-table tr:hover td {
             background: rgba(144, 146, 164, 0.3);
-            color: white;
+            color: rgba(0, 0, 0, 0.9);
             border-top: 1px solid #22262e;
             border-bottom: 1px solid #22262e;
         }
@@ -441,12 +441,12 @@ textarea {
 }
 
 #project-area {
-    float: left;
+    overflow-y: auto;
+    position: relative;
     display: inline-block;
     left: 0;
-    height: 100%;
     width: 30%;
-    margin-right: 30px;
+    margin-right: 10px;
     border-collapse: collapse;
     box-shadow: 1px -2px 5px rgba(0, 0, 0, 0.3);
 }
@@ -470,7 +470,8 @@ textarea {
 #project-panel input:active,
 #project-panel input:focus {
     outline: none;
-    border: 1px solid rgba(34, 38, 46, 0.6);
+    box-shadow: none;
+    border: -1px solid rgba(34, 38, 46, 0.6);
 }
 
 #project-area ul {
@@ -534,7 +535,9 @@ textarea {
     max-height: 350px;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    font-weight: 200;
     font-size: 1.1em;
+    font-style: italic;
     box-sizing: border-box;
     margin-left: 15%;
     width: 70%;
@@ -547,14 +550,160 @@ textarea {
     border-bottom: 1px solid rgba(34, 38, 46,0.3);
 }
 
+#project-area .task-title a:hover {
+    color: rgba(0, 0, 0, 0.9);
+}
+
 #project-area .task-title a:active,
 #project-area .task-title a.selected {
     color: tomato;
 }
 
 /*Tasks*/
-#tasks-area {
+/*Task menu bar*/
+#task-area {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+    padding: 0;
+    width: 67%;
+    border-collapse: collapse;
+    box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.3);
 }
+
+#task-header div {
+    display: inline-block;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+#task-project-title {
+    font-family: inherit;
+    font-size: 2em;
+    color: #666B85;
+    text-align: left;
+    height: 50px;
+    width: 33%;
+}
+
+    #task-project-title i {
+        position: relative;
+        font-style: inherit;
+        top: 10%;
+        left: 10%;
+    }
+
+#task-search {
+    display: inline;
+    width: 33%;
+}
+
+#task-serach .input-group {
+    margin: 0;
+}
+
+#input-project-span {
+    margin: 0;
+    width: 40%;
+}
+
+#task-search input {
+    width: 60%;
+}
+
+#task-navs {
+    width: 30%;
+    margin: 0;
+}
+
+/*Task body*/
+#task-table {
+    width: 100%;
+    margin-top: 5%;
+    border-radius: 3px;
+    border-collapse: collapse;
+    padding: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    animation: float 5s infinite;
+}
+
+    #task-table th {
+        color: #fafafa;
+        background: rgba(0, 0, 0, 0.85);
+        border-bottom: 2px solid #9ea7af;
+        font-family: inherit;
+        font-weight: 400;
+        padding: 15px;
+        text-align: center;
+    }
+
+        #task-table th:first-child {
+            border-top-left-radius: 3px;
+        }
+
+        #task-table th:last-child {
+            border-top-right-radius: 3px;
+            border-right: none;
+        }
+
+    #task-table tr {
+        border: 1px solid #C1C3D1;
+        color: #666B85;
+        font-size: 16px;
+        font-weight: normal;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+        #task-table tr:hover td {
+            background: rgba(144, 146, 164, 0.3);
+            color: rgba(0, 0, 0, 0.9);
+            border-top: 1px solid #22262e;
+            border-bottom: 1px solid #22262e;
+        }
+
+        #task-table tr:nth-child(odd) td {
+            background: #EBEBEB;
+        }
+
+        #task-table tr:nth-child(odd):hover td {
+            background: rgba(144, 146, 164, 0.3);
+        }
+
+    #task-table td {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        background: #FFFFFF;
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+        font-weight: 400;
+        font-size: 1.3em;
+        border-right: 1px solid #C1C3D1;
+    }
+
+        #task-table td a {
+            text-decoration: none;
+        }
+
+#task-descriptuion-td i {
+    font-size: 1em;
+    font-style: italic;
+}
+
+#task-table .btn {
+    display: block;
+}
+
+#task-table select {
+    border-radius: 3px;
+}
+
+
+
 /*Save changes popup*/
 .list {
     list-style: none;

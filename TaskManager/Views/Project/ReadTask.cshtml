@@ -1,46 +1,64 @@
 ﻿@model TaskManager.Models.ViewTasksModel
 
-<div class="container">
-    <div class="row task-info">
-        <div id="comments">
-            <div>
-                @foreach (var comment in Model.Comments)
-                {
-                    <div class="comment-info">
-                        @comment.ClientEmail
-                    </div>
-                    <div class="comment-body">
-                        @comment.Text
-                    </div>
-                }
-            </div>
-            <div id="send-comment">
-                <textarea /> <div class="btn btn-default">Send</div>
-            </div>
+<div id="task-header" class="task-header">
+    <div id="task-project-title">
+        <i>@ViewBag.ProjectTitle</i>
+    </div>
+
+    <div class="input-group" id="task-search">
+        <input type="text" class="form-control" placeholder="Search for...">
+        <button class="btn btn-default disabled" type="button">Search</button>
+    </div>
+
+    <div id="task-navs">
+        <div id="task-filters">
+            <button class="btn btn-default disabled" type="button">Priority</button>
+            <button class="btn btn-default disabled" type="button">Status</button>
         </div>
-        <div id="task-body">
-            <div id="title">
-                @Model.Title
-            </div>
-            <div id="description">
-                @Model.Description
-            </div>
-            <div id="info">
-                <ul class="list">
-                    <li id="task-signed-to">
-                        <h6>Signed to: @Model.AssignedToEmail</h6>
-                    </li>
-                    <li id="task-status">
-                        <h6>Status: @Model.StatusTitle</h6>
-                    </li>
-                    <li id="task-priority">
-                        <h6>Priority: @Model.PriorityTitle</h6>
-                    </li>
-                    <li id="task-deadline">
-                        <h6>Deadline: @Model.DeadLine</h6>
-                    </li>
-                </ul>
-            </div>
+
+        <div id="task-add">
+            <button class="btn btn-default disabled" type="button">Add</button>
         </div>
     </div>
+
+</div>
+
+<div id="task-body">
+    <table id="task-table">
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Info
+            </th>
+        </tr>
+            <tr>
+                <td>
+                    <p>@Model.Title</p>
+                </td>
+                <td id="task-descriptuion-td">
+                    <i>@Model.Description</i>
+                </td>
+                <td>
+                    <ul class="list">
+                        <li id="task-signed-to">
+                            <h6>Signed to: @Model.AssignedToEmail</h6>
+                        </li>
+                        <li id="task-status">
+                            <h6>Status: @Model.StatusTitle</h6>
+                        </li>
+                        <li id="task-priority">
+                            <h6>Priority: @Model.PriorityTitle</h6>
+                        </li>
+                        <li id="task-deadline">
+                            <h6>Deadline: @Model.DeadLine</h6>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+    </table>
 </div>

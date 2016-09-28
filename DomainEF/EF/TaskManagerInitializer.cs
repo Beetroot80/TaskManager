@@ -4,6 +4,7 @@ using DomainCore;
 using Microsoft.AspNet.Identity;
 using DomainEF.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 
 namespace DomainEF
 {
@@ -61,27 +62,55 @@ namespace DomainEF
             UserManager.AddToRole(u1.Id, admin.Name);
             var userGroup0 = new List<ApplicationUser>();
             var userGroup1 = new List<ApplicationUser>();
+            var userGroup2 = new List<ApplicationUser>();
+            var userGroup3 = new List<ApplicationUser>();
+            var userGroup4 = new List<ApplicationUser>();
             userGroup0.Add(u0);
-            userGroup0.Add(u1);
             userGroup1.Add(u0);
+            userGroup2.Add(u0);
+            userGroup2.Add(u0);
+            userGroup3.Add(u1);
+            userGroup3.Add(u0);
+            userGroup4.Add(u1);
+            userGroup4.Add(u0);
 
+            context.SaveChanges();
 
             //Projects
-            var pr0 = new Project() { Title = "FirstProject", Description = "This project was created first", Clients = userGroup0, CreatedBy = u0 };
-            var pr1 = new Project() { Title = "SecondProject", Description = "This project was created second", Clients = userGroup1, CreatedBy = u0 };
+
+            var pr0 = new Project() { Title = "Home", Description = "Home tasks for me and my wife", Clients = userGroup0, CreatedBy = u0 };
+            var pr1 = new Project() { Title = "Work", Description = "My boss can't hold his ideas", Clients = userGroup1, CreatedBy = u0 };
+            var pr2 = new Project() { Title = "Home2", Description = "Home tasks for me and my wife", Clients = userGroup2, CreatedBy = u1 };
+            var pr3 = new Project() { Title = "My game Ideas", Description = "damn, I wont my own game", Clients = userGroup3, CreatedBy = u1 };
+            var pr4 = new Project() { Title = "Buy medicine", Description = "My grandma's needs", Clients = userGroup4, CreatedBy = u0 };
             context.Projects.Add(pr0);
             context.Projects.Add(pr1);
+            context.Projects.Add(pr2);
+            context.Projects.Add(pr3);
+            context.Projects.Add(pr4);
             context.SaveChanges();
 
             //Tasks
-            var t0 = new DomainTask() { Title = "Task1", Description = "First task", Status = s0, Priority = p0, Project = pr0, CreatedBy = u1, CreatedBy_Id = u1.Id };
-            var t1 = new DomainTask() { Title = "Task2", Description = "Second task", Status = s0, Priority = p1, Project = pr0, CreatedBy = u0, CreatedBy_Id = u0.Id };
-            var t2 = new DomainTask() { Title = "Task3", Description = "Third task", Status = s1, Priority = p1, Project = pr1, CreatedBy = u0, CreatedBy_Id = u0.Id };
-            var t3 = new DomainTask() { Title = "Task4", Description = "Fourth task", Status = s2, Priority = p2, Project = pr1, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t0 = new DomainTask() { Title = "Wash windows", Description = "Why should i wash windows and not she?", Status = s0, Priority = p0, Project = pr0, CreatedBy = u1, CreatedBy_Id = u1.Id };
+            var t1 = new DomainTask() { Title = "Wash dishes", Description = "For real, again I should do it?", Status = s0, Priority = p1, Project = pr0, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t2 = new DomainTask() { Title = "Chapter 1", Description = "Create first chapter for child's book", Status = s1, Priority = p1, Project = pr1, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t3 = new DomainTask() { Title = "Fix printer", Description = "Bosses printer has broke down", Status = s2, Priority = p2, Project = pr1, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t4 = new DomainTask() { Title = "Buy dishwasher", Description = "Tired to wash dishes", Status = s0, Priority = p0, Project = pr2, CreatedBy = u1, CreatedBy_Id = u1.Id };
+            var t5 = new DomainTask() { Title = "Buy window washer", Description = "Is it even exist?", Status = s0, Priority = p1, Project = pr2, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t6 = new DomainTask() { Title = "Buy new wife", Description = "Need to consider about this", Status = s1, Priority = p1, Project = pr2, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t7 = new DomainTask() { Title = "Main character", Description = "Sketches", Status = s2, Priority = p2, Project = pr3, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t8 = new DomainTask() { Title = "Environment", Description = "Design where this took place", Status = s2, Priority = p2, Project = pr3, CreatedBy = u0, CreatedBy_Id = u0.Id };
+            var t9 = new DomainTask() { Title = "Classes", Description = "Design classes", Status = s2, Priority = p2, Project = pr3, CreatedBy = u0, CreatedBy_Id = u0.Id };
             context.Tasks.Add(t0);
             context.Tasks.Add(t1);
             context.Tasks.Add(t2);
             context.Tasks.Add(t3);
+            context.Tasks.Add(t4);
+            context.Tasks.Add(t5);
+            context.Tasks.Add(t6);
+            context.Tasks.Add(t7);
+            context.Tasks.Add(t8);
+            context.Tasks.Add(t9);
             context.SaveChanges();
 
             //Comments
@@ -89,10 +118,13 @@ namespace DomainEF
             var c1 = new Comment() { Text = "Hello world", DomainTask = t1, Client = u0 };
             context.Comments.Add(c0);
             context.Comments.Add(c1);
-            context.Entry<ApplicationUser>(u0).State = EntityState.Modified;
-            context.Entry<ApplicationUser>(u1).State = EntityState.Modified;
-            context.Entry<DomainTask>(t0).State = EntityState.Modified;
-            context.Entry<DomainTask>(t1).State = EntityState.Modified;
+            //context.Entry<ApplicationUser>(u0).State = EntityState.Modified;
+            //context.Entry<ApplicationUser>(u1).State = EntityState.Modified;
+            //context.Entry<DomainTask>(t0).State = EntityState.Modified;
+            //context.Entry<DomainTask>(t1).State = EntityState.Modified;
+            //context.Entry<DomainTask>(t2).State = EntityState.Modified;
+            //context.Entry<DomainTask>(t3).State = EntityState.Modified;
+
             context.SaveChanges();
 
         }
