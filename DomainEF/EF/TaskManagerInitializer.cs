@@ -13,7 +13,7 @@ namespace DomainEF
         protected override void Seed(TaskManagerContext context)
         {
             //Statuses
-            var s0 = new Status() { Title = "NotAsigned" };
+            var s0 = new Status() { Title = "NotStarted" };
             var s1 = new Status() { Title = "InProgress" };
             var s2 = new Status() { Title = "Done" };
 

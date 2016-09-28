@@ -1,75 +1,78 @@
-﻿@model TaskManager.Models.TaskModel
+﻿@model TaskManager.Models.ViewTasksModel
 
 @{ Layout = "~/Views/Shared/_Layout.cshtml";}
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>TaskModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+<div class="col-md-offset-3">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal" id="add-task">
+            <header class="text-center">Add task</header>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group add-task">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group add-task">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group add-task">
+                @Html.LabelFor(model => model.DeadLine, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DeadLine, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group add-task">
+                @Html.LabelFor(model => model.StatusTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.DropDownListFor(model => model.StatusTitle, new SelectList((ICollection<string>)TempData["StatusList"]), new { @class = "btn btn-default btn-block text-center" })
+                    @Html.ValidationMessageFor(model => model.StatusTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group add-task">
+                @Html.LabelFor(model => model.PriorityTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.DropDownListFor(model => model.PriorityTitle, new SelectList((ICollection<string>)TempData["PriorityList"]), new { @class = "btn btn-default btn-block text-center" })
+                    @Html.ValidationMessageFor(model => model.PriorityTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group add-task">
+                @Html.LabelFor(model => model.AssignedToEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.EditorFor(model => model.AssignedToEmail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AssignedToEmail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group add-task">
+                @Html.LabelFor(model => model.ProjectTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div>
+                    @Html.DropDownListFor(model => model.ProjectTitle, new SelectList((ICollection<string>)TempData["ProjectTitles"]), new { @class = "btn btn-default btn-block text-center" })
+                    @Html.ValidationMessageFor(model => model.ProjectTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Create" class="btn btn-default" id="add-task-btn" />
+                </div>
             </div>
         </div>
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DeadLine, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DeadLine, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StatusTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("StatusList", new SelectList((ICollection<string>)TempData["StatusList"]), new { @class = "btn btn-default btn-block text-center" })
-                @Html.ValidationMessageFor(model => model.StatusTitle, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PriorityTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PriorityList", new SelectList((ICollection<string>)TempData["PriorityList"]), new { @class = "btn btn-default btn-block text-center" })
-                @Html.EditorFor(model => model.PriorityTitle, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AssignedToEmail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AssignedToEmail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AssignedToEmail, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProjectTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ProjectTitles", new SelectList((ICollection<string>)TempData["ProjectTitles"]), new { @class = "btn btn-default btn-block text-center" })
-                @Html.EditorFor(model => model.ProjectTitle, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
+</div>

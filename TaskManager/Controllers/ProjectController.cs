@@ -102,7 +102,7 @@ namespace TaskManager.Controllers
         {
             TempData["ProjectTitles"] = projectTitle;
             projectTitle = null;
-            var taskModel = new TaskModel();
+            var taskModel = new ViewTasksModel();
             if (projectTitle == null)
             {
                 var projectService = new ProjectService();
@@ -115,8 +115,8 @@ namespace TaskManager.Controllers
                 TempData["ProjectTitles"] = projectTitles;
             }
             var infoService = new InfoService();
-            var statusList = infoService.PriorityList().Select(x => x.Title).ToList();
-            var priorityList = infoService.StatusList().Select(x => x.Title).ToList();
+            var statusList = infoService.StatusList().Select(x => x.Title).ToList();
+            var priorityList = infoService.PriorityList().Select(x => x.Title).ToList();
 
             TempData["StatusList"] = statusList;
             TempData["PriorityList"] = priorityList;
@@ -126,19 +126,19 @@ namespace TaskManager.Controllers
 
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpPost]
-        public ActionResult AddTask(TaskModel model)
+        public ActionResult AddTask(ViewTasksModel model)
         {
-            var userId = User.Identity.GetUserId();
-            var serviceModel = new ServiceTask();
-            serviceModel = Mapper.Map<ServiceTask>(model);
-            serviceModel.CreatedById = userId;
+            //var userId = User.Identity.GetUserId();
+            //var serviceModel = new ServiceTask();
+            //serviceModel = Mapper.Map<ServiceTask>(model);
+            //serviceModel.CreatedById = userId;
 
-            string projectTitle = null;
-            if (projectTitle == null)
-            {
+            //string projectTitle = null;
+            //if (projectTitle == null)
+            //{
 
-            }
-            return PartialView();
+            //}
+            return RedirectToAction("Index", "Home");
         }
 
 
