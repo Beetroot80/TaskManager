@@ -84,12 +84,24 @@ namespace TaskManager.Controllers
         }
 
         [Authorize(Roles = "Administrator,Manager,User")]
-        [HttpGet]
-        public ActionResult ReadTask(int taskId) //TODO: raname to viewtask!
+        public ActionResult Comments(int? Id)
         {
-            var taskServie = new TaskService();
-            var task = taskServie.GetTaskById(taskId);
-            return PartialView(task);
+            if (Id != null)
+            {
+                var taskService = new TaskService();
+                var taskComments = taskService.GetComments((int)Id);
+
+                return PartialView(Mapper.Map<List<CommentModel>>(taskComments));
+            }
+            return RedirectToAction("Index", "Home");
         }
+
+        [Authorize(Roles = "Administrator,Manager,User")]
+        [HttpGet]
+        public ActionResult AddTask()
+        {
+            return PartialView();
+        }
+
     }
 }

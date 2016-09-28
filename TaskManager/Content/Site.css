@@ -675,7 +675,6 @@ textarea {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-
         background: #FFFFFF;
         padding: 10px;
         text-align: center;
@@ -702,8 +701,31 @@ textarea {
     border-radius: 3px;
 }
 
+/*Comments*/
 
+#comments-body {
+    overflow-y: auto;
+    width: 80%;
+    margin-left: 10%;
+}
 
+#coment-body .comment li {
+
+    list-style: none;
+    position: relative;
+}
+
+#coment-imput {
+    position: relative;
+    margin-left: 15%;
+    margin-top: 15%;
+    width: 70%;
+    bottom: 0;
+}
+
+.modal{
+    border-radius: 0;
+}
 /*Save changes popup*/
 .list {
     list-style: none;

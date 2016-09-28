@@ -58,5 +58,13 @@ namespace Services
                 return Mapper.Map<ServiceTask>(domainTask);
             }
         }
+        public List<ServiceEntities.Comment> GetComments(int taskId)
+        {
+            using (uow = new UnitOfWork<TaskManagerContext>())
+            {
+                var domainComments = uow.DomainTaskRepo.All().Where(x => x.Id == taskId).Select(x => x.Comments).FirstOrDefault();
+                return Mapper.Map<List<ServiceEntities.Comment>>(domainComments);
+            }
+        }
     }
 }

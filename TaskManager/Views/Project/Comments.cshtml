@@ -1,0 +1,22 @@
+﻿@model IEnumerable<TaskManager.Models.CommentModel>
+
+@{ Layout = null;}
+
+<div id="comments-body">
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li class="comment">
+                @item.Text
+            </li>
+        }
+    </ul>
+</div>
+<div id="comment-footer">
+    <div class="input-group" id="coment-imput">
+        <input type="text" class="form-control" placeholder="Text">
+        <button class="btn btn-default disabled" type="button">Send</button>
+    </div>
+</div>
+
+

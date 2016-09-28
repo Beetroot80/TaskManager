@@ -8,7 +8,7 @@ using System;
 
 namespace DomainEF
 {
-    class TaskManagerInitializer : DropCreateDatabaseAlways<TaskManagerContext>
+    class TaskManagerInitializer : DropCreateDatabaseIfModelChanges<TaskManagerContext>
     {
         protected override void Seed(TaskManagerContext context)
         {

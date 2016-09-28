@@ -43,6 +43,7 @@ namespace TaskManager
                 .ForMember(x => x.StatusTitle, op => op.MapFrom(status => status.Status.Title))
                 .ForMember(x => x.ProjectTitle,op => op.MapFrom(project => project.Project.Title))
                 .MaxDepth(1).ReverseMap();
+            CreateMap<ServiceEntities.Comment, CommentModel>();
         }
     }
     public static class MVCMapperConfig
