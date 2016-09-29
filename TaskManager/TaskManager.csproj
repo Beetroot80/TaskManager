@@ -184,6 +184,7 @@
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\EditUserModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\MangeModel.cs" />
     <Compile Include="Models\PriorityModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -271,6 +272,7 @@
     <Content Include="Views\Project\AddTask.cshtml" />
     <Content Include="Views\Home\AuthorizedAsManager.cshtml" />
     <Content Include="Views\Home\AuthorizedAsUser.cshtml" />
+    <Content Include="Views\Project\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,59 @@
+﻿@model TaskManager.Models.ManageModel
+@{
+    ViewBag.Title = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="manage-wrapper">
+    @using (Html.BeginForm("Manage", "Project", FormMethod.Post))
+    {
+        <div class="form-group add-task">
+            @Html.LabelFor(model => model.ProjectTitle, htmlAttributes: new { @class = "control-label col-md-2 " })
+            <div>
+                @Html.DropDownListFor(model => model.ProjectTitle, new SelectList(TempData["ProjectTitles"] as ICollection<string>), new { @class = "btn btn-default btn-block text-center user-projects" })
+                @Html.ValidationMessageFor(model => model.ProjectTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group add-task">
+            @Html.LabelFor(model => model.ProjectActions, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div>
+                @Html.DropDownListFor(model => model.ProjectActions, new SelectList(Model.ProjectActions), new { @class = "btn btn-default btn-block text-center disabled", @id = "project-actions" })
+                @Html.ValidationMessageFor(model => model.ProjectTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group add-task">
+            @Html.LabelFor(model => model.TaskTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div>
+                @Html.DropDownListFor(model => model.TaskTitle, new SelectList(Model.ProjectActions), new { @class = "btn btn-default btn-block text-center disabled", @id = "project-actions" })
+                @Html.ValidationMessageFor(model => model.TaskTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group add-task">
+            @Html.LabelFor(model => model.TaskAction, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div>
+                @Html.DropDownListFor(model => model.TaskAction, new SelectList(Model.TaskAction), new { @class = "btn btn-default btn-block text-center disabled", @id = "project-actions" })
+                @Html.ValidationMessageFor(model => model.TaskAction, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jquryUi")
+@Styles.Render("~/jqueryUi/css")
+
+<script type="text/javascript">
+    var projectActionsList = ["Add user to project", "Delete project", "Manage tasks"];
+    var projectAction;
+    $("document").ready(function () {
+        $(".user-projects").change( function() {
+            $("#project-actions").removeClass("disabled");
+            }
+        );
+        $("#project-actions").change(function () {
+            projectAction = $("#project-actions :selected").text();
+            //if(projectAction = "Add user to project")
+        });
+    });
+</script>
