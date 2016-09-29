@@ -25,7 +25,8 @@ namespace ServiceMapper
             CreateMap<DomainEntities.Project, ServiceEntities.Project>()
                 .MaxDepth(1);
             CreateMap<ServiceEntities.Project, DomainEntities.Project>()
-                .ForMember(x => x.Id, op => op.Ignore());
+                .ForMember(x => x.Id, op => op.Ignore())
+                .ForMember(x => x.Clients, op => op.MapFrom(client => client.Clients));
         }
     }
 }
