@@ -207,5 +207,15 @@ namespace TaskManager.Controllers
             return Json(projecttitles, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize(Roles = "Administrator, Manager, User")]
+        [HttpPost]
+        public ActionResult TaskList(string projectTitle)
+        {
+            var projectService = new ProjectService();
+            var taskTitles = projectService.FindByTitle(projectTitle).Tasks.Select(x => x.Title).ToList();
+            SelectList titles = new SelectList(taskTitles, "Title", "Task title", 0);
+            return Json(taskTitles);
+        }
+
     }
 }

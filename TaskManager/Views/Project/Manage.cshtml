@@ -10,7 +10,7 @@
         <div class="form-group add-task">
             @Html.LabelFor(model => model.ProjectTitle, htmlAttributes: new { @class = "control-label col-md-2 " })
             <div>
-                @Html.DropDownListFor(model => model.ProjectTitle, new SelectList(TempData["ProjectTitles"] as ICollection<string>), new { @class = "btn btn-default btn-block text-center user-projects" })
+                @Html.DropDownListFor(model => model.ProjectTitle, new SelectList(TempData ["ProjectTitles"] as ICollection<string>), new { @class = "btn btn-default btn-block text-center user-projects", @id = "project-title" })
                 @Html.ValidationMessageFor(model => model.ProjectTitle, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -24,17 +24,18 @@
         <div class="form-group add-task">
             @Html.LabelFor(model => model.TaskTitle, htmlAttributes: new { @class = "control-label col-md-2" })
             <div>
-                @Html.DropDownListFor(model => model.TaskTitle, new SelectList(Model.ProjectActions), new { @class = "btn btn-default btn-block text-center disabled", @id = "project-actions" })
+                <select id="task-title" name="task-title" class="btn btn-default btn-block text-center disabled"></select>
                 @Html.ValidationMessageFor(model => model.TaskTitle, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group add-task">
             @Html.LabelFor(model => model.TaskAction, htmlAttributes: new { @class = "control-label col-md-2" })
             <div>
-                @Html.DropDownListFor(model => model.TaskAction, new SelectList(Model.TaskAction), new { @class = "btn btn-default btn-block text-center disabled", @id = "project-actions" })
+                @Html.DropDownListFor(model => model.TaskAction, new SelectList(Model.TaskAction), new { @class = "btn btn-default btn-block text-center disabled", @id = "task-actions" })
                 @Html.ValidationMessageFor(model => model.TaskAction, "", new { @class = "text-danger" })
             </div>
         </div>
+
     }
 </div>
 
@@ -46,14 +47,78 @@
 <script type="text/javascript">
     var projectActionsList = ["Add user to project", "Delete project", "Manage tasks"];
     var projectAction;
-    $("document").ready(function () {
-        $(".user-projects").change( function() {
-            $("#project-actions").removeClass("disabled");
+    var _projectTitle;
+    var _taskTitle;
+    function SetProjectTitle(title) {
+        _projectTitle = title;
+    }
+    function SetTaskTitle(tile)
+    {
+        _taskTitle = title;
+    }
+
+    function RedirectionToProjectAction() {
+        projectAction = $("#project-actions :selected").text();
+        if (projectAction == "Manage tasks") {
+            FillTaskTitles();
+            $("#task-titles").removeClass("disable");
+        }
+    }
+
+    function FillTaskTitles() {
+        var procemessage = "<option value='0'> Loading...</option>";
+        $("#task-title").html(procemessage).show();
+        $("#task-title").addClass("disabled");
+        $("#project-actions").addClass("disabled");
+        var url = "/Project/TaskList";
+        $.ajax({
+            url: url,
+            data: { projectTitle: _projectTitle },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=\"" + data[x] + "\">" + data[x] + "</option>";
+                }
+                $("#task-title").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse + data);
             }
-        );
-        $("#project-actions").change(function () {
-            projectAction = $("#project-actions :selected").text();
-            //if(projectAction = "Add user to project")
+        });
+        $("#project-actions").removeClass("disabled");
+        $("#task-title").removeClass("disabled");
+    }
+
+
+    $("document").ready(function () {
+        $("#project-title option").click(function () {
+            //unable dropdowns
+            $("#task-title").empty();
+            $("#task-title").addClass("disabled");
+            $("#task-action").addClass("disabled");
+            //set project title, able project actions
+            SetProjectTitle($("#project-title").val());
+            $("#project-actions").removeClass("disabled");
+        });
+
+        $("#project-actions option").click(function () {
+            //disable titles dropdown
+            $("#task-title").addClass("disabled");
+            //move to action
+            RedirectionToProjectAction();
+        });
+
+
+        $("#task-actions").click(function () {
+
+        });
+
+        $("#task-title").on("click", "option", function () {
+            //anable
+            $("#task-actions").removeClass("disabled");
+            SetTaskTitle($("#task-title").val());
         });
     });
 </script>
