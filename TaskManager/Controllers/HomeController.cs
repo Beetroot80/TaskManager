@@ -10,6 +10,10 @@ namespace TaskManager.Controllers
         {
             if (User.IsInRole("Administrator"))
                 return View("AuthorizedAsAdmin");
+            else if (User.IsInRole("Manager"))
+                return View("AuthorizedAsManager");
+            else if (User.IsInRole("User"))
+                return View("AuthorizedAsUser");
             return View();
         }
 

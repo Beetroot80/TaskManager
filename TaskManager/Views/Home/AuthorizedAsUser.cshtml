@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "AuthorizedAsUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    function setHeight() {
+        var h = jQuery(".body-content").height();
+        h = h - (h * 0.1);
+        jQuery("#results-wrapper").height(h);
+    }
+    jQuery("document").ready(function () {
+        setHeight();
+    });
+    jQuery("Window").resize(setHeight());
+</script>
+
+@section Menu
+{
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li id="brand">
+                    @Html.ActionLink("Home", "Index", "Home", new { area = "" })
+                </li>
+                <li>
+                    @Html.ActionLink("Add project", "AddProject", "Project")
+                </li>
+                <li>
+                    @Html.ActionLink("Add task", "AddTask", "Project")
+                </li>
+                <li>
+                    @Ajax.ActionLink("Projects", "Projects", "Project", new AjaxOptions
+               {
+                   HttpMethod = "Get",
+                   InsertionMode = InsertionMode.Replace,
+                   UpdateTargetId = "results"
+               })
+                </li>
+                <li>
+                    Management
+                </li>
+            </ul>
+        </div>
+        @*<div id="menu-toggle"><a href="#menu-toggle"></a></div>*@
+    </div>
+}
+
+<div id="results-wrapper">
+    <div>
+        <div id="results">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        jQuery("#wrapper").toggleClass("toggled");
+        jQuery(".body-content").toggleClass("toggled");
+    });
+
+    jQuery(".sidebar-nav li a").click(function () {
+        jQuery(".sidebar-nav li a.selected").removeClass("selected");
+        jQuery(this).addClass("selected")
+    });
+</script>
+
+
+

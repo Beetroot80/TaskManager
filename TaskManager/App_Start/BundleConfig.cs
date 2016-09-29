@@ -27,6 +27,14 @@ namespace TaskManager
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquryUi").Include(
+                "~/Scripts/jquery-ui.min.js"));
+
+            bundles.Add(new StyleBundle("~/jqueryUi/css").Include(
+                "~/Content/jquery-ui.min.css",
+                "~/Content/jquery-ui.structure.min.css",
+                "~/Content/jquery-ui.theme.min.css"));
         }
     }
 }

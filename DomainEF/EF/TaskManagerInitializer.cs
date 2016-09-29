@@ -58,7 +58,7 @@ namespace DomainEF
             var u0 = UserManager.Find("Eugene@gmail.com", "Eugene1!");
             var u1 = UserManager.Find("Kate@gmail.com", "Kate11!");
             UserManager.AddToRole(u0.Id, admin.Name);
-            UserManager.AddToRole(u1.Id, admin.Name);
+            UserManager.AddToRole(u1.Id, manager.Name);
             var userGroup0 = new List<ApplicationUser>();
             var userGroup1 = new List<ApplicationUser>();
             var userGroup2 = new List<ApplicationUser>();

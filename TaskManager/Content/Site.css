@@ -570,7 +570,11 @@ textarea {
     color: tomato;
 }
 
+
 /*Tasks*/
+#task-results{
+    background: rgba(0, 0, 0, 0.1);
+}
 #add-task {
     background: white;
     width: 60%;
@@ -596,6 +600,8 @@ textarea {
 
 
     #add-task .add-task input {
+        position: relative;
+        z-index: 20;
         display: inline-block;
         margin-top: 2%;
         margin-bottom: 1%;
@@ -611,6 +617,8 @@ textarea {
         margin-bottom: 1%;
         width: 50%;
         height: 10%;
+        font-size: 1em;
+        font-style: inherit;
         border-radius: 3px;
         outline: none;
         border: 1px solid #ccc;
@@ -622,19 +630,6 @@ textarea {
         margin-left: 5%;
         margin-top: 1%;
         text-align: left;
-    }
-
-    #add-task .form-group select {
-        display: inline-block;
-        height: 10%;
-        width: 50%;
-        font-size: 1em;
-        font-style: inherit;
-        margin-top: 1%;
-        margin-bottom: 1%;
-        box-shadow: none;
-        font-size: 1.1em;
-        border: 1px solid #ccc;
     }
 
 #add-task-btn {
@@ -658,13 +653,15 @@ textarea {
 }
 
 #add-task .field-validation-error {
-    color: tomato;
+    vertical-align: bottom;
     position: absolute;
-    font-size: 1.3em;
-    width: 5%;
-    height: 20px;
-    margin-top: 1%;
-    margin-left: 2%;
+    z-index: 10;
+    margin-top: 3%;
+    margin-left: -52%;
+    width: 51%;
+    height: 6%;
+    background: rgba(237, 39, 4, 0.5);
+    color: transparent;
 }
 /*Task menu bar*/
 #task-area {
@@ -672,7 +669,7 @@ textarea {
     display: inline-block;
     margin-left: 5px;
     padding: 0;
-    width: 67%;
+    width: 69%;
     border-collapse: collapse;
     box-shadow: -1px 0px 5px rgba(0, 0, 0, 0.3);
 }
@@ -724,6 +721,7 @@ textarea {
 }
 
 /*Task body*/
+
 #task-table {
     width: 100%;
     margin-top: 5%;
@@ -736,7 +734,7 @@ textarea {
 
     #task-table th {
         color: #fafafa;
-        background: rgba(0, 0, 0, 0.85);
+        background: rgba(0, 0, 0, 0.8);
         border-bottom: 2px solid #9ea7af;
         font-family: inherit;
         font-weight: 400;

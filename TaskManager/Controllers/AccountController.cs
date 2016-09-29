@@ -8,6 +8,7 @@ using Services.Interfaces;
 using ServiceEntities;
 using Services.Helpers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TaskManager.Controllers
 {
@@ -145,6 +146,12 @@ namespace TaskManager.Controllers
 
             ViewBag.Roles = UserService.GetAllRoles();
             return PartialView(userList);
+        }
+        [Authorize(Roles = "Administrator, Manager")]
+        public ActionResult UserEmails()
+        {
+            var users = UserService.GetUsers().Select(x => x.Email).ToList();
+            return Json(users, JsonRequestBehavior.AllowGet);
         }
 
         private void SetInitialData() //TODO: remove

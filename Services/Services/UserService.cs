@@ -15,7 +15,7 @@ using DomainEF.Interfaces;
 using appUser = DomainEntities.ApplicationUser;
 using appRole = DomainEntities.ApplicationRole;
 using serviceUser = ServiceEntities.ApplicationUser;
-
+using System;
 
 namespace Services.Services
 {
@@ -34,6 +34,9 @@ namespace Services.Services
         }
 
         public UserService(IIdentityUnitOfWork unitOfWork)
+        {
+        }
+        public UserService()
         {
         }
 
@@ -69,6 +72,36 @@ namespace Services.Services
             else
             {
                 return new OperationDetails(false, "Error", "Email is already used");
+            }
+        }
+
+        public ServiceEntities.ApplicationUser Find(string id)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    return Mapper.Map<ServiceEntities.ApplicationUser>(uow.UserManager.FindById(id));
+                }
+                catch (NullReferenceException)
+                {
+                    return null;
+                }
+            }
+
+        }
+        public ServiceEntities.ApplicationUser FindByEmail(string email)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    return Mapper.Map<ServiceEntities.ApplicationUser>(uow.UserManager.FindByEmail(email));
+                }
+                catch (NullReferenceException)
+                {
+                    return null;
+                }
             }
         }
 
@@ -109,7 +142,6 @@ namespace Services.Services
                 user.UserRoles = rolenames;
 
             }
-
 
             List<serviceUser> users = new List<serviceUser>();
             foreach (var user in domainUsers)

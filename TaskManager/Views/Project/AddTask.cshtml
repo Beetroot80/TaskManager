@@ -28,9 +28,9 @@
             </div>
 
             <div class="form-group add-task">
-                @Html.LabelFor(model => model.DeadLine, htmlAttributes: new { @class = "control-label col-md-2 "})
+                @Html.LabelFor(model => model.DeadLine, htmlAttributes: new { @class = "control-label col-md-2 " })
                 <div>
-                    @Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.DeadLine, new { htmlAttributes = new { @class = "form-control datefield" } })
                     @Html.ValidationMessageFor(model => model.DeadLine, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -54,7 +54,7 @@
             <div class="form-group add-task">
                 @Html.LabelFor(model => model.AssignedToEmail, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div>
-                    @Html.EditorFor(model => model.AssignedToEmail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.AssignedToEmail, new { htmlAttributes = new { @class = "form-control usersvalue" } })
                     @Html.ValidationMessageFor(model => model.AssignedToEmail, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -76,3 +76,17 @@
     }
 
 </div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jquryUi")
+@Styles.Render("~/jqueryUi/css")
+<script type="text/javascript">
+
+    $("document").ready(function () {
+        $(".datefield").datepicker();
+    });
+
+    $('.usersvalue').autocomplete({
+        source: '@Url.Action("UserList")'
+    });
+</script>

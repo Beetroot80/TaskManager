@@ -99,6 +99,8 @@ namespace TaskManager.Controllers
             {
                 var projectService = new ProjectService();
                 var projectTitles = projectService.GetUserProjects(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+                if (projectTitles.Count == 0)
+                    return RedirectToAction("AddProject", "Project");
                 TempData["ProjectTitles"] = projectTitles;
             }
             else
@@ -125,6 +127,7 @@ namespace TaskManager.Controllers
             var statusService = new StatusService();
             var projectService = new ProjectService();
             var taskService = new TaskService();
+            var userService = new UserService();
 
             serviceTask = Mapper.Map<ServiceTask>(model);
             serviceTask.CreatedById = User.Identity.GetUserId();
@@ -133,13 +136,23 @@ namespace TaskManager.Controllers
             serviceTask.ProjectId = projectService.FindByTitle(model.ProjectTitle).Id;
             serviceTask.StatusId = statusService.FindByTitle(model.StatusTitle).Id;
             serviceTask.PriorityId = priorityService.FindByTitle(model.PriorityTitle).Id;
-            //serviceTask.AssignedToId
-            //TODO: asigned to
+            if (User.IsInRole("User"))
+            {
+                serviceTask.AssignedToId = User.Identity.GetUserId();
+            }
+            else
+            {
+                serviceTask.AssignedToId = userService.FindByEmail(model.AssignedToEmail).Id;
+            }
 
             taskService.AddTask(serviceTask);
             return RedirectToAction("Index", "Home");
         }
 
-
+        [Authorize(Roles = "Administrator, Manager")]
+        public ActionResult UserList()
+        {
+            return RedirectToAction("UserEmails", "Account");
+        }
     }
 }
