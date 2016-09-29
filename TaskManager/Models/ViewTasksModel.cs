@@ -13,10 +13,9 @@ namespace TaskManager.Models
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }
-        public byte? Percentage { get; set; }
         [DataType(DataType.Date)]
         public DateTime? CreationDate { get; set; }
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [Required]
         public DateTime? DeadLine { get; set; }
 

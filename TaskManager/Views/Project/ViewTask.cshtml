@@ -18,7 +18,11 @@
         </div>
 
         <div id="task-add">
-            @Html.ActionLink("New", "AddTask", "Project", "", new { @class = "btn btn-default" })
+            @*@Html.ActionLink("New", "AddTask", "Project", "", new { @class = "btn btn-default" })*@
+            <form action="/Project/AddTask" method="get">
+                <input type="hidden" name="projectTitle" value="@ViewBag.ProjectTitle" />
+                <input type="submit" value="New" class="btn btn-default" />
+            </form>
         </div>
     </div>
 
@@ -91,17 +95,12 @@
     $(function () {
         $.ajaxSetup({ cache: false });
         $(".comments").click(function (e) {
-                    e.preventDefault();
+            e.preventDefault();
             $.get(this.href, function (data) {
                 $('#dialogContent').html(data);
                 $('#modDialog').modal('show');
-                    });
-                });
             });
+        });
+    });
 </script>
 
-@*post form   <form action="/User/Show" method="post">
-        <input type="hidden" name="uid" value="1" />
-        <input type="hidden" name="uname" value="user1">
-        <input type="submit" value="+" />
-    </form>*@

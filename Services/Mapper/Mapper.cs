@@ -20,13 +20,20 @@ namespace ServiceMapper
                 .ForMember(x => x.Tasks, op => op.MapFrom(user => user.DomainTasks)).MaxDepth(1).ReverseMap();
             CreateMap<DomainEntities.ApplicationRole, ServiceEntities.ApplicationRole>();
             CreateMap<DomainEntities.Comment, ServiceEntities.Comment>();
-            CreateMap<DomainEntities.Priority, ServiceEntities.Priority>();
+            CreateMap<DomainEntities.Priority, ServiceEntities.Priority>()
+                /*.ForMember(x => x.Tasks , op => op.AllowNull()).MaxDepth(1)*/;
             CreateMap<DomainEntities.Status, ServiceEntities.Status>();
             CreateMap<DomainEntities.Project, ServiceEntities.Project>()
+                .ForMember(x => x.Clients, op => op.MapFrom(client => client.Clients))
                 .MaxDepth(1);
             CreateMap<ServiceEntities.Project, DomainEntities.Project>()
+                .ForMember(x => x.Id, op => op.Ignore());
+            CreateMap<ServiceEntities.ServiceTask, DomainEntities.DomainTask>()
                 .ForMember(x => x.Id, op => op.Ignore())
-                .ForMember(x => x.Clients, op => op.MapFrom(client => client.Clients));
+                .ForMember(x => x.Project, op => op.Ignore())
+                .ForMember(x => x.Status , op => op.Ignore())
+                .ForMember(x => x.Priority , op => op.Ignore())
+                .ForMember(x => x.CreatedBy_Id , op => op.MapFrom(y => y.CreatedById));
         }
     }
 }

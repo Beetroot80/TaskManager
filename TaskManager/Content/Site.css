@@ -32,6 +32,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+
 /*Layout navbar*/
 #layout-navbar {
     background-color: rgba(0, 0, 0, 0.9);
@@ -272,8 +275,9 @@ textarea {
         position: absolute;
         font-size: 0.9em;
         width: 100%;
+        margin-left: -5%;
         height: 20px;
-        margin-left: -15%;
+
     }
 
 /*Add user*/
@@ -303,6 +307,8 @@ textarea {
 
 
     #add-user .add-user input {
+        position: relative;
+        z-index: 20;
         display: inline-block;
         margin-top: 2%;
         margin-bottom: 1%;
@@ -355,14 +361,17 @@ textarea {
 }
 
 #add-user .field-validation-error {
-    color: tomato;
+    vertical-align: bottom;
     position: absolute;
-    font-size: 1.3em;
-    width: 5%;
-    height: 20px;
-    margin-top: 1%;
-    margin-left: 2%;
+    z-index: 10;
+    margin-top: 3%;
+    margin-left: -52%;
+    width: 51%;
+    height: 6%;
+    background: rgba(237, 39, 4, 0.5);
+    color: transparent;
 }
+
 /*User list*/
 #user-table {
     margin-left: 10%;
@@ -482,7 +491,7 @@ textarea {
 }
 
 #project-area .task-title {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.8);
     border-radius: 3px;
     border-bottom: 2px solid rgba(51, 51, 51, 0.3);
     font-family: inherit;
@@ -495,7 +504,7 @@ textarea {
 
     #project-area .task-title a {
         text-decoration: none;
-        color: #666B85;
+        color: #fafafa;
     }
 
 #project-area .project-icons {
@@ -538,6 +547,7 @@ textarea {
     font-weight: 200;
     font-size: 1.1em;
     font-style: italic;
+    text-align: center;
     box-sizing: border-box;
     margin-left: 15%;
     width: 70%;
@@ -550,9 +560,10 @@ textarea {
     border-bottom: 1px solid rgba(34, 38, 46,0.3);
 }
 
-#project-area .task-title a:hover {
+#project-area .task-title:hover a{
     color: rgba(0, 0, 0, 0.9);
 }
+
 
 #project-area .task-title a:active,
 #project-area .task-title a.selected {

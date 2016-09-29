@@ -6,6 +6,7 @@ using ServiceEntities;
 
 using DomainEntities;
 using DomainEF.UnitOfWork;
+using Services.Services;
 
 namespace Services
 {
@@ -64,30 +65,9 @@ namespace Services
         }
         public void AddTask(ServiceTask model)
         {
-            var userId = model.CreatedById;
-            var statusId = model.StatusId;
-            var priorityId = model.PriorityId;
-            var projectId = model.ProjectId;
             using (uow = new UnitOfWork())
             {
-                uow.DomainTaskRepo.Insert(Mapper.Map<DomainTask>(model)); //Updet by id
-                if (statusId != null)
-                {
-                    var entity = uow.StatusRepo.Find((int)statusId);
-                    uow.StatusRepo.Update(entity);
-                }
-                if (priorityId != null)
-                {
-                    var entity = uow.PriorityRepo.Find((int)priorityId);
-                    uow.PriorityRepo.Update(entity);
-                }
-                if (priorityId != null)
-                {
-                    var entity = uow.ProjectRepo.Find((int)projectId);
-                    uow.ProjectRepo.Update(entity);
-                }
-                var user = uow.UserManager.Users.Where(x => x.Id == userId).FirstOrDefault();
-                uow.UserManager.UpdateAsync(user);
+                uow.DomainTaskRepo.Insert(Mapper.Map<DomainTask>(model));
                 uow.SaveChanges();
             }
         }

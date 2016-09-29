@@ -245,7 +245,6 @@
     <Content Include="Views\Project\ViewTask.cshtml" />
     <Content Include="Views\Project\AddProject.cshtml" />
     <Content Include="Views\Shared\LoadingView.cshtml" />
-    <Content Include="Views\Project\ReadTask.cshtml" />
     <Content Include="Views\Project\Comments.cshtml" />
     <Content Include="Views\Project\AddTask.cshtml" />
   </ItemGroup>

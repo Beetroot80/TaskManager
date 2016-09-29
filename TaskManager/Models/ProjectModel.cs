@@ -7,12 +7,18 @@ namespace TaskManager.Models
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "*")]
+        [MaxLength(25, ErrorMessage = "Length of this field should be less than 25 characters")]
         public string Title { get; set; }
-        [MaxLength(255)]
+
+        [Required(ErrorMessage = "*")]
+        [MaxLength(255, ErrorMessage = "Length of this field should be less than 255 characters")]
         public string Description { get; set; }
+
         public int? ClientsCount { get; set; }
         public int? TaskCount { get; set; }
+
         [HiddenInput(DisplayValue = false)]
         public string CreatedById { get; set; }
     }

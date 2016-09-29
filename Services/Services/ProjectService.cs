@@ -5,6 +5,7 @@ using AutoMapper;
 using ServiceEntities;
 
 using DomainEF.UnitOfWork;
+using System;
 
 namespace Services.Services
 {
@@ -25,6 +26,36 @@ namespace Services.Services
                 projects.Add(Mapper.Map<Project>(entity));
             }
             return projects;
+        }
+
+        public Project Find(int id)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    return Mapper.Map<Project>(uow.ProjectRepo.Find(id));
+                }
+                catch (NullReferenceException)
+                {
+                    return null;
+                }
+            }
+        }
+
+        public Project FindByTitle(string title)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    return Mapper.Map<Project>(uow.ProjectRepo.GetAll().Where(x => x.Title == title).FirstOrDefault());
+                }
+                catch (NullReferenceException)
+                {
+                    return null;
+                }
+            }
         }
 
         public List<Project> GetAllProjectsWithCounts(string userId)
@@ -49,7 +80,7 @@ namespace Services.Services
             IEnumerable<DomainEntities.Project> dProjects = new List<DomainEntities.Project>();
             using (uow = new UnitOfWork())
             {
-                    dProjects = uow.ProjectRepo.GetAllIncluding(includeProperties: x => x.Tasks).ToList(); 
+                    dProjects = uow.ProjectRepo.GetAllIncluding(includeProperties: x => x.Tasks).ToList();
             }
             List<Project> projects = new List<Project>();
             foreach (var entity in dProjects)
@@ -64,13 +95,21 @@ namespace Services.Services
             using (uow = new UnitOfWork())
             {
                 dProjects = uow.ProjectRepo.GetAll().Where(x => x.CreatedById == userId).ToList();
+                List<Project> projects = new List<Project>();
+                foreach (var entity in dProjects)
+                {
+                    projects.Add(Mapper.Map<Project>(entity));
+                }
+                return projects;
             }
-            List<Project> projects = new List<Project>();
-            foreach (var entity in dProjects)
+        }
+        public List<string> GetUserProjectsTitles(string userId)
+        {
+            using (uow = new UnitOfWork())
             {
-                projects.Add(Mapper.Map<Project>(entity));
+                return uow.ProjectRepo.GetAllIncluding(null, null, x => x.Clients, x => x.Tasks).Where(x => x.CreatedById == userId).Select(x => x.Title).ToList();
             }
-            return projects;
+
         }
 
         public List<Project> GetFullTasks() //TODO: delete

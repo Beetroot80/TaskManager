@@ -7,6 +7,7 @@ using ServiceEntities;
 using Services.Services;
 using TaskManager.Models;
 using Services;
+using System;
 
 namespace TaskManager.Controllers
 {
@@ -57,12 +58,7 @@ namespace TaskManager.Controllers
             ViewBag.ProjectTitle = taskModels.Select(x => x.ProjectTitle).FirstOrDefault();
             return PartialView(taskModels.AsEnumerable());
         }
-        //[Authorize(Roles = "Administrator,Manager,User")]
-        //[HttpPost]
-        ////public ActionResult TaskInfo(int taskId)
-        ////{
-        ////    return PartialView();
-        ////}
+
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpGet]
         public ActionResult AddProject()
@@ -97,23 +93,22 @@ namespace TaskManager.Controllers
         [HttpGet]
         public ActionResult AddTask(string projectTitle)
         {
-            TempData["ProjectTitles"] = projectTitle;
-            projectTitle = null;
+            TempData["ProjectTitles"] = new List<string>();
             var taskModel = new ViewTasksModel();
             if (projectTitle == null)
             {
                 var projectService = new ProjectService();
-                var serviceProjects = projectService.GetUserProjects(User.Identity.GetUserId());
-                var projectTitles = new List<string>();
-                foreach(var item in serviceProjects)
-                {
-                    projectTitles.Add(item.Title);
-                }
+                var projectTitles = projectService.GetUserProjects(User.Identity.GetUserId()).Select(x => x.Title).ToList();
                 TempData["ProjectTitles"] = projectTitles;
             }
-            var infoService = new InfoService();
-            var statusList = infoService.StatusList().Select(x => x.Title).ToList();
-            var priorityList = infoService.PriorityList().Select(x => x.Title).ToList();
+            else
+            {
+                TempData["ProjectTitles"] = new List<string>() { projectTitle };
+            }
+            var statusService = new StatusService();
+            var priorityService = new PriorityService();
+            var statusList = statusService.StatusList().Select(x => x.Title).ToList();
+            var priorityList = priorityService.PriorityList().Select(x => x.Title).ToList();
 
             TempData["StatusList"] = statusList;
             TempData["PriorityList"] = priorityList;
@@ -125,16 +120,23 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult AddTask(ViewTasksModel model)
         {
-            //var userId = User.Identity.GetUserId();
-            //var serviceModel = new ServiceTask();
-            //serviceModel = Mapper.Map<ServiceTask>(model);
-            //serviceModel.CreatedById = userId;
+            var serviceTask = new ServiceTask();
+            var priorityService = new PriorityService();
+            var statusService = new StatusService();
+            var projectService = new ProjectService();
+            var taskService = new TaskService();
 
-            //string projectTitle = null;
-            //if (projectTitle == null)
-            //{
+            serviceTask = Mapper.Map<ServiceTask>(model);
+            serviceTask.CreatedById = User.Identity.GetUserId();
+            serviceTask.CreationDate = DateTime.Now.Date;
+            serviceTask.DeadLine = DateTime.Now.Date;
+            serviceTask.ProjectId = projectService.FindByTitle(model.ProjectTitle).Id;
+            serviceTask.StatusId = statusService.FindByTitle(model.StatusTitle).Id;
+            serviceTask.PriorityId = priorityService.FindByTitle(model.PriorityTitle).Id;
+            //serviceTask.AssignedToId
+            //TODO: asigned to
 
-            //}
+            taskService.AddTask(serviceTask);
             return RedirectToAction("Index", "Home");
         }
 
