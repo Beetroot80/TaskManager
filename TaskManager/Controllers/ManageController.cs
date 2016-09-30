@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using ServiceEntities;
-using Services.Interfaces;
-using System.Web;
+﻿using Microsoft.AspNet.Identity;
+using Services.Services;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using TaskManager.Models;
 
@@ -10,42 +9,47 @@ namespace TaskManager.Controllers
 {
     public class ManageController : Controller
     {
-        private IUserService UserService
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().GetUserManager<IUserService>();
-            }
-        }
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-        // GET: Manage
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        [Authorize(Roles = "Administrator, Manager, User")]
         [HttpGet]
-        public ActionResult Save()
+        public ActionResult Manage()
         {
-            return View("Index");
+            var manageModel = new ManageModel();
+            if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+            {
+                manageModel.ProjectActions = new List<string>()
+                {
+                    "Add user to project",
+                    "Delete project",
+                    "Manage tasks"
+                };
+                manageModel.TaskAction = new List<string>()
+                {
+                    "Assign to user",
+                    "Delete"
+                };
+            }
+            else
+            {
+                manageModel.ProjectActions = new List<string>()
+                {
+                    "Delete project",
+                    "Manage tasks"
+                };
+                manageModel.TaskAction = new List<string>()
+                {
+                    "Delete"
+                };
+            }
+            var projectService = new ProjectService();
+            TempData["ProjectTitles"] = projectService.GetUserProjects(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+            return PartialView("Manage", manageModel);
         }
 
+        [Authorize(Roles = "Administrator, Manager, User")]
         [HttpPost]
-        public ActionResult Save(ClientProfileModel model)
+        public ActionResult Manage(ManageModel model)
         {
-            if(ModelState.IsValid)
-            {
-                ClientProfile profile = new ClientProfile { Name = model.Name, BirthDate = model.BirthDate, Surname = model.Surname };
-                var user = User.Identity.Name;
-                //ApplicationUser user = UserService.GetUserById(model.)
-            }
-            return View("Index");
+            return PartialView("Manage");
         }
     }
 }

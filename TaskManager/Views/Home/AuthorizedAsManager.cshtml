@@ -35,11 +35,12 @@
                {
                    HttpMethod = "Get",
                    InsertionMode = InsertionMode.Replace,
-                   UpdateTargetId = "results"
+                   UpdateTargetId = "results",
+                   LoadingElementId = "loading-projects"
                })
                 </li>
                 <li>
-                    Management
+                    @Html.ActionLink("Manage", "Manage", "Project")
                 </li>
             </ul>
         </div>
@@ -49,6 +50,7 @@
 
 <div id="results-wrapper">
     <div>
+        <img src="~/Content/gifs/ring-alt.gif" id="loading-projects" style="display: none; position: fixed; margin: 0 0 0 40%; z-index: 1000" />
         <div id="results">
         </div>
     </div>

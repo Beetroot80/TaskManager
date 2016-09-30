@@ -21,13 +21,14 @@ namespace TaskManager.Models
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "*")]
-        [MaxLength(25, ErrorMessage = "Length of this field should be less than 25 characters")]
+        [MaxLength(35, ErrorMessage = "Length of this field should be less than 25 characters")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "*")]
         public string Role { get; set; }
 
         public string Surname { get; set; }
+
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

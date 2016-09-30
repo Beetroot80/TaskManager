@@ -1,13 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace TaskManager.Models
 {
     public class ApplicationUserModel
     {
+        [HiddenInput(DisplayValue = false)]
         public string Id { get; set; }
+        [Required]
         public string Email { get; set; }
+        [Required]
+        [MaxLength(35)]
         public string UserName { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public string ClientProfileId { get; set; }
         public ClientProfileModel ClientProfile { get; set; }
 
@@ -15,11 +22,5 @@ namespace TaskManager.Models
         public ICollection<ProjectModel> Projects { get; set; }
         public ICollection<ViewTasksModel> Tasks { get; set; }
 
-        public ApplicationUserModel()
-        {
-            Comments = new List<CommentModel>();
-            Projects = new List<ProjectModel>();
-            Tasks = new List<ViewTasksModel>();
-        }
     }
 }

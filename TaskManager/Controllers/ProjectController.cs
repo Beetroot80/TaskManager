@@ -109,8 +109,8 @@ namespace TaskManager.Controllers
             }
             var statusService = new StatusService();
             var priorityService = new PriorityService();
-            var statusList = statusService.StatusList().Select(x => x.Title).ToList();
-            var priorityList = priorityService.PriorityList().Select(x => x.Title).ToList();
+            var statusList = statusService.GetAll().Select(x => x.Title).ToList();
+            var priorityList = priorityService.GetAll().Select(x => x.Title).ToList();
 
             TempData["StatusList"] = statusList;
             TempData["PriorityList"] = priorityList;

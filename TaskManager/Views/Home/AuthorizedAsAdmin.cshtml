@@ -39,7 +39,7 @@
                    HttpMethod = "Get",
                    InsertionMode = InsertionMode.Replace,
                    UpdateTargetId = "results",
-                   LoadingElementId = "loading"
+                   LoadingElementId = "loading-projects"
                })
                 </li>
                 <li>
@@ -47,7 +47,8 @@
                {
                    HttpMethod = "Get",
                    InsertionMode = InsertionMode.Replace,
-                   UpdateTargetId = "results"
+                   UpdateTargetId = "results",
+                   LoadingElementId = "loading-projects"
                })
                 </li>
                 <li>
@@ -55,12 +56,12 @@
                 </li>
             </ul>
         </div>
-        @*<div id="menu-toggle"><a href="#menu-toggle"></a></div>*@
     </div>
 }
 
 <div id="results-wrapper">
     <div>
+        <img src="~/Content/gifs/ring-alt.gif" id="loading-projects" style="display: none; position: fixed; margin: 0 0 0 40%; z-index: 1000" />
         <div id="results">
         </div>
     </div>

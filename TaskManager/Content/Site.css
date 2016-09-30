@@ -277,7 +277,6 @@ textarea {
         width: 100%;
         margin-left: -5%;
         height: 20px;
-
     }
 
 /*Add user*/
@@ -560,9 +559,9 @@ textarea {
     border-bottom: 1px solid rgba(34, 38, 46,0.3);
 }
 
-#project-area .task-title:hover a{
-    color: rgba(0, 0, 0, 0.9);
-}
+    #project-area .task-title:hover a {
+        color: rgba(0, 0, 0, 0.9);
+    }
 
 
 #project-area .task-title a:active,
@@ -572,9 +571,10 @@ textarea {
 
 
 /*Tasks*/
-#task-results{
+#task-results {
     background: rgba(0, 0, 0, 0.1);
 }
+
 #add-task {
     background: white;
     width: 60%;
@@ -611,6 +611,7 @@ textarea {
         outline: none;
         border: 1px solid #ccc;
     }
+
     #add-task .form-group select {
         display: inline-block;
         margin-top: 2%;
@@ -814,7 +815,6 @@ textarea {
 }
 
 #coment-body .comment li {
-
     list-style: none;
     position: relative;
 }
@@ -827,10 +827,180 @@ textarea {
     bottom: 0;
 }
 
-.modal{
+.modal {
     border-radius: 0;
 }
 /*Add task*/
+
+/*Manage*/
+#manage-wrapper {
+    position: relative;
+    background: white;
+    width: 80%;
+    height: 700px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    font-family: inherit;
+    color: #373f52;
+    border-radius: 2px;
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+    #manage-wrapper div {
+        height: 10%;
+    }
+
+    #manage-wrapper header {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 30px 20px;
+        color: white;
+        font-size: 1.6em;
+        font-weight: 600;
+        border-radius: 2px 2px 0 0;
+    }
+
+.manage input {
+    display: inline-block;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    width: 50%;
+    font-size:1.1em;
+    font-style: inherit;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid #ccc;
+}
+
+#manage-wrapper .form-group label {
+    display: inline-block;
+    width: 30%;
+    margin-left: 5%;
+    margin-top: 1%;
+    text-align: left;
+}
+
+#manage-wrapper .form-group:first-of-type select {
+    display: inline-block;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    font-size: 1.1em;
+    width: 100%;
+    position: relative;
+    font-family: inherit;
+    color: rgba(0, 0, 0, 0.9);
+    font-family: inherit;
+    font-weight: 400;
+    border-radius: 3px;
+    box-shadow: 0px 0px 30px rgba(51, 51, 51, 0.3);
+    cursor: pointer;
+}
+
+#manage-wrapper .form-group select {
+    width: 0;
+}
+
+.display-dropdown {
+    animation: display-animation;
+    animation-fill-mode: forwards;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+}
+#add-btn {
+    position: relative;
+    font-family: inherit;
+    margin-left: 35%;
+    margin-top: 3%;
+    width: 50%;
+    color: rgba(0, 0, 0, 0.9);
+    background: white;
+    border: none;
+    font-family: inherit;
+    font-size: 1.1em;
+    font-weight: 400;
+    border-radius: 3px;
+    box-shadow: 0px 0px 30px rgba(51, 51, 51, 0.3);
+    cursor: pointer;
+}
+#cancel-btn {
+    position: relative;
+    font-family: inherit;
+    margin-left: 35%;
+    margin-top: 3%;
+    width: 50%;
+    color: rgba(0, 0, 0, 0.9);
+    background: white;
+    border: none;
+    font-family: inherit;
+    font-size: 1.1em;
+    font-weight: 400;
+    border-radius: 3px;
+    box-shadow: 0px 0px 30px rgba(51, 51, 51, 0.3);
+    cursor: pointer;
+}
+
+
+@-moz-keyframes display-animation {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@-webkit-keyframes display-display-animation {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes display-display-animation {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+#manage-wrapper .btn {
+    position: relative;
+    font-family: inherit;
+    width: 50%;
+    color: rgba(0, 0, 0, 0.9);
+    background: white;
+    border: none;
+    font-family: inherit;
+    font-size: 1.1em;
+    font-weight: 400;
+    border-radius: 3px;
+    box-shadow: 0px 0px 30px rgba(51, 51, 51, 0.3);
+    cursor: pointer;
+}
+
+    #manage-wrapper .btn:hover {
+        box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.2);
+    }
+
+
+#manage-wrapper .field-validation-error {
+    vertical-align: bottom;
+    position: absolute;
+    z-index: 10;
+    margin-top: 3%;
+    margin-left: -52%;
+    width: 51%;
+    height: 6%;
+    background: rgba(237, 39, 4, 0.5);
+    color: transparent;
+}
 
 /*Save changes popup*/
 .list {

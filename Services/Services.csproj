@@ -66,6 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\OperationDetails.cs" />
+    <Compile Include="Interfaces\IClientProfileService.cs" />
+    <Compile Include="Interfaces\IPriorityService.cs" />
+    <Compile Include="Interfaces\IProjectService.cs" />
+    <Compile Include="Interfaces\IService.cs" />
+    <Compile Include="Interfaces\IStatusService.cs" />
+    <Compile Include="Interfaces\ITaskService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Interfaces\IServiceCreator.cs" />
     <Compile Include="Mapper\Mapper.cs" />

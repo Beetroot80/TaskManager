@@ -89,6 +89,7 @@ namespace Services.Services
             }
             return projects;
         }
+
         public List<Project> GetUserProjects(string userId)
         {
             IEnumerable<DomainEntities.Project> dProjects = new List<DomainEntities.Project>();
@@ -103,6 +104,7 @@ namespace Services.Services
                 return projects;
             }
         }
+
         public List<string> GetUserProjectsTitles(string userId)
         {
             using (uow = new UnitOfWork())

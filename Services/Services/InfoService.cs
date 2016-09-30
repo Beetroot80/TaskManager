@@ -1,18 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System;
+using System.Collections.Generic;
 using ServiceEntities;
 using AutoMapper;
 
 using DomainEF.UnitOfWork;
-using System.Linq;
-using System;
+using Services.Interfaces;
+using Services.Helpers;
+
 
 namespace Services.Services
 {
-    public class StatusService
+    public class StatusService : IStatusService
     {
         private UnitOfWork uow;
 
-        public List<Status> StatusList()
+        public IEnumerable<Status> GetAll()
         {
             using (uow = new UnitOfWork())
             {
@@ -36,6 +39,7 @@ namespace Services.Services
             }
 
         }
+
         public Status FindByTitle(string title)
         {
             using (uow = new UnitOfWork())
@@ -50,12 +54,43 @@ namespace Services.Services
                 }
             }
         }
+
+        public OperationDetails Create(Status item)
+        {
+            OperationDetails details;
+            bool result;
+            try
+            {
+                var status = Mapper.Map<DomainEntities.Status>(item);
+                using (uow = new UnitOfWork())
+                {
+                    uow.StatusRepo.Insert(status);
+                    uow.SaveChanges(out result);
+                }
+                return new OperationDetails(result, "", "");
+            }
+            catch (AutoMapperMappingException ex)
+            {
+                return details = new OperationDetails(false, ex.Message, "");
+            }
+            catch (Exception ex)
+            {
+                return details = new OperationDetails(false, ex.Message, "");
+            }
+        }
+
+        public void Dispose()
+        {
+            if (uow != null)
+                uow.Dispose();
+        }
     }
 
-    public class PriorityService
+    public class PriorityService : IPriorityService
     {
         private UnitOfWork uow;
-        public List<Priority> PriorityList()
+
+        public IEnumerable<Priority> GetAll()
         {
             using (uow = new UnitOfWork())
             {
@@ -63,6 +98,7 @@ namespace Services.Services
                 return Mapper.Map<List<Priority>>(domainPriority);
             }
         }
+
         public Priority Find(int id)
         {
             using (uow = new UnitOfWork())
@@ -76,8 +112,8 @@ namespace Services.Services
                     return null;
                 }
             }
-
         }
+
         public Priority FindByTitle(string title)
         {
             using (uow = new UnitOfWork())
@@ -91,7 +127,36 @@ namespace Services.Services
                     return null;
                 }
             }
+        }
 
+        public OperationDetails Create(Priority item)
+        {
+            OperationDetails details;
+            bool result;
+            try
+            {
+                var priority = Mapper.Map<DomainEntities.Priority>(item);
+                using (uow = new UnitOfWork())
+                {
+                    uow.PriorityRepo.Insert(priority);
+                    uow.SaveChanges(out result);
+                }
+                return new OperationDetails(result, "", "");
+            }
+            catch (AutoMapperMappingException ex)
+            {
+                return details = new OperationDetails(false, ex.Message, "");
+            }
+            catch (Exception ex)
+            {
+                return details = new OperationDetails(false, ex.Message, "");
+            }
+        }
+
+        public void Dispose()
+        {
+            if (uow != null)
+                uow.Dispose();
         }
     }
 }

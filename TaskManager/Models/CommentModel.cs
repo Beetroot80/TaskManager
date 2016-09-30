@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace TaskManager.Models
 {
@@ -6,9 +7,14 @@ namespace TaskManager.Models
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
+
+        [Required]
+        [MaxLength(255)]
         public string Text { get; set; }
+
         [HiddenInput(DisplayValue = false)]
         public int DomainTaskId { get; set; }
+
         [HiddenInput(DisplayValue = false)]
         public string ClientId { get; set; }
 

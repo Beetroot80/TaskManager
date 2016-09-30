@@ -92,6 +92,11 @@ namespace DomainEF.UnitOfWork
         {
             throw new NotImplementedException();
         }
+
+        public void SaveChanges(out bool result)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

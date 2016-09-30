@@ -34,7 +34,8 @@
                        {
                            HttpMethod = "Post",
                            InsertionMode = InsertionMode.Replace,
-                           UpdateTargetId = "task-results"
+                           UpdateTargetId = "task-results",
+                           LoadingElementId = "loading"
                        })
                             </div>
                             <div class="project-description">
@@ -52,6 +53,7 @@
     </aside>
 
     <section id="task-area">
+        <img src="~/Content/gifs/ring-alt.gif" id="loading" style="display: none; position: fixed; margin: 25% 0 0 25%; z-index: 1000" />
         <div id="task-results">
         </div>
     </section>

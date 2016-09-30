@@ -18,7 +18,7 @@ namespace Services.Services
                     {
                         serviceClients.Add(Mapper.Map<ClientProfile>(c));
                     }
-                    return serviceClients;                
+                    return serviceClients;
             }
         }
     }

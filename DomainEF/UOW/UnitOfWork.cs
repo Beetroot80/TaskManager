@@ -145,13 +145,19 @@ namespace DomainEF.UnitOfWork
             context.SaveChanges();
         }
 
+        public void SaveChanges(out bool result)
+        {
+            int saved = context.SaveChanges();
+            result = saved > 0 ? true : false;
+        }
+
+        #region IDisposable
+
         private void SafeDispose<T>(T o) where T : IDisposable
         {
             if (o != null)
                 o.Dispose();
         }
-
-        #region IDisposable
 
         private bool disposedValue = false;
         void Dispose(bool disposing)
@@ -178,18 +184,6 @@ namespace DomainEF.UnitOfWork
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-        public void SaveChanges(out bool? result)
-        {
-            int saves = context.SaveChanges();
-            if (saves > 0)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
         }
         #endregion
     }
