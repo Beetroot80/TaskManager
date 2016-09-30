@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    interface IService<TEntity> : IDisposable
+    public interface IService<TEntity> : IDisposable
         where TEntity: class
     {
         IEnumerable<TEntity> GetAll();

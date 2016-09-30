@@ -18,7 +18,7 @@ namespace TaskManager.Controllers
         public ActionResult Index()
         {
             ProjectService pService = new ProjectService();
-            IEnumerable<Project> projects = pService.GetFullTasks();
+            IEnumerable<Project> projects = pService.GetAll();
             List<ProjectModel> projectModels = new List<ProjectModel>();
 
             foreach (var project in projects)
@@ -34,7 +34,7 @@ namespace TaskManager.Controllers
         {
             var projectService = new ProjectService();
             var userId = User.Identity.GetUserId();
-            var projects = projectService.GetAllProjectsWithCounts(userId);
+            var projects = projectService.GetProjectsWithCounters(userId);
             List<ProjectModel> projectModels = new List<ProjectModel>();
             foreach (var project in projects)
             {
@@ -72,7 +72,7 @@ namespace TaskManager.Controllers
         {
             model.CreatedById = HttpContext.User.Identity.GetUserId();
             var projectService = new ProjectService();
-            projectService.Addproject(Mapper.Map<ServiceEntities.Project>(model));
+            projectService.Create(Mapper.Map<ServiceEntities.Project>(model));
             return RedirectToAction("Index", "Home");
         }
 
@@ -98,7 +98,7 @@ namespace TaskManager.Controllers
             if (projectTitle == null)
             {
                 var projectService = new ProjectService();
-                var projectTitles = projectService.GetUserProjects(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+                var projectTitles = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
                 if (projectTitles.Count == 0)
                     return RedirectToAction("AddProject", "Project");
                 TempData["ProjectTitles"] = projectTitles;
@@ -145,7 +145,7 @@ namespace TaskManager.Controllers
                 serviceTask.AssignedToId = userService.FindByEmail(model.AssignedToEmail).Id;
             }
 
-            taskService.AddTask(serviceTask);
+            var operationResult = taskService.Create(serviceTask); //TODO: check results
             return RedirectToAction("Index", "Home");
         }
 
@@ -187,7 +187,7 @@ namespace TaskManager.Controllers
                 };
             }
             var projectService = new ProjectService();
-            TempData["ProjectTitles"] = projectService.GetUserProjects(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+            TempData["ProjectTitles"] = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
             return PartialView("Manage", manageModel);
         }
 
@@ -203,7 +203,7 @@ namespace TaskManager.Controllers
         public ActionResult ProjectList()
         {
             var projectService = new ProjectService();
-            var projecttitles = projectService.GetUserProjects(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+            var projecttitles = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
             return Json(projecttitles, JsonRequestBehavior.AllowGet);
         }
 

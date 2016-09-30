@@ -3,29 +3,50 @@ using System.Linq;
 using AutoMapper;
 
 using ServiceEntities;
-
+using Services.Interfaces;
 using DomainEF.UnitOfWork;
 using System;
+using Services.Helpers;
 
 namespace Services.Services
 {
-    public class ProjectService
+    public class ProjectService : IProjectService
     {
         private UnitOfWork uow;
 
-        public List<Project> GetAllProjects()
+        public IEnumerable<Project> GetAll()
         {
-            IEnumerable<DomainEntities.Project> dProjects = new List<DomainEntities.Project>();
+            IEnumerable<DomainEntities.Project> domainProjects;
             using (uow = new UnitOfWork())
             {
-                dProjects = uow.ProjectRepo.GetAll().ToList();
-            }
-            List<Project> projects = new List<Project>();
-            foreach (var entity in dProjects)
+                domainProjects = uow.ProjectRepo.GetAll().ToList();
+                return Mapper.Map<IEnumerable<Project>>(domainProjects);
+            }            
+        }
+
+        public IEnumerable<Project> GetAll(string userId)
+        {
+            using (uow = new UnitOfWork())
             {
-                projects.Add(Mapper.Map<Project>(entity));
+                var domainProjects = uow.ProjectRepo.GetAll().Where(x => x.CreatedById == userId).ToList();
+                return Mapper.Map<IEnumerable<Project>>(domainProjects);
+            }            
+        }
+
+        public IEnumerable<string> GetTitles()
+        {
+            using (uow = new UnitOfWork())
+            {
+                return uow.ProjectRepo.GetAll().Select(x => x.Title).ToList();
             }
-            return projects;
+        }
+
+        public IEnumerable<string> GetTitles(string userId) //TODO: do i need all created by or cleits of also?
+        {
+            using (uow = new UnitOfWork())
+            {
+                return uow.ProjectRepo.GetAll().Where(x => x.CreatedById == userId).Select(x => x.Title).ToList();
+            }
         }
 
         public Project Find(int id)
@@ -58,93 +79,56 @@ namespace Services.Services
             }
         }
 
-        public List<Project> GetAllProjectsWithCounts(string userId)
+        public OperationDetails Create(Project item)
         {
-            IEnumerable<DomainEntities.Project> dProjects = new List<DomainEntities.Project>();
-            using (uow = new UnitOfWork())
-            { //TODO: dispose connection before foreach, notice - gonna be exception if uow is disposed before mapping
-                dProjects = uow.ProjectRepo.GetAllIncluding(null, null, x => x.Clients, y => y.Tasks)
-                    .Where(x => x.CreatedById == userId || x.Clients.Where(y => y.Id == userId).Any()).ToList();//TODO: have to take counts without Including
-                //TODO: recheck expression!
-                List<Project> projects = new List<Project>();
-                foreach (var entity in dProjects)
+            OperationDetails details;
+            bool result;
+            try
+            {
+                var project = Mapper.Map<DomainEntities.Project>(item);
+                using (uow = new UnitOfWork())
                 {
-                    projects.Add(Mapper.Map<Project>(entity));
+                    uow.ProjectRepo.Insert(project);
+                    uow.SaveChanges(out result);
                 }
-                return projects;
+                return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
+            }
+            catch (AutoMapperMappingException ex)
+            {
+                return details = new OperationDetails(false, ex.Message, "");
+            }
+            catch (Exception ex)
+            {
+                return details = new OperationDetails(false, ex.Message, "");
             }
         }
 
-        public List<Project> GetAllProjectsWithTasks(string userId)//TODO: meaningful names!
+        public IEnumerable<Project> GetProjectsWithCounters(string userId)
         {
-            IEnumerable<DomainEntities.Project> dProjects = new List<DomainEntities.Project>();
             using (uow = new UnitOfWork())
-            {
-                    dProjects = uow.ProjectRepo.GetAllIncluding(includeProperties: x => x.Tasks).ToList();
-            }
-            List<Project> projects = new List<Project>();
-            foreach (var entity in dProjects)
-            {
-                projects.Add(Mapper.Map<Project>(entity));
-            }
-            return projects;
-        }
-
-        public List<Project> GetUserProjects(string userId)
-        {
-            IEnumerable<DomainEntities.Project> dProjects = new List<DomainEntities.Project>();
-            using (uow = new UnitOfWork())
-            {
-                dProjects = uow.ProjectRepo.GetAll().Where(x => x.CreatedById == userId).ToList();
-                List<Project> projects = new List<Project>();
-                foreach (var entity in dProjects)
-                {
-                    projects.Add(Mapper.Map<Project>(entity));
-                }
-                return projects;
+            { 
+                var domainProjects = uow.ProjectRepo
+                    .GetAll()
+                    .Where(x => x.CreatedById == userId || x.Clients.Where(y => y.Id == userId).Any())
+                    .ToList();
+                return Mapper.Map<IEnumerable<Project>>(domainProjects);
             }
         }
 
-        public List<string> GetUserProjectsTitles(string userId)
+        public IEnumerable<Project> GetProjectsWithTaskIncluded(string userId)//TODO: do i need this
         {
             using (uow = new UnitOfWork())
             {
-                return uow.ProjectRepo.GetAllIncluding(null, null, x => x.Clients, x => x.Tasks).Where(x => x.CreatedById == userId).Select(x => x.Title).ToList();
+               var domainProjects = uow.ProjectRepo.GetAllIncluding(includeProperties: x => x.Tasks).ToList();
+                return Mapper.Map<IEnumerable<Project>>(domainProjects);
             }
-
+            
         }
 
-        public List<Project> GetFullTasks() //TODO: delete
+        public void Dispose()
         {
-            IEnumerable<DomainEntities.Project> dProjects = new List<DomainEntities.Project>();
-            using (uow = new UnitOfWork())
-            {
-                dProjects = uow.ProjectRepo.GetAllIncluding(null, null, x => x.Clients, y => y.Tasks).ToList();
-                foreach(var project in dProjects)
-                {
-                    foreach(var client in project.Clients)
-                    {
-                        client.ClientProfile = (DomainEntities.ClientProfile)uow.UserManager.Users.Select(c => c.ClientProfile).Where(p => p.Id == client.ClientProfileId);
-                    }
-                }
-            }
-            List<Project> projects = new List<Project>();
-
-            foreach (var entity in dProjects)
-            {
-                projects.Add(Mapper.Map<Project>(entity));
-            }
-            return projects;
-        }
-
-        public void Addproject(Project project) //TODO: working if database excists and created by id excists
-            //TODO: add some succed or failed view!
-        {
-            using (uow = new UnitOfWork())
-            {
-                uow.ProjectRepo.Insert(Mapper.Map<DomainEntities.Project>(project));
-                uow.SaveChanges();
-            }
+            if (uow != null)
+                uow.Dispose();
         }
     }
 }

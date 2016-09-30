@@ -31,18 +31,27 @@ namespace TaskManager
             CreateMap<ServiceEntities.Project, ProjectModel>()
                 .ForMember(x => x.TaskCount, op => op.MapFrom(project => project.Tasks.Count))
                 .ForMember(x => x.ClientsCount, op => op.MapFrom(project => project.Clients.Count))
-                .MaxDepth(2).ReverseMap();
-            CreateMap<ServiceEntities.ApplicationUser, ApplicationUserModel>().ReverseMap();
+                .MaxDepth(2)
+                .ReverseMap();
+            CreateMap<ServiceEntities.ApplicationUser, ApplicationUserModel>()
+                .ReverseMap();
             CreateMap<ServiceEntities.ApplicationUser, EditUserModel>()
                 .ForMember(x => x.Name, op => op.MapFrom(user => user.ClientProfile.Name))
-                .ForMember(x => x.Surname, x => x.MapFrom(user => user.ClientProfile.Surname)).ReverseMap();
+                .ForMember(x => x.Surname, x => x.MapFrom(user => user.ClientProfile.Surname))
+                .ReverseMap();
+            CreateMap<ServiceEntities.ApplicationUser, AddUserModel>()
+                .ForMember(x => x.Role, op => op.MapFrom(y => y.UserRoles.First()))
+                .ReverseMap();
+            CreateMap<ServiceEntities.ApplicationUser, RegisterModel>()
+                .ReverseMap();
             CreateMap<ServiceEntities.ServiceTask, ViewTasksModel>()
                 .ForMember(x => x.AssignedToEmail, op => op.MapFrom(user => user.Client.Email))
                 .ForMember(x => x.CreatedByEmail, op => op.MapFrom(user => user.CreatedBy.Email))
                 .ForMember(x => x.PriorityTitle, op => op.MapFrom(title => title.Priority.Title))
                 .ForMember(x => x.StatusTitle, op => op.MapFrom(status => status.Status.Title))
                 .ForMember(x => x.ProjectTitle,op => op.MapFrom(project => project.Project.Title))
-                .MaxDepth(1).ReverseMap();
+                .MaxDepth(1)
+                .ReverseMap();
             CreateMap<ServiceEntities.Comment, CommentModel>();
         }
     }

@@ -1,32 +1,32 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using AutoMapper;
-
 using DomainEF.UnitOfWork;
-using Services.Interfaces;
-using Services.Helpers;
 using ServiceEntities;
-
+using Services.Helpers;
+using Services.Interfaces;
 
 namespace Services.Services
 {
-    class ClientProfileService : IClientProfileService
+    public class UserRoleService : IUserRoleService
     {
         private UnitOfWork uow;
-
-        public OperationDetails Create(ClientProfile item)
+        public OperationDetails Create(ApplicationRole item)
         {
             OperationDetails details;
             bool result;
             try
             {
-                var profile = Mapper.Map<DomainEntities.ClientProfile>(item);
+                var role = Mapper.Map<DomainEntities.ApplicationRole>(item);
                 using (uow = new UnitOfWork())
                 {
-                    uow.ClientManager.Create(profile);
+                    uow.RoleManager.CreateAsync(role);
                     uow.SaveChanges(out result);
                 }
+
                 return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
             }
             catch (AutoMapperMappingException ex)
@@ -39,17 +39,27 @@ namespace Services.Services
             }
         }
 
-        public ClientProfile Find(int id)
+        public ApplicationRole Find(int id)
         {
-            throw new NotImplementedException("Client profile demend id as a string");
+            throw new NotImplementedException("Role mannager accepts string ids");
         }
 
-        public IEnumerable<ClientProfile> GetAll()
+        public IEnumerable<ApplicationRole> GetAll()
         {
             using (uow = new UnitOfWork())
             {
-                var domainProfiles = uow.UserManager.Users.Select(x => x.ClientProfile).ToList();
-                return Mapper.Map<IEnumerable<ClientProfile>>(domainProfiles);
+                return Mapper.Map<IEnumerable<ApplicationRole>>(uow.RoleManager.Roles.ToList());
+            }
+        }
+
+        public IEnumerable<string> GetAllTitles()
+        {
+            using (uow = new UnitOfWork())
+            {
+                return uow.RoleManager.Roles
+                .Select(x => x.Name)
+                .Distinct()
+                .ToList();
             }
         }
 
@@ -58,5 +68,6 @@ namespace Services.Services
             if (uow != null)
                 uow.Dispose();
         }
+
     }
 }

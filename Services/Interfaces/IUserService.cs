@@ -6,13 +6,9 @@ using Services.Helpers;
 
 namespace Services.Interfaces
 {
-    public interface IUserService : IDisposable
+    public interface IUserService : IService<ApplicationUser>
     {
-        OperationDetails Create(UserDTO userDto);
-        ClaimsIdentity Authenticate(UserDTO userDto);
-        void SetInitialDate(UserDTO adminDto, List<string> roles);
-        IEnumerable<ApplicationUser> GetUsers();
+        ClaimsIdentity Authenticate(ApplicationUser user);
         ApplicationUser GetUserById(string id);
-        IEnumerable<string> GetAllRoles();
     }
 }

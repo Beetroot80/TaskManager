@@ -12,7 +12,7 @@ namespace DomainEF
         public TaskManagerContext()
             : base("TaskManagerDB")
         {
-            
+            this.Database.Log = s=> System.Diagnostics.Debug.WriteLine(s);
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

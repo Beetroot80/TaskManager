@@ -41,7 +41,7 @@ namespace TaskManager.Controllers
                 };
             }
             var projectService = new ProjectService();
-            TempData["ProjectTitles"] = projectService.GetUserProjects(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+            TempData["ProjectTitles"] = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
             return PartialView("Manage", manageModel);
         }
 

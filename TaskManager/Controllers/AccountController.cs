@@ -9,6 +9,8 @@ using ServiceEntities;
 using Services.Helpers;
 using System.Collections.Generic;
 using System.Linq;
+using Services.Services;
+using AutoMapper;
 
 namespace TaskManager.Controllers
 {
@@ -39,12 +41,12 @@ namespace TaskManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-            SetInitialData();
+            //SetInitialData();
 
             if (ModelState.IsValid)
             {
-                UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
-                ClaimsIdentity claim = UserService.Authenticate(userDto);
+                ApplicationUser user = new ApplicationUser { Email = model.Email, Password = model.Password };
+                ClaimsIdentity claim = UserService.Authenticate(user);
                 if (claim == null)
                 {
                     ModelState.AddModelError("", "Incorrect login or password");
@@ -78,18 +80,11 @@ namespace TaskManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            SetInitialData();
-
+            //SetInitialData();
+            
             if (ModelState.IsValid)
             {
-                UserDTO userDto = new UserDTO
-                {
-                    Email = model.Email,
-                    Password = model.Password,
-                    Name = model.Name,
-                    Role = "user"
-                };
-                OperationDetails opDetails = UserService.Create(userDto);
+                OperationDetails opDetails = UserService.Create(Mapper.Map<ApplicationUser>(model));
                 if (opDetails.Succedeed)
                     return View("SuccessRegister");
                 else
@@ -102,7 +97,8 @@ namespace TaskManager.Controllers
         [HttpGet]
         public ActionResult AddUser()
         {
-            TempData.Add("Roles", UserService.GetAllRoles());
+            var roleService = new UserRoleService();
+            TempData.Add("Roles", roleService.GetAllTitles());
             return PartialView();
         }
 
@@ -113,23 +109,21 @@ namespace TaskManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                UserDTO user = new UserDTO
-                {
-                    Email = model.Email,
-                    Password = model.Password,
-                    UserName = model.Email,
-                    Name = model.Name,
-                    Role = model.Role,
-                    PhoneNumber = model.PhoneNumber,
-                    Surname = model.Surname
-                };
+                var user = Mapper.Map<ApplicationUser>(model);
+                var roles = new List<string>();
+                if (model.Role != null)
+                    roles.Add(model.Role);
+                else
+                    roles.Add("User");
+                user.UserRoles = roles;
                 OperationDetails opDetails = UserService.Create(user);
                 if (opDetails.Succedeed)
                     return RedirectToAction("Index", "Home");
                 else
                     ModelState.AddModelError(opDetails.Property, opDetails.Message);
             }
-            TempData["Roles"] = UserService.GetAllRoles();
+            var roleService = new UserRoleService();
+            TempData ["Roles"] = roleService.GetAllTitles();
             return View(model);
         }
 
@@ -137,33 +131,21 @@ namespace TaskManager.Controllers
         [HttpGet]
         public ActionResult UsersList()
         {
-            var users = UserService.GetUsers();
+            var users = UserService.GetAll();
             var userList = new List<EditUserModel>();
             foreach(var user in users)
             {
                 userList.Add(AutoMapper.Mapper.Map<EditUserModel>(user));
             }
-
-            ViewBag.Roles = UserService.GetAllRoles();
+            var roleService = new UserRoleService();
+            ViewBag.Roles = roleService.GetAllTitles();
             return PartialView(userList);
         }
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult UserEmails()
         {
-            var users = UserService.GetUsers().Select(x => x.Email).ToList();
+            var users = UserService.GetAll().Select(x => x.Email).ToList();
             return Json(users, JsonRequestBehavior.AllowGet);
-        }
-
-        private void SetInitialData() //TODO: remove
-        {
-            UserService.SetInitialDate(new UserDTO
-            {
-                Email = "admin@gmail.com",
-                UserName = "admin@gmail.com",
-                Password = "Admin1!",
-                Name = "Admin",
-                Role = "Administrator",
-            }, new List<string> { "User", "Manager" });
         }
     }
 }

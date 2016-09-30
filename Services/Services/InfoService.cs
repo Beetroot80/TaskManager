@@ -67,7 +67,7 @@ namespace Services.Services
                     uow.StatusRepo.Insert(status);
                     uow.SaveChanges(out result);
                 }
-                return new OperationDetails(result, "", "");
+                return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
             }
             catch (AutoMapperMappingException ex)
             {
@@ -141,7 +141,7 @@ namespace Services.Services
                     uow.PriorityRepo.Insert(priority);
                     uow.SaveChanges(out result);
                 }
-                return new OperationDetails(result, "", "");
+                return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
             }
             catch (AutoMapperMappingException ex)
             {

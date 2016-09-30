@@ -39,7 +39,7 @@ namespace TaskManager.Controllers
             if (projectTitle == null)
             {
                 var projectService = new ProjectService();
-                var projectTitles = projectService.GetUserProjects(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+                var projectTitles = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
                 if (projectTitles.Count == 0)
                     return RedirectToAction("AddProject", "Project");
                 TempData["ProjectTitles"] = projectTitles;
@@ -86,7 +86,7 @@ namespace TaskManager.Controllers
                 serviceTask.AssignedToId = userService.FindByEmail(model.AssignedToEmail).Id;
             }
 
-            taskService.AddTask(serviceTask);
+            var operationResults = taskService.Create(serviceTask); //TODO: checkResults
             return RedirectToAction("Index", "Home");
         }
 

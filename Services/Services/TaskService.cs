@@ -3,31 +3,72 @@ using System.Linq;
 using AutoMapper;
 
 using ServiceEntities;
-
+using Services.Interfaces;
 using DomainEntities;
 using DomainEF.UnitOfWork;
-using Services.Services;
+using Services.Helpers;
+using System;
 
 namespace Services
 {
-    public class TaskService
+    public class TaskService : ITaskService
     {
         private UnitOfWork uow;
 
-        public IEnumerable<ServiceTask> GetAllTasks()
+        public IEnumerable<ServiceTask> GetAll()
         {
-            List<ServiceTask> serviseTasks;
             IEnumerable<DomainTask> tasks;
             using (uow = new UnitOfWork())
             {
-                serviseTasks = new List<ServiceTask>();
                 tasks = uow.DomainTaskRepo.GetAllIncluding(includeProperties: x => x.Client).ToList();
+                return Mapper.Map<IEnumerable<ServiceTask>>(tasks);
             }
-            foreach (var i in tasks)
+        }
+
+        public IEnumerable<ServiceTask> GetAll(string userId)
+        {
+            IEnumerable<DomainTask> tasks;
+            using (uow = new UnitOfWork())
             {
-                serviseTasks.Add(Mapper.Map<ServiceTask>(i));
+                tasks = uow.DomainTaskRepo.GetAll().Where(x => x.CreatedBy_Id == userId | x.AssignedTo == userId).ToList();
+                return Mapper.Map<IEnumerable<ServiceTask>>(tasks);
             }
-            return serviseTasks;
+        }
+
+        public IEnumerable<ServiceTask> GetAll(int projectId)
+        {
+            IEnumerable<DomainTask> tasks;
+            using (uow = new UnitOfWork())
+            {
+                tasks = uow.DomainTaskRepo.GetAll().Where(x => x.ProjectId == projectId).ToList();
+                return Mapper.Map<IEnumerable<ServiceTask>>(tasks);
+            }
+        }
+
+        public IEnumerable<string> GetTitles()
+        {
+            IEnumerable<string> titles;
+            using (uow = new UnitOfWork())
+            {
+                titles = uow.DomainTaskRepo.GetAll().Select(x => x.Title).ToList();
+            }
+            return titles;
+        }
+        public IEnumerable<ServiceEntities.Comment> GetComments(int taskId)
+        {
+            IEnumerable<DomainEntities.Comment> domainComments;
+            using (uow = new UnitOfWork())
+            {
+                domainComments = uow.DomainTaskRepo.GetAll().Where(x => x.Id == taskId).Select(x => x.Comments).FirstOrDefault();
+            }
+            return Mapper.Map<IEnumerable<ServiceEntities.Comment>>(domainComments);
+        }
+        public ServiceTask Find(int taskId)
+        {
+            using (uow = new UnitOfWork())
+            {
+                return Mapper.Map<ServiceTask>(uow.DomainTaskRepo.Find(taskId));
+            }
         }
 
         public IEnumerable<ServiceTask> GetSignedTasks(int projectId) //TODO: optimization!!!
@@ -55,21 +96,37 @@ namespace Services
                 return Mapper.Map<ServiceTask>(domainTask);
             }
         }
-        public List<ServiceEntities.Comment> GetComments(int taskId)
+
+        public OperationDetails Create(ServiceTask item)
         {
-            using (uow = new UnitOfWork())
+            OperationDetails details;
+            bool result;
+            try
             {
-                var domainComments = uow.DomainTaskRepo.GetAll().Where(x => x.Id == taskId).Select(x => x.Comments).FirstOrDefault();
-                return Mapper.Map<List<ServiceEntities.Comment>>(domainComments);
+                var task = Mapper.Map<DomainTask>(item);
+                using (uow = new UnitOfWork())
+                {
+                    uow.DomainTaskRepo.Insert(task);
+                    uow.SaveChanges(out result);
+                }
+
+                return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
+            }
+            catch (AutoMapperMappingException ex)
+            {
+                return details = new OperationDetails(false, ex.Message, "");
+            }
+            catch (Exception ex)
+            {
+                return details = new OperationDetails(false, ex.Message, "");
             }
         }
-        public void AddTask(ServiceTask model)
+
+        public void Dispose()
         {
-            using (uow = new UnitOfWork())
-            {
-                uow.DomainTaskRepo.Insert(Mapper.Map<DomainTask>(model));
-                uow.SaveChanges();
-            }
+            if (uow != null)
+                uow.Dispose();
         }
+
     }
 }

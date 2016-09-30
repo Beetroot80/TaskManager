@@ -668,6 +668,7 @@ textarea {
 #task-area {
     position: relative;
     display: inline-block;
+    overflow-y: auto;
     margin-left: 5px;
     padding: 0;
     width: 69%;

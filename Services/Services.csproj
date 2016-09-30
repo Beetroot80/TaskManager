@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -72,6 +72,7 @@
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\IStatusService.cs" />
     <Compile Include="Interfaces\ITaskService.cs" />
+    <Compile Include="Interfaces\IUserRoleService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Interfaces\IServiceCreator.cs" />
     <Compile Include="Mapper\Mapper.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ServiceCreator.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\UserRoleService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
