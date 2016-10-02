@@ -23,7 +23,6 @@ namespace Services.Services
                 return Mapper.Map<IEnumerable<Project>>(domainProjects);
             }
         }
-
         public IEnumerable<Project> GetAll(string userId)
         {
             using (uow = new UnitOfWork())
@@ -107,10 +106,9 @@ namespace Services.Services
         {
             using (uow = new UnitOfWork())
             {
-                var domainProjects = uow.ProjectRepo
-                    .GetAll()
-                    .Where(x => x.CreatedById == userId || x.Clients.Where(y => y.Id == userId).Any())
-                    .ToList();
+                IEnumerable<DomainEntities.Project> domainProjects;
+
+                domainProjects = uow.ProjectRepo.GetAllIncluding(null, null, x => x.Clients, x => x.Tasks).Where(x => x.CreatedById == userId).ToList();
                 return Mapper.Map<IEnumerable<Project>>(domainProjects);
             }
         }
@@ -119,8 +117,16 @@ namespace Services.Services
         {
             using (uow = new UnitOfWork())
             {
-               var domainProjects = uow.ProjectRepo.GetAllIncluding(includeProperties: x => x.Tasks).ToList();
+                var domainProjects = uow.ProjectRepo.GetAllIncluding(includeProperties: x => x.Tasks).ToList();
                 return Mapper.Map<IEnumerable<Project>>(domainProjects);
+            }
+        }
+        public Project GetFullProject(int projectId)
+        {
+            using (uow = new UnitOfWork())
+            {
+                var domainProjects = uow.ProjectRepo.GetAllIncluding(null, null, x => x.Tasks, x=> x.Clients, x=> x.CreatedBy).Where(x => x.Id == projectId).FirstOrDefault();
+                return Mapper.Map<Project>(domainProjects);
             }
         }
         public Project GetProjectWithTaskByTitle(string projectTitle)
@@ -144,7 +150,10 @@ namespace Services.Services
             {
                 try
                 {
-                    uow.ProjectRepo.Update(Mapper.Map<DomainEntities.Project>(item));
+                    var i = new DomainEntities.Project();
+                    i.Clients = Mapper.Map<ICollection<DomainEntities.ApplicationUser>>(item.Clients);
+                    i.Id = item.Id;
+                    uow.ProjectRepo.Update(i);
                     uow.SaveChanges();
                     return new OperationDetails(true, "Updated", "Project");
                 }
@@ -188,7 +197,6 @@ namespace Services.Services
             {
                 try
                 {
-
                     uow.ProjectRepo.Delete(itemId);
                     uow.SaveChanges();
                     return new OperationDetails(true, "Deleted", "Project");

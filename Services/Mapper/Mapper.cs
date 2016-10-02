@@ -13,8 +13,11 @@ namespace ServiceMapper
                 .ForMember(x => x.CreatedById, op => op.MapFrom(task => task.CreatedBy_Id))
                 .ForMember(x=> x.AssignedToId, op => op.MapFrom(task => task.AssignedTo))
                 .ForMember( x=> x.Client, op => op.MapFrom(user => user.Client))
-                .MaxDepth(1)
-                .ReverseMap();
+                .MaxDepth(1);
+            CreateMap<ServiceEntities.ServiceTask, DomainEntities.DomainTask > ()
+                .ForMember(x => x.CreatedBy_Id, op => op.MapFrom(task => task.CreatedById))
+                .ForMember(x => x.AssignedTo, op => op.MapFrom(task => task.AssignedToId))
+                .MaxDepth(1);
             CreateMap<DomainEntities.ClientProfile, ServiceEntities.ClientProfile>()
                 .ForMember(x => x.ApplicationUser , op => op.MapFrom(profile => profile.ApplicationUser))
                 .MaxDepth(1)

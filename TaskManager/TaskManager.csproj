@@ -271,6 +271,7 @@
     <Content Include="Views\Home\AuthorizedAsManager.cshtml" />
     <Content Include="Views\Home\AuthorizedAsUser.cshtml" />
     <Content Include="Views\Project\Manage.cshtml" />
+    <Content Include="Views\Shared\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

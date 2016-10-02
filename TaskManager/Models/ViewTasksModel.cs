@@ -49,7 +49,6 @@ namespace TaskManager.Models
         public string PriorityTitle { get; set; }
 
         [Display(Name = "Assign to")]
-        [Required]
         [EmailAddress]
         public string AssignedToEmail { get; set; }
 

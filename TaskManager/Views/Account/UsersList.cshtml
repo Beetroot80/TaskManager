@@ -44,7 +44,7 @@
                 <td>
                     <div>
                         @*new SelectList((ICollection<string>)TempData["Roles"])*@
-                        @Html.DropDownListFor(model => user.NewRole, user.RoleList , new { @class = "btn btn-default btn-block text-center", @id = "roles-dropdown" })
+                        @Html.DropDownListFor(model => user.NewRole, user.RoleList , new { @class = "btn disabled btn-default btn-block text-center", @id = "roles-dropdown" })
                     </div>
                 </td>
                 <td>
@@ -52,7 +52,7 @@
                         <input id="id" type="hidden" name="id" value="@user.Id" />
                         <input type="hidden" name="newRole" value=@user.NewRole/>
                         <input type="hidden" name="name" value=@user.Name />
-                        <input type="button" value="Change role" class="btn btn-default submit" />
+                        <input type="button" value="Change role" class="btn btn-default submit disabled" />
                     </form>
                 </td>
             </tr>

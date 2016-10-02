@@ -181,10 +181,12 @@
             cache: false,
             type: "POST",
             sucess: function(response){
-                    alert(respone.responseText);
+                window.location.href
+                = "~/Result";
             },
             error: function (response) {
-                alert(response.responseText);
+                window.location.href
+                = "~/Result";
             }
         });
     }

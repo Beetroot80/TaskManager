@@ -100,7 +100,6 @@ namespace Services.Services
                             uow.UserManager.AddToRole(user.Id, item.UserRoles ?? "User");
                             return new OperationDetails(true, "Registration is successful", "");
                         }
-
                         else
                             return new OperationDetails(false, "Error", "Email or password is incorrect");
                     }

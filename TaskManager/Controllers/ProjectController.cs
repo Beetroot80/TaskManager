@@ -8,6 +8,7 @@ using Services.Services;
 using TaskManager.Models;
 using Services;
 using System;
+using Services.Helpers;
 
 namespace TaskManager.Controllers
 {
@@ -35,11 +36,8 @@ namespace TaskManager.Controllers
             var projectService = new ProjectService();
             var userId = User.Identity.GetUserId();
             var projects = projectService.GetProjectsWithCounters(userId);
-            List<ProjectModel> projectModels = new List<ProjectModel>();
-            foreach (var project in projects)
-            {
-                projectModels.Add(Mapper.Map<ProjectModel>(project));
-            }
+            var projectModels = Mapper.Map<IEnumerable<ProjectModel>>(projects);
+
             return PartialView(projectModels.AsEnumerable());
         }
 
@@ -48,14 +46,14 @@ namespace TaskManager.Controllers
         public ActionResult ViewTask(int projectId)
         {
             var taskService = new TaskService();
+            var projectService = new ProjectService();
             var tasks = taskService.GetSignedTasks(projectId);
             List<ViewTasksModel> taskModels = new List<ViewTasksModel>();
             foreach (var task in tasks)
             {
                 taskModels.Add(Mapper.Map<ViewTasksModel>(task));
             }
-            ViewBag.CreatedByEmail = tasks.Select(x => x.Project.CreatedBy.Email).FirstOrDefault(); //TODO: get projectby id;
-            ViewBag.ProjectTitle = taskModels.Select(x => x.ProjectTitle).FirstOrDefault();
+            ViewBag.ProjectTitle = projectService.Find(projectId).Title ?? "--------";
             return PartialView(taskModels.AsEnumerable());
         }
 
@@ -72,8 +70,8 @@ namespace TaskManager.Controllers
         {
             model.CreatedById = HttpContext.User.Identity.GetUserId();
             var projectService = new ProjectService();
-            projectService.Create(Mapper.Map<ServiceEntities.Project>(model));
-            return RedirectToAction("Index", "Home");
+            var opDetails = projectService.Create(Mapper.Map<ServiceEntities.Project>(model));
+            return Result(opDetails);
         }
 
         [Authorize(Roles = "Administrator,Manager,User")]
@@ -128,25 +126,46 @@ namespace TaskManager.Controllers
             var projectService = new ProjectService();
             var taskService = new TaskService();
             var userService = new UserService();
+            var statusList = statusService.GetAll().Select(x => x.Title).ToList();
+            var priorityList = priorityService.GetAll().Select(x => x.Title).ToList();
+
+            TempData["StatusList"] = statusList;
+            TempData["PriorityList"] = priorityList;
 
             serviceTask = Mapper.Map<ServiceTask>(model);
             serviceTask.CreatedById = User.Identity.GetUserId();
             serviceTask.CreationDate = DateTime.Now.Date;
-            serviceTask.DeadLine = DateTime.Now.Date;
+            if (model.DeadLine < DateTime.Now.Date)
+            {
+                ModelState.AddModelError("DeadLine", "Incorrect date");
+                TempData["ProjectTitles"] = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+                return View(model);
+            }
+            if(!statusList.Contains(model.StatusTitle) || !priorityList.Contains(model.PriorityTitle))
+            {
+                TempData["ProjectTitles"] = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+                ModelState.AddModelError("PriorityTitle", "Incorrect data");
+                ModelState.AddModelError("StatusTitle", "Incorrect data");
+                return View(model);
+            }
+            serviceTask.DeadLine = model.DeadLine ?? DateTime.Now.Date;
             serviceTask.ProjectId = projectService.FindByTitle(model.ProjectTitle).Id;
             serviceTask.StatusId = statusService.FindByTitle(model.StatusTitle).Id;
             serviceTask.PriorityId = priorityService.FindByTitle(model.PriorityTitle).Id;
+
             if (User.IsInRole("User"))
             {
                 serviceTask.AssignedToId = User.Identity.GetUserId();
             }
             else
             {
-                serviceTask.AssignedToId = userService.FindByEmail(model.AssignedToEmail).Id;
+                if (model.AssignedToEmail != null)
+                    serviceTask.AssignedToId = userService.FindByEmail(model.AssignedToEmail).Id;
             }
 
-            var operationResult = taskService.Create(serviceTask); //TODO: check results
-            return RedirectToAction("Index", "Home");
+            var opDetails = taskService.Create(serviceTask);
+            return Result(opDetails);
+
         }
 
         [Authorize(Roles = "Administrator, Manager")]
@@ -203,8 +222,8 @@ namespace TaskManager.Controllers
         public ActionResult ProjectList()
         {
             var projectService = new ProjectService();
-            var projecttitles = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
-            return Json(projecttitles, JsonRequestBehavior.AllowGet);
+            var projectTitles = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+            return Json(projectTitles, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "Administrator, Manager, User")]
@@ -218,12 +237,28 @@ namespace TaskManager.Controllers
                 var taskTitles = new List<string>();
                 var project = projectService.GetProjectWithTaskByTitle(projectTitle);
                 if (project != null)
-                     taskTitles= project.Tasks.Select(x => x.Title).ToList();
+                    taskTitles = project.Tasks.Select(x => x.Title).ToList();
                 return Json(taskTitles);
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 return Json("");
+            }
+        }
+
+        private ActionResult Result(OperationDetails opDetails)
+        {
+            if (opDetails.Succedeed)
+            {
+                TempData["Result"] = "Succeed";
+                TempData["Message"] = opDetails.Message;
+                return PartialView("Result");
+            }
+            else
+            {
+                TempData["Result"] = "Failed";
+                TempData["Message"] = opDetails.Message;
+                return PartialView("Result");
             }
         }
 

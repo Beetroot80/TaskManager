@@ -30,22 +30,5 @@ namespace TaskManager.Controllers
 
             return View();
         }
-
-        [Authorize(Roles = "Administrator")]
-        public ActionResult AuthorizedAsAdmin()
-        {
-            return View();
-        }
-        [Authorize(Roles = "Manager")]
-        public ActionResult AuthorizedAuthorizedAsManager()
-        {
-            throw new NotImplementedException();
-        }
-        [Authorize(Roles = "User")]
-        public ActionResult AuthorizedAuthorizedAsUser()
-        {
-            throw new NotImplementedException();
-
-        }
     }
 }

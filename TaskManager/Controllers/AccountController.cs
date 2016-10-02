@@ -84,7 +84,11 @@ namespace TaskManager.Controllers
                 var userService = new UserService();
                 OperationDetails opDetails = userService.Create(Mapper.Map<ApplicationUser>(model));
                 if (opDetails.Succedeed)
-                    return View("SuccessRegister");
+                {
+                    TempData["Result"] = "Succeed";
+                    TempData["Message"] = opDetails.Message;
+                    return PartialView("Result");
+                }
                 else
                     ModelState.AddModelError(opDetails.Property, opDetails.Message);
             }
@@ -115,7 +119,7 @@ namespace TaskManager.Controllers
             {
                 if (model.BirthDate != null)
                 {
-                    if (model.BirthDate >= DateTime.Now.Date)
+                    if (model.BirthDate >= DateTime.Now.Date || model.BirthDate < DateTime.Now.Date.AddYears(-150))
                     {
                         ModelState.AddModelError("BirthDate", "Incorrect birth date");
                         return View(model);
@@ -140,9 +144,13 @@ namespace TaskManager.Controllers
                 user.UserName = model.Name;
                 opDetails = UserService.Create(user);
 
-                if (opDetails.Succedeed) //TODO: Partial view Succeed
-                    return RedirectToAction("Index", "Home");
-                else //TODO: Partial view failed
+                if (opDetails.Succedeed)
+                {
+                    TempData["Result"] = "Succeed";
+                    TempData["Message"] = opDetails.Message;
+                    return PartialView("Result");
+                }
+                else
                 {
                     ModelState.AddModelError("Password", "Incorrect value");
                     ModelState.AddModelError("Email", "Incorrect value");
@@ -198,11 +206,19 @@ namespace TaskManager.Controllers
                     var userService = new UserService();
                     var user = userService.Find(id);
                     user.UserRoles = newRole;
-                    var opresults = userService.Update(user);
-                    if (opresults.Succedeed == true)
-                        return PartialView("Index", "Home"); //TODO: Succeed screen
+                    var opDetails = userService.Update(user);
+                    if (opDetails.Succedeed == true)
+                    {
+                        TempData["Result"] = "Succeed";
+                        TempData["Message"] = opDetails.Message;
+                        return PartialView("Result");
+                    }
                     else
-                        return PartialView("Index", "Home"); //TODO: Error occurred
+                    {
+                        TempData["Result"] = "Failed";
+                        TempData["Message"] = opDetails.Message;
+                        return PartialView("Result");
+                    }
                 }
                 else
                     ModelState.AddModelError("NewRole", "Role does not exist");

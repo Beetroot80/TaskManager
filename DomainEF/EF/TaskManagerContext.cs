@@ -11,7 +11,7 @@ namespace DomainEF
     public class TaskManagerContext : IdentityDbContext<ApplicationUser>, ITaskManagerContext
     {
         public TaskManagerContext()
-            : base("TaskManagerDB")
+            : base("SqlDB")
         {
             Configuration.ProxyCreationEnabled = false;
         }

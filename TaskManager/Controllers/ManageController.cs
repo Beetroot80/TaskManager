@@ -20,13 +20,13 @@ namespace TaskManager.Controllers
             {
                 manageModel.ProjectActions = new List<string>()
                 {
-                    "Add user to project",
+                    //"Add user to project",
                     "Delete project",
                     "Manage tasks"
                 };
                 manageModel.TaskAction = new List<string>()
                 {
-                    "Assign to user",
+                    //"Assign to user",
                     "Delete"
                 };
             }
@@ -145,7 +145,7 @@ namespace TaskManager.Controllers
         {
             var projectService = new ProjectService();
             var opDetails = projectService.Delete(projectId);
-            return Json(new { success = opDetails.Succedeed, responseText = opDetails.Succedeed == true ? opDetails.Message : "Error occurred while deleting" }, JsonRequestBehavior.AllowGet);
+            return Result(opDetails);
         }
 
         private ActionResult DeleteTask(int projectId, string taskTitle)
@@ -153,21 +153,22 @@ namespace TaskManager.Controllers
             var taskService = new TaskService();
             var task = taskService.GetAll(projectId).Where(x => x.Title == taskTitle).FirstOrDefault();
             var opDetails = taskService.Delete(task);
-            return Json(new { success = opDetails.Succedeed, responseText = opDetails.Succedeed == true ? opDetails.Message : "Error occurred while deleting" }, JsonRequestBehavior.AllowGet);
+            return Result(opDetails);
         }
 
         private ActionResult AddUserToProject(int projectId, string assignTo)
         {
             var projectService = new ProjectService();
             var userService = new UserService();
-            var project = projectService.Find(projectId);
+            var project = projectService.GetFullProject(projectId);
+
             var user = userService.FindByEmail(assignTo);
             OperationDetails opDetails;
             if (user != null && !project.Clients.Contains(user))
             {
                 project.Clients.Add(user);
                 opDetails = projectService.Update(project);
-                return Json(new { success = opDetails.Succedeed, responseText = opDetails.Succedeed == true ? opDetails.Message : "Error occurred while updating" }, JsonRequestBehavior.AllowGet);
+                return Result(opDetails);
             }
             return Json(new { success = false, responseText = user == null ? "User was not found" : "User already signet for project" }, JsonRequestBehavior.AllowGet);
         }
@@ -188,10 +189,26 @@ namespace TaskManager.Controllers
                     projectService.Update(project);
                 }
                 task.AssignedToId = user.Id;
-                var odDetails = taskService.Update(task);
-                return Json(new { success = odDetails.Succedeed, responseText = odDetails.Succedeed == true ? odDetails.Message : "Error occurred while updating" }, JsonRequestBehavior.AllowGet);
+                var opDetails = taskService.Update(task);
+                return Result(opDetails);
             }
             return Json(new { success = false, responseText = "User was not found" }, JsonRequestBehavior.AllowGet);
+        }
+
+        private ActionResult Result(OperationDetails opDetails)
+        {
+            if (opDetails.Succedeed)
+            {
+                TempData["Result"] = "Succeed";
+                TempData["Message"] = opDetails.Message;
+                return PartialView("Result");
+            }
+            else
+            {
+                TempData["Result"] = "Failed";
+                TempData["Message"] = opDetails.Message;
+                return PartialView("Result");
+            }
         }
     }
 }

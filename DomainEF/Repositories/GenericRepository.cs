@@ -107,7 +107,7 @@ namespace DomainEF.Repositories
 
         public void Update(TEntity entity)
         {
-            context.Entry(entity).State = EntityState.Detached;
+            context.Entry(entity).State = EntityState.Added;
             context.Entry(entity).State = EntityState.Modified;
         }
     }

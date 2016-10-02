@@ -104,6 +104,7 @@ namespace Services
             try
             {
                 var task = Mapper.Map<DomainTask>(item);
+                task.AssignedTo = item.AssignedToId;
                 using (uow = new UnitOfWork())
                 {
                     uow.DomainTaskRepo.Insert(task);
@@ -155,8 +156,6 @@ namespace Services
             {
                 try
                 {
-                    //var oldItem = new DomainEntities.DomainTask();
-                    //oldItem.Id = item.Id;
                     uow.DomainTaskRepo.Delete(item.Id);
                     uow.SaveChanges();
                     return new OperationDetails(true, "Deleted", "Task");

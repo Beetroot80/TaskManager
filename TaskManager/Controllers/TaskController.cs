@@ -73,7 +73,7 @@ namespace TaskManager.Controllers
             serviceTask = Mapper.Map<ServiceTask>(model);
             serviceTask.CreatedById = User.Identity.GetUserId();
             serviceTask.CreationDate = DateTime.Now.Date;
-            serviceTask.DeadLine = DateTime.Now.Date;
+            serviceTask.DeadLine = model.DeadLine ?? DateTime.Now.Date;
             serviceTask.ProjectId = projectService.FindByTitle(model.ProjectTitle).Id;
             serviceTask.StatusId = statusService.FindByTitle(model.StatusTitle).Id;
             serviceTask.PriorityId = priorityService.FindByTitle(model.PriorityTitle).Id;

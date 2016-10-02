@@ -8,6 +8,7 @@ using System.Web.Routing;
 using AutoMapper;
 using ServiceMapper;
 using TaskManager.Models;
+using ServiceEntities;
 
 namespace TaskManager
 {
@@ -28,24 +29,26 @@ namespace TaskManager
         [Obsolete]
         protected override void Configure()
         {
-            CreateMap<ServiceEntities.Project, ProjectModel>()
+            CreateMap<Project, ProjectModel>()
                 .ForMember(x => x.TaskCount, op => op.MapFrom(project => project.Tasks.Count))
-                .ForMember(x => x.ClientsCount, op => op.MapFrom(project => project.Clients.Count))
+                .ForMember(x => x.ClientsCount, op => op.MapFrom(project => project.Clients.Count >= 1 ? project.Clients.Count : 1 ))
                 .MaxDepth(2)
                 .ReverseMap();
-            CreateMap<ServiceEntities.ApplicationUser, ApplicationUserModel>()
+            CreateMap<ViewTasksModel, ServiceTask>()
                 .ReverseMap();
-            CreateMap<ServiceEntities.ApplicationUser, EditUserModel>()
+            CreateMap<ApplicationUser, ApplicationUserModel>()
+                .ReverseMap();
+            CreateMap<ApplicationUser, EditUserModel>()
                 .ForMember(x => x.Name, op => op.MapFrom(user => user.ClientProfile.Name))
                 .ForMember(x => x.Surname, x => x.MapFrom(user => user.ClientProfile.Surname))
                 .ReverseMap();
-            CreateMap<ServiceEntities.ApplicationUser, AddUserModel>()
+            CreateMap<ApplicationUser, AddUserModel>()
                 .ForMember(x => x.Role, op => op.MapFrom(y => y.UserRoles.First()))
                 .ForMember(x => x.Name, op => op.MapFrom(y => y.UserName))
                 .ReverseMap();
-            CreateMap<ServiceEntities.ApplicationUser, RegisterModel>()
+            CreateMap<ApplicationUser, RegisterModel>()
                 .ReverseMap();
-            CreateMap<ServiceEntities.ServiceTask, ViewTasksModel>()
+            CreateMap<ServiceTask, ViewTasksModel>()
                 .ForMember(x => x.AssignedToEmail, op => op.MapFrom(user => user.Client.Email))
                 .ForMember(x => x.CreatedByEmail, op => op.MapFrom(user => user.CreatedBy.Email))
                 .ForMember(x => x.PriorityTitle, op => op.MapFrom(title => title.Priority.Title))
@@ -53,7 +56,7 @@ namespace TaskManager
                 .ForMember(x => x.ProjectTitle,op => op.MapFrom(project => project.Project.Title))
                 .MaxDepth(1)
                 .ReverseMap();
-            CreateMap<ServiceEntities.Comment, CommentModel>();
+            CreateMap<Comment, CommentModel>();
         }
     }
     public static class MVCMapperConfig
