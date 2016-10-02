@@ -155,9 +155,9 @@ namespace Services
             {
                 try
                 {
-                    var oldItem = new DomainEntities.DomainTask();
-                    oldItem.Id = item.Id;
-                    uow.DomainTaskRepo.Delete((oldItem));
+                    //var oldItem = new DomainEntities.DomainTask();
+                    //oldItem.Id = item.Id;
+                    uow.DomainTaskRepo.Delete(item.Id);
                     uow.SaveChanges();
                     return new OperationDetails(true, "Deleted", "Task");
                 }

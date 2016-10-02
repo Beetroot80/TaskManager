@@ -96,7 +96,9 @@ namespace TaskManager.Controllers
         public ActionResult AddUser()
         {
             var roleService = new UserRoleService();
-            TempData.Add("Roles", roleService.GetAllTitles());
+            if (!TempData.ContainsKey("Roles"))
+                TempData.Add("Roles", roleService.GetAllTitles());
+            else TempData["Roles"] = roleService.GetAllTitles();
             return PartialView();
         }
 
@@ -107,23 +109,33 @@ namespace TaskManager.Controllers
         {
             var roleService = new UserRoleService();
             IEnumerable<string> roleList = roleService.GetAllTitles();
+            TempData["Roles"] = roleList;
             OperationDetails opDetails;
             if (ModelState.IsValid)
             {
                 if (model.BirthDate != null)
                 {
                     if (model.BirthDate >= DateTime.Now.Date)
+                    {
                         ModelState.AddModelError("BirthDate", "Incorrect birth date");
+                        return View(model);
+                    }
                 }
-
+                var userService = new UserService();
+                var userExcists = userService.FindByEmail(model.Email);
+                if (userExcists != null)
+                {
+                    ModelState.AddModelError("Email", "User already exist");
+                    return View(model);
+                }
                 var roleExcist = roleList.Contains(model.Role);
                 if (!roleExcist)
                 {
                     ModelState.AddModelError("Role", "Role does not exist");
+                    return View(model);
                 }
                 var user = Mapper.Map<ApplicationUser>(model);
                 var roles = new List<string>();
-
                 user.UserRoles = model.Role;
                 user.UserName = model.Name;
                 opDetails = UserService.Create(user);
@@ -131,7 +143,14 @@ namespace TaskManager.Controllers
                 if (opDetails.Succedeed) //TODO: Partial view Succeed
                     return RedirectToAction("Index", "Home");
                 else //TODO: Partial view failed
-                    ModelState.AddModelError(opDetails.Property, opDetails.Message);
+                {
+                    ModelState.AddModelError("Password", "Incorrect value");
+                    ModelState.AddModelError("Email", "Incorrect value");
+                    model.Email = "";
+                    model.Password = "";
+                    model.ConfirmPassword = "";
+                    return View(model);
+                }
 
             }
             TempData["Roles"] = roleList;

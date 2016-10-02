@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Services;
+using Services.Helpers;
 using Services.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace TaskManager.Controllers
         //This code is just awful, have to totally refactor this!
         [Authorize(Roles = "Administrator, Manager, User")]
         [HttpPost]
-        public ActionResult Manage(string projectTitle, string taskTitle, string projectAction, string taskAction, string assignTo)
+        public void Manage(string projectTitle, string taskTitle, string projectAction, string taskAction, string assignTo)
         {
             #region settings
             var projectService = new ProjectService();
@@ -84,15 +85,16 @@ namespace TaskManager.Controllers
             }
             else
             {
+                var projectId = projectService.FindByTitle(projectTitle).Id;
                 if (isInAdminrole && adminsProjectAction.Contains(projectAction))
                 {
                     switch (projectAction)
                     {
                         case "Delete project":
-                            DeleteProject(projectTitle);
+                            DeleteProject(projectId);
                             break;
                         case "Add user to project":
-                            AddUserToProject(projectTitle, assignTo);
+                            AddUserToProject(projectId, assignTo);
                             break;
                         case "Manage tasks":
                             if (adminsTaskAction.Contains(taskAction))
@@ -100,20 +102,16 @@ namespace TaskManager.Controllers
                                 switch (taskAction)
                                 {
                                     case "Assign to user":
-                                        AssignToTask(projectTitle, taskTitle, assignTo);
+                                        AssignToTask(projectId, taskTitle, assignTo);
                                         break;
                                     case "Delete":
-                                        DeleteTask(projectTitle, taskTitle);
+                                        DeleteTask(projectId, taskTitle);
                                         break;
-                                    default:
-                                        return RedirectToAction("Manage");
                                 }
                             }
                             else
                                 ModelState.AddModelError("TaskActions", "Invalid task action");
                             break;
-                        default:
-                            return RedirectToAction("Manage");
                     }
                 }
                 else if (!isInAdminrole && userProjectAction.Contains(projectAction))
@@ -121,7 +119,7 @@ namespace TaskManager.Controllers
                     switch (projectAction)
                     {
                         case "Delete":
-                            DeleteProject(projectTitle);
+                            DeleteProject(projectId);
                             break;
                         case "Manage tasks":
                             if (userTaskAction.Contains(taskAction))
@@ -129,65 +127,71 @@ namespace TaskManager.Controllers
                                 switch (taskAction)
                                 {
                                     case "Delete":
-                                        DeleteTask(projectTitle, taskTitle);
+                                        DeleteTask(projectId, taskTitle);
                                         break;
-                                    default:
-                                        return RedirectToAction("Manage");
                                 }
                             }
                             else
                                 ModelState.AddModelError("TaskActions", "Invalid task action");
                             break;
-                        default:
-                            return RedirectToAction("Manage");
                     }
                 }
                 else
-                    ModelState.AddModelError("ProjectActions", "Invalid project action");
+                    ModelState.AddModelError("ProjectActions", "Title does not exist");
             }
-            return PartialView("Manage");
         }
-        private ActionResult DeleteProject(string projectTitle)
+
+        private ActionResult DeleteProject(int projectId)
         {
             var projectService = new ProjectService();
-            var project = projectService.FindByTitle(projectTitle);
-            var opDetails = projectService.Delete(project);
-            return RedirectToAction("Index","Home");
+            var opDetails = projectService.Delete(projectId);
+            return Json(new { success = opDetails.Succedeed, responseText = opDetails.Succedeed == true ? opDetails.Message : "Error occurred while deleting" }, JsonRequestBehavior.AllowGet);
         }
-        private ActionResult DeleteTask(string projectTitle, string taskTitle)
+
+        private ActionResult DeleteTask(int projectId, string taskTitle)
         {
             var taskService = new TaskService();
-            var task = taskService.GetAll().Where(x => x.Title == taskTitle && x.Project.Title == projectTitle).FirstOrDefault();
+            var task = taskService.GetAll(projectId).Where(x => x.Title == taskTitle).FirstOrDefault();
             var opDetails = taskService.Delete(task);
-            return RedirectToAction("Index", "Home");
+            return Json(new { success = opDetails.Succedeed, responseText = opDetails.Succedeed == true ? opDetails.Message : "Error occurred while deleting" }, JsonRequestBehavior.AllowGet);
         }
-        private ActionResult AddUserToProject(string projectTitle, string assignTo)
+
+        private ActionResult AddUserToProject(int projectId, string assignTo)
         {
             var projectService = new ProjectService();
             var userService = new UserService();
-            var project = projectService.FindByTitle(projectTitle);
+            var project = projectService.Find(projectId);
             var user = userService.FindByEmail(assignTo);
-            if (user != null)
+            OperationDetails opDetails;
+            if (user != null && !project.Clients.Contains(user))
             {
                 project.Clients.Add(user);
-                projectService.Update(project);
+                opDetails = projectService.Update(project);
+                return Json(new { success = opDetails.Succedeed, responseText = opDetails.Succedeed == true ? opDetails.Message : "Error occurred while updating" }, JsonRequestBehavior.AllowGet);
             }
-            return RedirectToAction("Index", "Home");
+            return Json(new { success = false, responseText = user == null ? "User was not found" : "User already signet for project" }, JsonRequestBehavior.AllowGet);
         }
-        private ActionResult AssignToTask(string projectTitle, string taskTitle, string assignTo)
+
+        private ActionResult AssignToTask(int projectId, string taskTitle, string assignTo)
         {
-            var projectService = new ProjectService();
             var userService = new UserService();
             var taskService = new TaskService();
-            var project = projectService.FindByTitle(projectTitle);
-            var task = taskService.GetAll(project.Id).Where(x => x.Title == taskTitle).FirstOrDefault();
+            var projectService = new ProjectService();
+            var project = projectService.Find(projectId);
+            var task = taskService.GetAll(projectId).Where(x => x.Title == taskTitle).FirstOrDefault();
             var user = userService.FindByEmail(assignTo);
             if (user != null)
             {
+                if (!project.Clients.Contains(user))
+                {
+                    project.Clients.Add(user);
+                    projectService.Update(project);
+                }
                 task.AssignedToId = user.Id;
-                taskService.Update(task);
+                var odDetails = taskService.Update(task);
+                return Json(new { success = odDetails.Succedeed, responseText = odDetails.Succedeed == true ? odDetails.Message : "Error occurred while updating" }, JsonRequestBehavior.AllowGet);
             }
-            return RedirectToAction("Index", "Home");
+            return Json(new { success = false, responseText = "User was not found" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

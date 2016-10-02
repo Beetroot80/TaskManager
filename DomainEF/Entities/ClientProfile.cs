@@ -14,6 +14,7 @@ namespace DomainEntities
         public string PhoneNumber { get; set; }
         public DateTime? BirthDate { get; set; }
 
+        public string ApplicationUserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
     }

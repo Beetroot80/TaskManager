@@ -54,7 +54,7 @@
             <div class="form-group add-user">
                 @Html.LabelFor(model => model.Role, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div>
-                    @Html.DropDownList("Role", new SelectList((ICollection<string>)TempData["Roles"]), new { @class = "btn btn-default btn-block text-center" })
+                    @Html.DropDownList("Role", new SelectList((ICollection<string>)TempData["Roles"],"User"), new { @class = "btn btn-default btn-block text-center" })
                     @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -80,7 +80,14 @@
 <script type="text/javascript">
     $("document").ready(function () {
         $(".datefield").datepicker({
-            dateFormat: "yy-mm-dd"
+            dateFormat: "yy-mm-dd",
+            beforeShow: function()
+            {
+                setTimeout(function () {
+                    $('.ui-datepicker').css('z-index', 50);
+                }, 0);
+            }
+
         })
     });
 </script>

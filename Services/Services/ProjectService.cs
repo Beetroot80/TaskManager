@@ -123,6 +123,14 @@ namespace Services.Services
                 return Mapper.Map<IEnumerable<Project>>(domainProjects);
             }
         }
+        public Project GetProjectWithTaskByTitle(string projectTitle)
+        {
+            using (uow = new UnitOfWork())
+            {
+                var domainProjects = uow.ProjectRepo.GetAllIncluding(includeProperties: x => x.Tasks).Where(x => x.Title == projectTitle).FirstOrDefault();
+                return Mapper.Map<Project>(domainProjects);
+            }
+        }
 
         public void Dispose()
         {
@@ -160,6 +168,28 @@ namespace Services.Services
                     var oldItem = new DomainEntities.Project();
                     oldItem.Id = item.Id;
                     uow.ProjectRepo.Delete(oldItem);
+                    uow.SaveChanges();
+                    return new OperationDetails(true, "Deleted", "Project");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Project");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Project");
+                }
+            }
+        }
+
+        public OperationDetails Delete(int itemId)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+
+                    uow.ProjectRepo.Delete(itemId);
                     uow.SaveChanges();
                     return new OperationDetails(true, "Deleted", "Project");
                 }

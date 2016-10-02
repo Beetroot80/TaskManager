@@ -15,6 +15,7 @@ using DomainEF.Interfaces;
 using appUser = DomainEntities.ApplicationUser;
 using serviceUser = ServiceEntities.ApplicationUser;
 using System;
+using System.Data.Entity.Validation;
 
 namespace Services.Services
 {
@@ -82,27 +83,35 @@ namespace Services.Services
                         user = new appUser
                         {
                             Email = item.Email,
-                            UserName = item.UserName
+                            UserName = item.Email
                         };
-                        uow.UserManager.Create(user, item.Password);
-
-                        DomainEntities.ClientProfile clientProfile = new DomainEntities.ClientProfile
+                        var succed = uow.UserManager.Create(user, item.Password);
+                        if(succed.Succeeded)
                         {
-                            Id = user.Id,
-                            ApplicationUser = user,
-                            Name = item.UserName,
-                            Surname = item.Surname,
-                            BirthDate = item.BirthDate
-                        };
-                        user.ClientProfileId = clientProfile.Id;
-                        uow.ClientManager.Create(clientProfile);
-                        uow.UserManager.AddToRole(user.Id, item.UserRoles ?? "User");
-                        return new OperationDetails(true, "Registration is successful", "");
+                            DomainEntities.ClientProfile clientProfile = new DomainEntities.ClientProfile
+                            {
+                                Id = user.Id,
+                                Name = item.UserName,
+                                Surname = item.Surname,
+                                BirthDate = item.BirthDate
+                            };
+                            user.ClientProfileId = clientProfile.Id;
+                            uow.ClientManager.Create(clientProfile);
+                            uow.UserManager.AddToRole(user.Id, item.UserRoles ?? "User");
+                            return new OperationDetails(true, "Registration is successful", "");
+                        }
+
+                        else
+                            return new OperationDetails(false, "Error", "Email or password is incorrect");
                     }
                     else
                     {
                         return new OperationDetails(false, "Error", "Email is already used");
                     }
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Error occurred while saving");
                 }
                 catch (AutoMapperMappingException ex)
                 {

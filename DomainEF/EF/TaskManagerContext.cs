@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using DomainEntities;
 using DomainEF.Interfaces;
 using System;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace DomainEF
 {
@@ -13,11 +14,14 @@ namespace DomainEF
             : base("TaskManagerDB")
         {
             Configuration.ProxyCreationEnabled = false;
-            this.Database.Log = s=> System.Diagnostics.Debug.WriteLine(s);
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Entity<ApplicationUser>().HasMany(x => x.DomainTasks).WithRequired(x => x.CreatedBy).WillCascadeOnDelete(false);
+            modelBuilder.Entity<ApplicationUser>().HasOptional(x => x.ClientProfile);
+
+            modelBuilder.Entity<Project>().HasMany(x => x.Tasks).WithRequired(x => x.Project).WillCascadeOnDelete(true);
             modelBuilder.Entity<DomainTask>().Property(x => x.CreatedBy_Id).IsRequired();
             modelBuilder.Entity<Project>().HasMany(x => x.Clients);
             modelBuilder.Entity<ApplicationUser>().HasMany(x => x.DomainTasks);

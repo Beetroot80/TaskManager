@@ -159,7 +159,7 @@
                 $("#task-title").html(markup).show();
             },
             error: function (reponse) {
-                alert("error : " + reponse + data);
+                alert(reponse);
             }
         });
         $("#project-actions").removeClass("disabled");
@@ -180,11 +180,11 @@
                 },
             cache: false,
             type: "POST",
-            sucess: function(data){
-            alert("Loading");
+            sucess: function(response){
+                    alert(respone.responseText);
             },
             error: function (response) {
-                alert("error :" + response);
+                alert(response.responseText);
             }
         });
     }

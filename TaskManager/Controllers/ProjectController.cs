@@ -212,9 +212,19 @@ namespace TaskManager.Controllers
         public ActionResult TaskList(string projectTitle)
         {
             var projectService = new ProjectService();
-            var taskTitles = projectService.FindByTitle(projectTitle).Tasks.Select(x => x.Title).ToList();
-            SelectList titles = new SelectList(taskTitles, "Title", "Task title", 0);
-            return Json(taskTitles);
+            var taskService = new TaskService();
+            try
+            {
+                var taskTitles = new List<string>();
+                var project = projectService.GetProjectWithTaskByTitle(projectTitle);
+                if (project != null)
+                     taskTitles= project.Tasks.Select(x => x.Title).ToList();
+                return Json(taskTitles);
+            }
+            catch(NullReferenceException)
+            {
+                return Json("");
+            }
         }
 
     }
