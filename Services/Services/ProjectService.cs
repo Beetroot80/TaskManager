@@ -21,7 +21,7 @@ namespace Services.Services
             {
                 domainProjects = uow.ProjectRepo.GetAll().ToList();
                 return Mapper.Map<IEnumerable<Project>>(domainProjects);
-            }            
+            }
         }
 
         public IEnumerable<Project> GetAll(string userId)
@@ -30,7 +30,7 @@ namespace Services.Services
             {
                 var domainProjects = uow.ProjectRepo.GetAll().Where(x => x.CreatedById == userId).ToList();
                 return Mapper.Map<IEnumerable<Project>>(domainProjects);
-            }            
+            }
         }
 
         public IEnumerable<string> GetTitles()
@@ -106,7 +106,7 @@ namespace Services.Services
         public IEnumerable<Project> GetProjectsWithCounters(string userId)
         {
             using (uow = new UnitOfWork())
-            { 
+            {
                 var domainProjects = uow.ProjectRepo
                     .GetAll()
                     .Where(x => x.CreatedById == userId || x.Clients.Where(y => y.Id == userId).Any())
@@ -122,13 +122,56 @@ namespace Services.Services
                var domainProjects = uow.ProjectRepo.GetAllIncluding(includeProperties: x => x.Tasks).ToList();
                 return Mapper.Map<IEnumerable<Project>>(domainProjects);
             }
-            
         }
 
         public void Dispose()
         {
             if (uow != null)
                 uow.Dispose();
+        }
+
+        public OperationDetails Update(Project item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    uow.ProjectRepo.Update(Mapper.Map<DomainEntities.Project>(item));
+                    uow.SaveChanges();
+                    return new OperationDetails(true, "Updated", "Project");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Project");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Project");
+                }
+            }
+        }
+
+        public OperationDetails Delete(Project item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    var oldItem = new DomainEntities.Project();
+                    oldItem.Id = item.Id;
+                    uow.ProjectRepo.Delete(oldItem);
+                    uow.SaveChanges();
+                    return new OperationDetails(true, "Deleted", "Project");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Project");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Project");
+                }
+            }
         }
     }
 }

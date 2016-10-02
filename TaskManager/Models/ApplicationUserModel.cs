@@ -9,6 +9,7 @@ namespace TaskManager.Models
         [HiddenInput(DisplayValue = false)]
         public string Id { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
         [Required]
         [MaxLength(35)]

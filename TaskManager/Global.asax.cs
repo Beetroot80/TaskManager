@@ -41,6 +41,7 @@ namespace TaskManager
                 .ReverseMap();
             CreateMap<ServiceEntities.ApplicationUser, AddUserModel>()
                 .ForMember(x => x.Role, op => op.MapFrom(y => y.UserRoles.First()))
+                .ForMember(x => x.Name, op => op.MapFrom(y => y.UserName))
                 .ReverseMap();
             CreateMap<ServiceEntities.ApplicationUser, RegisterModel>()
                 .ReverseMap();

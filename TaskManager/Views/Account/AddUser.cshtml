@@ -62,7 +62,7 @@
             <div class="form-group add-user">
                 @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div>
-                    @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control datefield" } })
                     @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -73,3 +73,14 @@
         </div>
     }
 </div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jquryUi")
+@Styles.Render("~/jqueryUi/css")
+<script type="text/javascript">
+    $("document").ready(function () {
+        $(".datefield").datepicker({
+            dateFormat: "yy-mm-dd"
+        })
+    });
+</script>

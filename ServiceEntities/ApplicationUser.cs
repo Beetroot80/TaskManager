@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ServiceEntities
 {
@@ -8,8 +9,10 @@ namespace ServiceEntities
         public string Email { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
-
-        public IEnumerable<string> UserRoles { get; set; }
+        public string Surname { get; set; }
+        public DateTime? BirthDate { get; set; }
+        //public IEnumerable<string> UserRoles { get; set; }
+        public string UserRoles { get; set; }
 
         public string ClientProfileId { get; set; }
         public ClientProfile ClientProfile { get; set; }

@@ -10,6 +10,7 @@ namespace TaskManager.Models
         public string Id { get; set; }
 
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -19,6 +20,14 @@ namespace TaskManager.Models
 
         [Required]
         [Display(Name ="User role")]
-        public IEnumerable<string> UserRoles { get; set; }
+        public string UserRoles { get; set; }
+
+        [Required]
+        [Display (Name = "Change role")]
+        public string NewRole { get; set; }
+
+        public int SelectedItemId { get; set; }
+
+        public SelectList RoleList { get; set; }
     }
 }

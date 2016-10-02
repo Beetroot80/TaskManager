@@ -4,8 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Manage", "Project", FormMethod.Post))
-{
     @Html.AntiForgeryToken()
     <div class="form-horizontal" id="manage-wrapper">
         <header class="text-center">Manage</header>
@@ -46,7 +44,10 @@
         </div>
         <div class="form-group" id="manage-execute">
             <div>
-                <input type="submit" value="Execute" class="btn btn-default disabled" id="add-btn" />
+                <form>
+                    <input type="hidden" name="assignTo" value="@Model.AssignToEmail" />
+                    <input type="button" value="Execute" class="btn btn-default disabled" id="add-btn" onclick="javascript:Execute()" />
+                </form>
             </div>
         </div>
         <div class="form-group" id="manage-cancel">
@@ -55,7 +56,6 @@
             </div>
         </div>
     </div>
-}
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
@@ -68,6 +68,21 @@
     var taskAction;
     var _projectTitle;
     var _taskTitle;
+    var _projectAction;
+    var _taskAction;
+    var _assignTo;
+    function SetAsignTo(assignTo)
+    {
+        _assignTo = assignTo;
+    }
+    function SetTaskAction(taskAction)
+    {
+        _taskAction = taskAction;
+    }
+    function SetProjectAction(projectAction)
+    {
+        _projectAction = projectAction;
+    }
     function SetProjectTitle(title) {
         _projectTitle = title;
     }
@@ -130,7 +145,10 @@
         var url = "/Project/TaskList";
         $.ajax({
             url: url,
-            data: { projectTitle: _projectTitle },
+            data:
+                {
+                    projectTitle: _projectTitle
+            },
             cache: false,
             type: "POST",
             success: function (data) {
@@ -146,6 +164,29 @@
         });
         $("#project-actions").removeClass("disabled");
         $("#task-title").removeClass("disabled");
+    }
+
+    function Execute() {
+        var url = "/Manage/Manage";
+        $.ajax({
+            url: url,
+            data:
+                {
+                    projectTitle: _projectTitle,
+                    taskTitle: _taskTitle,
+                    projectAction: _projectAction,
+                    taskAction: _taskAction,
+                    assignTo: _assignTo
+                },
+            cache: false,
+            type: "POST",
+            sucess: function(data){
+            alert("Loading");
+            },
+            error: function (response) {
+                alert("error :" + response);
+            }
+        });
     }
 
     $("document").ready(function () {
@@ -172,6 +213,7 @@
             $("#task-actions").addClass("disabled");
             $(".uservalue").addClass("hidden");
             //move to action
+            SetProjectAction($("#project-actions").val());
             RedirectionToProjectAction();
         });
 
@@ -186,8 +228,18 @@
         });
 
         $("#task-actions option").click(function () {
+            SetTaskAction($("#task-actions").val());
             RedirectToTaskAction();
         });
-
+        $(".usersvalue").keyup(function(e)
+        {
+            if (e.keyCode === 13) {
+                (SetAsignTo($(this).val()));
+            }
+        });
+        $(".usersvalue").blur( function()
+        {
+            SetAsignTo($(this).val())
+        });
     });
 </script>

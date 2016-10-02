@@ -12,6 +12,8 @@ namespace Services.Interfaces
     {
         IEnumerable<TEntity> GetAll();
         OperationDetails Create(TEntity item);
+        OperationDetails Update(TEntity item);
+        OperationDetails Delete(TEntity item);
         TEntity Find(int id);
     }
 }

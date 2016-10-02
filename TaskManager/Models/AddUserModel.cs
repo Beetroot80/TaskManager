@@ -6,7 +6,7 @@ namespace TaskManager.Models
     public class AddUserModel
     {
         [Required(ErrorMessage ="*")]
-        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "*")]
@@ -33,7 +33,7 @@ namespace TaskManager.Models
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
-        [DataType(DataType.Date, ErrorMessage = "Incorrect data type")]
+        [DataType(DataType.Date)]
         [Display(Name = "Date of birth")]
         public DateTime? BirthDate { get; set; }
     }

@@ -8,6 +8,9 @@ using DomainEF.UnitOfWork;
 using Services.Interfaces;
 using Services.Helpers;
 
+using domainStatus = DomainEntities.Status;
+using domainPriority = DomainEntities.Priority;
+
 
 namespace Services.Services
 {
@@ -84,6 +87,48 @@ namespace Services.Services
             if (uow != null)
                 uow.Dispose();
         }
+
+        public OperationDetails Update(Status item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    uow.StatusRepo.Update(Mapper.Map<domainStatus>(item));
+                    uow.SaveChanges();
+                    return new OperationDetails(true, "Updated", "Status");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Status");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Status");
+                }
+            }
+        }
+
+        public OperationDetails Delete(Status item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    uow.StatusRepo.Delete(Mapper.Map<domainStatus>(item));
+                    uow.SaveChanges();
+                    return new OperationDetails(true, "Deleted", "Status");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Status");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Status");
+                }
+            }
+        }
     }
 
     public class PriorityService : IPriorityService
@@ -157,6 +202,48 @@ namespace Services.Services
         {
             if (uow != null)
                 uow.Dispose();
+        }
+
+        public OperationDetails Update(Priority item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    uow.PriorityRepo.Update(Mapper.Map<domainPriority>(item));
+                    uow.SaveChanges();
+                    return new OperationDetails(true, "Updated", "Priority");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Priority");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Priority");
+                }
+            }
+        }
+
+        public OperationDetails Delete(Priority item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    uow.PriorityRepo.Delete(Mapper.Map<domainPriority>(item));
+                    uow.SaveChanges();
+                    return new OperationDetails(true, "Deleted", "Priority");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Priority");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Priority");
+                }
+            }
         }
     }
 }

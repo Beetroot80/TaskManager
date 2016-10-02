@@ -134,10 +134,17 @@ namespace DomainEF.UnitOfWork
         public UnitOfWork()
         {
             context = new TaskManagerContext();
+            userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(Context));
+            roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(Context));
+            clientManager = new ClientManager(Context);
+
         }
         public UnitOfWork(string connectionName) //TODO: implement
         {
             context = new TaskManagerContext();
+            userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(Context));
+            roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(Context));
+            clientManager = new ClientManager(Context);
         }
 
         public void SaveChanges()

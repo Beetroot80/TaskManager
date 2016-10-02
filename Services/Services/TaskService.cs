@@ -128,5 +128,48 @@ namespace Services
                 uow.Dispose();
         }
 
+        public OperationDetails Update(ServiceTask item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    uow.DomainTaskRepo.Update(Mapper.Map<DomainEntities.DomainTask>(item));
+                    uow.SaveChanges();
+                    return new OperationDetails(true, "Updated", "Task");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Task");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Task");
+                }
+            }
+        }
+
+        public OperationDetails Delete(ServiceTask item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    var oldItem = new DomainEntities.DomainTask();
+                    oldItem.Id = item.Id;
+                    uow.DomainTaskRepo.Delete((oldItem));
+                    uow.SaveChanges();
+                    return new OperationDetails(true, "Deleted", "Task");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Task");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Task");
+                }
+            }
+        }
     }
 }

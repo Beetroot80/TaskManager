@@ -83,9 +83,13 @@
 <script type="text/javascript">
 
     $("document").ready(function () {
-        $(".datefield").datepicker();
+        $(".datefield").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+        $('.usersvalue').autocomplete({
+            source: '@Url.Action("UserList")'
+        });
     });
-
     $('.usersvalue').autocomplete({
         source: '@Url.Action("UserList")'
     });

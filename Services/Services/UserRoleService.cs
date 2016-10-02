@@ -69,5 +69,58 @@ namespace Services.Services
                 uow.Dispose();
         }
 
+        public OperationDetails Update(ApplicationRole item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    var oldRole = uow.RoleManager.Roles.Where(x => x.Id == item.Id).FirstOrDefault();
+                    if (oldRole != null)
+                    {
+                        oldRole.Name = item.Name;
+                        uow.RoleManager.UpdateAsync(Mapper.Map<DomainEntities.ApplicationRole>(item));
+                        return new OperationDetails(true, "Updated", "Role");
+                    }
+                    else return new OperationDetails(false, "Role was not found", "Role");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Role");
+                }
+                catch (NullReferenceException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Role");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Role");
+                }
+            }
+        }
+
+        public OperationDetails Delete(ApplicationRole item)
+        {
+            using (uow = new UnitOfWork())
+            {
+                try
+                {
+                    uow.RoleManager.DeleteAsync(Mapper.Map<DomainEntities.ApplicationRole>(item));
+                    return new OperationDetails(true, "Deleted", "Role");
+                }
+                catch (AutoMapperMappingException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Role");
+                }
+                catch (NullReferenceException ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Role");
+                }
+                catch (Exception ex)
+                {
+                    return new OperationDetails(false, ex.Message, "Role");
+                }
+            }
+        }
     }
 }

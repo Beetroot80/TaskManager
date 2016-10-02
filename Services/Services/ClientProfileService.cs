@@ -58,5 +58,15 @@ namespace Services.Services
             if (uow != null)
                 uow.Dispose();
         }
+
+        public OperationDetails Update(ClientProfile item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OperationDetails Delete(ClientProfile item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

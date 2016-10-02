@@ -50,6 +50,7 @@ namespace TaskManager.Models
 
         [Display(Name = "Assign to")]
         [Required]
+        [EmailAddress]
         public string AssignedToEmail { get; set; }
 
         [HiddenInput(DisplayValue = false)]

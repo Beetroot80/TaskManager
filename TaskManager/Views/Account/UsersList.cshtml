@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<TaskManager.Models.EditUserModel>
 
-<div> @* navigation, filtering *@
-
+<div>
 </div>
+
+
+
     <table id="user-table">
         <tr>
             <th>
@@ -18,14 +20,14 @@
                 @Html.DisplayNameFor(model => model.UserRoles)
             </th>
             <th>
-                @Html.DisplayName("Set role")
+                @Html.DisplayNameFor(model => model.NewRole)
             </th>
             <th>
 
             </th>
         </tr>
         @foreach (var user in Model)
-            {
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => user.Email)
@@ -37,21 +39,39 @@
                     @Html.DisplayFor(modelItem => user.Surname)
                 </td>
                 <td>
-                    @foreach (var userRole in user.UserRoles)
-                {
-                        @Html.DisplayFor(modelItem => userRole)
-                    }
+                    @Html.DisplayFor(modelItem => user.UserRoles)
                 </td>
                 <td>
                     <div>
-                        @Html.DropDownList("Role", new SelectList(ViewBag.Roles), new { @class = "btn btn-default btn-block text-center" })
+                        @*new SelectList((ICollection<string>)TempData["Roles"])*@
+                        @Html.DropDownListFor(model => user.NewRole, user.RoleList , new { @class = "btn btn-default btn-block text-center", @id = "roles-dropdown" })
                     </div>
                 </td>
                 <td>
-                    @Html.ActionLink("Save", "SaveChanges", "Account", new { id = user.Id }, new { @class = "btn btn-default" })
+                    <form id="form-action">
+                        <input id="id" type="hidden" name="id" value="@user.Id" />
+                        <input type="hidden" name="newRole" value=@user.NewRole/>
+                        <input type="hidden" name="name" value=@user.Name />
+                        <input type="button" value="Change role" class="btn btn-default submit" />
+                    </form>
                 </td>
             </tr>
         }
     </table>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $("document").ready(function () {
+        $(".submit").click(function () {
+            $.post('@Url.Action("ChangeRole", "Account")',
+                {
+                    id: $("#id").val(),
+                    newRole: $("#roles-dropdown").val()
+                },
+                function () { alert("Succsess") }
+            )
+        });
+    });
+</script>
+
 
 
