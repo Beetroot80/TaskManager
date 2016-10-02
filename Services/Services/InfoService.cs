@@ -70,7 +70,7 @@ namespace Services.Services
                     uow.StatusRepo.Insert(status);
                     uow.SaveChanges(out result);
                 }
-                return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
+                return new OperationDetails(result, result == true ? "Operation succeed" : "Operation failed", "");
             }
             catch (AutoMapperMappingException ex)
             {

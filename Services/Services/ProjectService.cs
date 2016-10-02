@@ -40,7 +40,7 @@ namespace Services.Services
             }
         }
 
-        public IEnumerable<string> GetTitles(string userId) //TODO: do i need all created by or cleits of also?
+        public IEnumerable<string> GetTitles(string userId)
         {
             using (uow = new UnitOfWork())
             {
@@ -75,6 +75,10 @@ namespace Services.Services
                 {
                     return null;
                 }
+                catch(Exception)
+                {
+                    return null;
+                }
             }
         }
 
@@ -90,7 +94,7 @@ namespace Services.Services
                     uow.ProjectRepo.Insert(project);
                     uow.SaveChanges(out result);
                 }
-                return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
+                return new OperationDetails(result, result == true ? "Operation succeed" : "Operation failed", "");
             }
             catch (AutoMapperMappingException ex)
             {

@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using AutoMapper;
+
 using ServiceEntities;
 using Services.Services;
-using TaskManager.Models;
 using Services;
-using System;
 using Services.Helpers;
+using TaskManager.Models;
 
 namespace TaskManager.Controllers
 {
@@ -29,6 +30,7 @@ namespace TaskManager.Controllers
             return PartialView(projectModels.AsEnumerable());
         }
 
+        //GET: Projects
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpGet]
         public ActionResult Projects()
@@ -41,6 +43,7 @@ namespace TaskManager.Controllers
             return PartialView(projectModels.AsEnumerable());
         }
 
+        //POST: Projects
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpPost]
         public ActionResult ViewTask(int projectId)
@@ -57,6 +60,7 @@ namespace TaskManager.Controllers
             return PartialView(taskModels.AsEnumerable());
         }
 
+        //GET: Add project
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpGet]
         public ActionResult AddProject()
@@ -64,9 +68,10 @@ namespace TaskManager.Controllers
             return PartialView();
         }
 
+        //POST: Add project
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpPost]
-        public ActionResult AddProject(ProjectModel model) //TODO: added or not?
+        public ActionResult AddProject(ProjectModel model)
         {
             model.CreatedById = HttpContext.User.Identity.GetUserId();
             var projectService = new ProjectService();
@@ -74,6 +79,7 @@ namespace TaskManager.Controllers
             return Result(opDetails);
         }
 
+        //GET: Comments
         [Authorize(Roles = "Administrator,Manager,User")]
         public ActionResult Comments(int? Id)
         {
@@ -87,6 +93,7 @@ namespace TaskManager.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //GET: Add task
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpGet]
         public ActionResult AddTask(string projectTitle)
@@ -116,6 +123,7 @@ namespace TaskManager.Controllers
             return PartialView(taskModel);
         }
 
+        //POST: Add task
         [Authorize(Roles = "Administrator,Manager,User")]
         [HttpPost]
         public ActionResult AddTask(ViewTasksModel model)
@@ -168,12 +176,14 @@ namespace TaskManager.Controllers
 
         }
 
+        //GET: Users
         [Authorize(Roles = "Administrator, Manager")]
         public ActionResult UserList()
         {
             return RedirectToAction("UserEmails", "Account");
         }
 
+        //GET: Manage
         [Authorize(Roles = "Administrator, Manager, User")]
         [HttpGet]
         public ActionResult Manage()
@@ -206,10 +216,11 @@ namespace TaskManager.Controllers
                 };
             }
             var projectService = new ProjectService();
-            TempData["ProjectTitles"] = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
+            TempData ["ProjectTitles"] = projectService.GetAll(User.Identity.GetUserId()).Select(x => x.Title).ToList();
             return PartialView("Manage", manageModel);
         }
 
+        //Post
         [Authorize(Roles = "Administrator, Manager, User")]
         [HttpPost]
         public ActionResult Manage(ManageModel model)

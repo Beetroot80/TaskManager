@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+
 using Services;
 using Services.Helpers;
 using Services.Services;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
 using TaskManager.Models;
 
 namespace TaskManager.Controllers

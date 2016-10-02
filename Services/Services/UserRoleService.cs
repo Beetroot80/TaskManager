@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
+
 using DomainEF.UnitOfWork;
 using ServiceEntities;
 using Services.Helpers;
@@ -27,7 +26,7 @@ namespace Services.Services
                     uow.SaveChanges(out result);
                 }
 
-                return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
+                return new OperationDetails(result, result == true ? "Operation succeed" : "Operation failed", "");
             }
             catch (AutoMapperMappingException ex)
             {
@@ -41,7 +40,7 @@ namespace Services.Services
 
         public ApplicationRole Find(int id)
         {
-            throw new NotImplementedException("Role mannager accepts string ids");
+            throw new NotImplementedException("Role manager accepts string ids");
         }
 
         public IEnumerable<ApplicationRole> GetAll()

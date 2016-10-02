@@ -1,17 +1,18 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using TaskManager.Models;
+using Services.Helpers;
+using AutoMapper;
+
+using Services.Services;
 using Services.Interfaces;
 using ServiceEntities;
-using Services.Helpers;
-using System.Collections.Generic;
-using System.Linq;
-using Services.Services;
-using AutoMapper;
-using System;
+using TaskManager.Models;
 
 namespace TaskManager.Controllers
 {

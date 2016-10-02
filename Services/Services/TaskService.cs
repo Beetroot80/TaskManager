@@ -71,7 +71,7 @@ namespace Services
             }
         }
 
-        public IEnumerable<ServiceTask> GetSignedTasks(int projectId) //TODO: optimization!!!
+        public IEnumerable<ServiceTask> GetSignedTasks(int projectId)
         {
             List<ServiceTask> serviceTasks = new List<ServiceTask>();
             IEnumerable<DomainTask> domainTasks;
@@ -111,7 +111,7 @@ namespace Services
                     uow.SaveChanges(out result);
                 }
 
-                return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
+                return new OperationDetails(result, result == true ? "Operation succeed" : "Operation failed", "");
             }
             catch (AutoMapperMappingException ex)
             {

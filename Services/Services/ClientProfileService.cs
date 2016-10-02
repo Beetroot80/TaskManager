@@ -27,7 +27,7 @@ namespace Services.Services
                     uow.ClientManager.Create(profile);
                     uow.SaveChanges(out result);
                 }
-                return new OperationDetails(result, result == true ? "Operation succed" : "Operation failed", "");
+                return new OperationDetails(result, result == true ? "Operation succeed" : "Operation failed", "");
             }
             catch (AutoMapperMappingException ex)
             {
@@ -41,7 +41,7 @@ namespace Services.Services
 
         public ClientProfile Find(int id)
         {
-            throw new NotImplementedException("Client profile demend id as a string");
+            throw new NotImplementedException("Client profile demand id as a string");
         }
 
         public IEnumerable<ClientProfile> GetAll()

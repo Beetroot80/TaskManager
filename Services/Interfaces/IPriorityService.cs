@@ -1,13 +1,8 @@
 ﻿using ServiceEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    interface IPriorityService: IService<Priority>
+    public interface IPriorityService: IService<Priority>
     {
     }
 }

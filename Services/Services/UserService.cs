@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
-using ServiceEntities;
 using AutoMapper;
 
 using Services.Helpers;
