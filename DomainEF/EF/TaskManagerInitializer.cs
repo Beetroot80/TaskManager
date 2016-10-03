@@ -55,33 +55,80 @@ namespace DomainEF
                 ClientProfile = new ClientProfile { Name = "Kate", Surname = "Windstorm" }
             }, "Kate11!");
 
+            UserManager.Create(new ApplicationUser
+            {
+                UserName = "Admin@gmail.com",
+                Email = "Admin@gmail.com",
+                ClientProfile = new ClientProfile { Name = "Admin", Surname = "Admin" }
+            }, "Admin1!");
+
+            UserManager.Create(new ApplicationUser
+            {
+                UserName = "Manager@gmail.com",
+                Email = "Manager@gmail.com",
+                ClientProfile = new ClientProfile { Name = "Manager", Surname = "Manager" }
+            }, "Manager1!");
+
+            UserManager.Create(new ApplicationUser
+            {
+                UserName = "User@gmail.com",
+                Email = "User@gmail.com",
+                ClientProfile = new ClientProfile { Name = "User", Surname = "User" }
+            }, "User1!");
+
+            UserManager.Create(new ApplicationUser
+            {
+                UserName = "Kate@gmail.com",
+                Email = "Kate@gmail.com",
+                ClientProfile = new ClientProfile { Name = "Kate", Surname = "Windstorm" }
+            }, "Kate11!");
+
             var u0 = UserManager.Find("Eugene@gmail.com", "Eugene1!");
             var u1 = UserManager.Find("Kate@gmail.com", "Kate11!");
+            var u2 = UserManager.Find("Admin@gmail.com", "Admin1!");
+            var u3 = UserManager.Find("Manager@gmail.com", "Manager1!");
+            var u4 = UserManager.Find("User@gmail.com", "User1!");
             UserManager.AddToRole(u0.Id, admin.Name);
             UserManager.AddToRole(u1.Id, manager.Name);
+            UserManager.AddToRole(u2.Id, admin.Name);
+            UserManager.AddToRole(u3.Id, manager.Name);
+            UserManager.AddToRole(u4.Id, user.Name);
             var userGroup0 = new List<ApplicationUser>();
             var userGroup1 = new List<ApplicationUser>();
             var userGroup2 = new List<ApplicationUser>();
             var userGroup3 = new List<ApplicationUser>();
             var userGroup4 = new List<ApplicationUser>();
             userGroup0.Add(u0);
+            userGroup0.Add(u3);
+            userGroup0.Add(u4);
+
             userGroup1.Add(u0);
+            userGroup1.Add(u1);
+            userGroup1.Add(u3);
+
             userGroup2.Add(u0);
-            userGroup2.Add(u0);
+            userGroup2.Add(u1);
+            userGroup2.Add(u2);
+            userGroup2.Add(u3);
+            userGroup2.Add(u4);
+
             userGroup3.Add(u1);
             userGroup3.Add(u0);
+
             userGroup4.Add(u1);
-            userGroup4.Add(u0);
+            userGroup4.Add(u2);
+            userGroup4.Add(u3);
+            userGroup4.Add(u4);
 
             context.SaveChanges();
 
             //Projects
 
-            var pr0 = new Project() { Title = "Home", Description = "Home tasks for me and my wife", Clients = userGroup0, CreatedBy = u0 };
-            var pr1 = new Project() { Title = "Work", Description = "My boss can't hold his ideas", Clients = userGroup1, CreatedBy = u0 };
-            var pr2 = new Project() { Title = "Home2", Description = "Home tasks for me and my wife", Clients = userGroup2, CreatedBy = u1 };
-            var pr3 = new Project() { Title = "My game Ideas", Description = "damn, I wont my own game", Clients = userGroup3, CreatedBy = u1 };
-            var pr4 = new Project() { Title = "Buy medicine", Description = "My grandma's needs", Clients = userGroup4, CreatedBy = u0 };
+            var pr0 = new Project() { Title = "Home", Description = "Home tasks for me and my wife", Clients = userGroup0, CreatedBy = u2 };
+            var pr1 = new Project() { Title = "Work", Description = "My boss can't hold his ideas", Clients = userGroup1, CreatedBy = u2 };
+            var pr2 = new Project() { Title = "Home2", Description = "Home tasks for me and my wife", Clients = userGroup2, CreatedBy = u2 };
+            var pr3 = new Project() { Title = "My game Ideas", Description = "damn, I wont my own game", Clients = userGroup3, CreatedBy = u2 };
+            var pr4 = new Project() { Title = "Buy medicine", Description = "My grandma's needs", Clients = userGroup4, CreatedBy = u3 };
             context.Projects.Add(pr0);
             context.Projects.Add(pr1);
             context.Projects.Add(pr2);
